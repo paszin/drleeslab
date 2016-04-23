@@ -1,6 +1,7 @@
 from flask import Flask
 import urllib2
 import re
+from HTMLParser import HTMLParser
 app = Flask(__name__)
 
 @app.route('/')
