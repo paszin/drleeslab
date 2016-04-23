@@ -4,6 +4,8 @@ angular.module('spaceappsApp')
   .controller('MainCtrl', function ($scope, $http) {
     $scope.awesomeThings = [];
 
+    $scope.hello = "hello world";
+
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
