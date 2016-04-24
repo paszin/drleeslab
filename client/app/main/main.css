@@ -1,5 +1,14 @@
- /*@import url("../../bower_components/TimelineJS/build/css/timeline.css");
-@import url("../../bower_components/TimelineJS/build/css/themes/font/Rancho-Gudea.css");*/
+ /*@import url("../../bower_components/TimelineJS/build/css/timeline.css");*/
+ @import url('../../bower_components/nvd3/build/nv.d3.css');
+ @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.eventstory md-content svg{
+  fill: white;
+}
+.eventstory md-content svg text{
+  fill: black;
+}
+
 
 .things-list {
  margin: 8px;

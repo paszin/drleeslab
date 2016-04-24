@@ -9,6 +9,7 @@ angular.module('spaceappsApp', [
   'ui.router',
   'ngMaterial',
   'leaflet-directive', // including leaflet.js library.
+  'nvd3'
 ])
   .config(function($mdIconProvider) {
     $mdIconProvider
