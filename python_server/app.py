@@ -32,7 +32,12 @@ def browser_headers(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 @app.route('/')
 def hello_world():
@@ -47,6 +52,10 @@ def getCorrelatedQueries():
 	if place is None:
 		place = 'us'
 	limit = args.get('limit')
+	if not RepresentsInt(limit):
+		return jsonify(success="fail", message="limit is not integer")
+	if int(limit) < 0:
+		return jsonify(success="fail", message="limit must be bigger than 0")
 	url1 = "https://www.google.com/trends/correlate/search?e="
 	url2 = "&t=weekly&p=" + place + "&filter="
 	event = event.replace(" ", "+")
