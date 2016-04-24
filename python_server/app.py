@@ -32,11 +32,12 @@ def getCorrelatedQueries(event):
 
 @app.route('/correlated_queries/<event>/<correlated_query>')
 def getCorrelatedQueriesPlots(event, correlated_query):
-	# url1="https://www.google.com/trends/correlate/search?e=fukushima+tsunami&t=weekly&p=us"
 	url1 = "https://www.google.com/trends/correlate/search?e="
-	url2 = "&t=weekly&p=us"
+	url2 = "&e="
+	url3 = "&t=weekly&p=us"
 	event = event.replace(" ", "+")
-	page =urllib2.urlopen(url1 + event + url2)
+	correlated_query = correlated_query.replace(" ", "+")
+	page =urllib2.urlopen(url1 + event + url2 + correlated_query + url3)
 	data=page.read()
 	startIndex = data.index("series_set = ") + 13
 	semiColonIndexes = [m.start() for m in re.finditer(';', data)]
