@@ -87,6 +87,11 @@ angular.module('spaceappsApp')
       $scope.awesomeThings = awesomeThings;
     });
 
+  // Code for loading JSON files
+  $http.get('./app/main/keywords.json').success(function(json_data){
+          console.log(json_data)             
+        });
+
 
 
     $scope.getColor = function($index) {
