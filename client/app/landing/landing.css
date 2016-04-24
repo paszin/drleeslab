@@ -1,0 +1,10 @@
+#latestEvent md-card md-card-title md-card-title-text{
+  height: 6vh;
+}
+#latestEvent md-card{
+  min-width: 16vw;
+}
+#latestEvent .md-headline {
+  font-size: 18px;
+  font-weight: bold;
+}

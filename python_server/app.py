@@ -67,7 +67,7 @@ def getCorrelatedQueries():
 	count = 0
 	maxRange = len(resultIndexes)-1
 	if limit is not None:
-		maxRange = int(limit)
+		maxRange = min (maxRange, int(limit))
 	for i in range(0, maxRange):
 		thisData = data[resultIndexes[i]:resultIndexes[i+1]]
 		startIndex = thisData.index('event="') + 7

@@ -2,25 +2,27 @@
 <div layout="column">
   <!-- <div class="mapintro" flex = "10"> -->
     <div class="map"  flex = "80">
-    <leaflet id="mymap" lf-center="center" height="60vh" width="100%" markers="markers" layers="layers"></leaflet>
-  </div>
-</div>
-<div class="column md-padding">
-  <h2>Latest Events</h2>
-  <md-content layout="row">
-    <md-card ng-repeat="nevent in openEventsList">
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">{{nevent.title}}</span>
-            <span class="md-subhead">{{nevent.categories[0].title}}</span>
-          </md-card-title-text>
-          <!-- <md-card-title-media>
-            <div class="md-media-lg card-media"></div>
-          </md-card-title-media> -->
-        </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
-            <md-button>more</md-button>
-        </md-card-actions>
-      </md-card>
-    </md-content>
+      <leaflet id="mymap" lf-center="center" height="60vh" width="100%" markers="markers" layers="layers"></leaflet>
+    </div>
+
+    <div class="md-padding"  flex = "20" id="latestEvent">
+      <h2>Latest Events</h2>
+      <md-content layout="row">
+        <md-card ng-repeat="nevent in openEventsList" flex="20">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">{{nevent.title}}</span>
+                <span class="md-subhead">{{nevent.categories[0].title}}</span>
+              </md-card-title-text>
+              <!-- <md-card-title-media>
+                <div class="md-media-lg card-media"></div>
+              </md-card-title-media> -->
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button>more</md-button>
+            </md-card-actions>
+          </md-card>
+        </md-content>
+    </div>
+
 </div>
