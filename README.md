@@ -93,3 +93,14 @@ http://localhost:5000/correlated_queries_plot?event=fukushima%20tsunami&correlat
   ]
 }
 ```
+
+## Get Houston Flood Tweets
+```bash
+http://nodetest123.mybluemix.net/houstonflood?limit=<number>
+```
+This Bluemix API returns tweets regarding Houston Flood along with sentiment analysis and location information. Limit is optional. Not specifying the limit returns all tweets in the database. 
+
+### Example
+```bash
+http://nodetest123.mybluemix.net/houstonflood?limit=10
+```
