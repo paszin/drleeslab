@@ -6,4 +6,6 @@
   </div>
 </div>
 
-<h1>{{info}}</h1>
+<h1>Latest Events</h1>
+
+<md-content layout="row"><md-card flex="33" ng-repeat="nevent in openEventsList">{{nevent.title}}</md-card></md-content>

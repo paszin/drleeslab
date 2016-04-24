@@ -5,6 +5,8 @@ var map_basic = angular.module('spaceappsApp');
 map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http) {
     $scope.searchWindow = 200; //days
     
+    var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': "volcano.svg"};
+    
     var earthquakeUrl = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson";
     //last ten days
     $http.get(earthquakeUrl).success(function(response) {
@@ -26,10 +28,18 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
                 $scope.info = args.model.message;
         });
     
+    $scope.$on('leafletDirectiveMarker.mymap.mouseover', function (e, args) {
+        //debugger;
+        args.leafletObject.openPopup();
+                $scope.info = args.model.data.title;
+        });
+    
+    
     //get events
     $scope.openEvents = [];
     
     $http.get('http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000').success(function(api) {
+        $scope.openEventsList = api.events;
       api.events.forEach(function(natureevent) {
           var lat, lng;
           if (!!natureevent.geometries && natureevent.geometries.length > 0 && !!natureevent.geometries[0].coordinates && natureevent.geometries[0].coordinates.length > 0) {
@@ -41,9 +51,9 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
                   lat = natureevent.geometries[0].coordinates[1]; 
                   lng = natureevent.geometries[0].coordinates[0]; 
             }
-              $scope.openEvents.push({message: natureevent.title, layer: "natureevents", lat: lat, lng: lng, icon: //{}
+              $scope.openEvents.push({data: natureevent, message: natureevent.title, layer: "natureevents", lat: lat, lng: lng, icon: //{}
                                       {
-                    iconUrl: 'assets/images/cloud.png',
+                    iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
                     //shadowUrl: 'img/leaf-shadow.png',
                     iconSize:     [24, 24], // size of the icon
                     shadowSize:   [50, 64], // size of the shadow
@@ -52,7 +62,7 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
                     popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
                 }
                 
-                                     });    
+            });    
           }
       });
         
@@ -93,7 +103,12 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
                   url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/" +
         "MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg",
                   type: "xyz"
-              }
+              } 
+              /*,something: {
+                  name: "iydfguladfh",
+                  type: "xyz",
+                  url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-arctic/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2013-06-20/EPSG3413_250m/{z}/{y}/{x}.jpg"
+              }*/
           }
         }
       });
