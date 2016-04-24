@@ -39,6 +39,11 @@ angular.module('spaceappsApp')
                 newData.value = $scope.sentimentData[d];
                 twiData.values.push(newData);
             };
+            twiData.values.sort(function(a, b) {
+                return parseFloat(a.label) - parseFloat(b.label);
+            })
+            console.log(twiData.values);
+
             $scope.twiiterData.push(twiData);
             console.log($scope.twiiterData);
         });
@@ -50,6 +55,7 @@ angular.module('spaceappsApp')
 
         // Draw words cloud
         $http.get(trendsUrl).success(function(result) {
+              debugger;
               var keywords = result.results;
               console.log(keywords);
 
@@ -70,7 +76,7 @@ angular.module('spaceappsApp')
         $scope.twiiterOptions = {
                 chart: {
                     type: 'discreteBarChart',
-                    height: 450,
+                    height: 300,
                     margin : {
                         top: 20,
                         right: 20,
@@ -78,7 +84,7 @@ angular.module('spaceappsApp')
                         left: 55
                     },
                     x: function(d){return d.label;},
-                    y: function(d){return d.value + (1e-10);},
+                    y: function(d){return d.value;},
                     showValues: true,
                     valueFormat: function(d){
                         return d3.format(',.4f')(d);
@@ -101,22 +107,16 @@ angular.module('spaceappsApp')
 
     $scope.options = {
             chart: {
-                type: 'cumulativeLineChart',
-                height: 450,
+                type: 'lineChart',
+                height: 300,
                 margin : {
                     top: 20,
                     right: 20,
-                    bottom: 60,
-                    left: 65
+                    bottom: 50,
+                    left: 55
                 },
-                x: function(d){
-                    return d[0];
-                },
-                y: function(d){
-                    return d[1];
-                },
-                average: function(d) { return d.mean/100; },
-
+                x: function(d){ return d[0]; },
+                y: function(d){  return d[1]; },
                 color: d3.scale.category10().range(),
                 duration: 300,
                 useInteractiveGuideline: true,
@@ -134,10 +134,6 @@ angular.module('spaceappsApp')
 
                 yAxis: {
                     axisLabel: 'Y Axis',
-                    tickFormat: function(d){
-                        // return d3.format(',.1%')(d);
-                        return d;
-                    },
                     axisLabelDistance: 20
                 }
             }
