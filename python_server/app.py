@@ -2,13 +2,43 @@ from flask import Flask,jsonify, make_response, request
 import urllib2
 import re
 import json
+from functools import wraps
 app = Flask(__name__)
+
+
+## cors decorators
+
+def add_response_headers(headers={}):
+    '''adds the headers passed in to the response'''
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            resp = make_response(f(*args, **kwargs))
+            h = resp.headers
+            for header, value in headers.items():
+                h[header] = value
+            return resp
+        return decorated_function
+    return decorator
+
+
+def browser_headers(f):
+    '''adds the headers required for browser secrurity'''
+    @wraps(f)
+    @add_response_headers({'Access-Control-Allow-Origin': '*',
+                           'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+                           'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'})
+    def decorated_function(*args, **kwargs):
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 
 @app.route('/')
 def hello_world():
     return 'Hello World!'
 
+@browser_headers
 @app.route('/correlated_queries')
 def getCorrelatedQueries():
 	args = request.args
@@ -36,6 +66,8 @@ def getCorrelatedQueries():
 	print correlatedQueries
 	return jsonify(results=correlatedQueries)
 
+
+@browser_headers
 @app.route('/correlated_queries_plot')
 def getCorrelatedQueriesPlots():
 	args = request.args
