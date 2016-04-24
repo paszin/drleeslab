@@ -1,6 +1,7 @@
-from flask import Flask,jsonify
+from flask import Flask,jsonify, make_response
 import urllib2
 import re
+import json
 app = Flask(__name__)
 
 
@@ -32,11 +33,12 @@ def getCorrelatedQueries(event):
 
 @app.route('/correlated_queries/<event>/<correlated_query>')
 def getCorrelatedQueriesPlots(event, correlated_query):
-	# url1="https://www.google.com/trends/correlate/search?e=fukushima+tsunami&t=weekly&p=us"
 	url1 = "https://www.google.com/trends/correlate/search?e="
-	url2 = "&t=weekly&p=us"
+	url2 = "&e="
+	url3 = "&t=weekly&p=us"
 	event = event.replace(" ", "+")
-	page =urllib2.urlopen(url1 + event + url2)
+	correlated_query = correlated_query.replace(" ", "+")
+	page =urllib2.urlopen(url1 + event + url2 + correlated_query + url3)
 	data=page.read()
 	startIndex = data.index("series_set = ") + 13
 	semiColonIndexes = [m.start() for m in re.finditer(';', data)]
@@ -44,8 +46,12 @@ def getCorrelatedQueriesPlots(event, correlated_query):
 		if (thisIndex > startIndex):
 			endIndex = thisIndex
 			break
-	print data[startIndex:endIndex]
-	return data[startIndex:endIndex]
+	dataJson = json.loads(data[startIndex:endIndex])
+	for thisSeries in dataJson["series"]:
+		for thisPoint in thisSeries["point"]:
+			del thisPoint['place_id']
+			print thisPoint
+	return jsonify(series=dataJson["series"])
 
 if __name__ == '__main__':
     app.run(debug=True)
