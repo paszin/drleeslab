@@ -16,9 +16,11 @@ angular.module('spaceappsApp')
 
     $scope.events = [];
 
-    $http.get('http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000').success(function(api) {
-      $scope.events = api.events;
+    $http.get('http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000').success(function(event) {
+      $scope.events = event;
     });
+    
+    /*http://map1.vis.earthdata.nasa.gov/twms-geo/twms.cgi?request=GetMap&layers=MODIS_Aqua_CorrectedReflectance_TrueColor&srs=EPSG:4326&format=image/jpeg&styles=&time=2016-04-13&width=512&height=512&bbox=-36.00000000,-54.00000000,36.00000000,18.00000000*/
     
     $scope.awesomeThings = [];
 

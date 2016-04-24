@@ -2,10 +2,10 @@
 
 var map_basic = angular.module('spaceappsApp');
 
-map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http) {
+map_basic.controller('LandingCtrl',[ '$scope', '$http', '$location', function ($scope, $http, $location) {
     $scope.searchWindow = 200; //days
     
-    var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': "volcano.svg"};
+    var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': "volcano.svg", 'Sea and Lake Ice': 'ice-seae.svg'};
     
     var earthquakeUrl = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson";
     //last ten days

@@ -8,4 +8,19 @@
 
 <h1>Latest Events</h1>
 
-<md-content layout="row"><md-card flex="33" ng-repeat="nevent in openEventsList">{{nevent.title}}</md-card></md-content>
+<md-content layout="row">
+    <md-card ng-repeat="nevent in openEventsList">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{nevent.title}}</span>
+            <span class="md-subhead">{{nevent.categories[0].title}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>more</md-button>
+          </md-card-actions>
+      </md-card>
+    </md-content>
