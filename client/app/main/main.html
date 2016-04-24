@@ -28,8 +28,10 @@
           <h2 class="md-flex">How people feel</h2>
         </div>
       </md-toolbar>
+        Twitter sentiment analysis
         
         {{sentiment}}  
+        {{sentimentData}}
         
         
         </md-card>
@@ -56,11 +58,12 @@
   <div class="eventWords">
     <md-content class="eventWordsCloud md-padding">
       <md-card>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">Events Cloud</span>
-          </md-card-title-text>
-        </md-card-title>
+       <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">How people react</h2>
+        </div>
+      </md-toolbar>
+          Google Trends
         <md-card-content my-directive>
           <div id="d3WordCloud">
 

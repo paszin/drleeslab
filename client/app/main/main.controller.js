@@ -19,9 +19,14 @@ angular.module('spaceappsApp')
         //GET TWITTER
         
         $scope.sentiment = 0
+        $scope.sentimentData = {};
         $http.get(twitter + twitterLookup[event.id]).success(function(data) {
             data.forEach(function(tweet) {
                 $scope.sentiment += tweet.sentiment.score+4;
+                if (!$scope.sentimentData.hasOwnProperty(""+tweet.sentiment.score)) {
+                    $scope.sentimentData[""+tweet.sentiment.score] = 0;
+                }
+                $scope.sentimentData[""+tweet.sentiment.score] += 1;
             });
             $scope.sentiment = ($scope.sentiment/data.length)/8*100;
         })
