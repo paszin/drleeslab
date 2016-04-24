@@ -1,3 +1,9 @@
+# Run Backend Python Server
+Go to python_server folder, and run the command below. 
+```bash
+python app.py
+```
+
 # Backend APIs
 
 ## Get Correlated Queries
