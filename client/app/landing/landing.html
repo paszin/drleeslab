@@ -1,3 +1,9 @@
 <div ng-include="'components/shell/shell.html'"></div>
-
-<leaflet id="mymap" lf-center="center" height="480px" width="640px"></leaflet>
+<div layout="column">
+  <div class="mapintro" flex = "10">First item in column</div>
+  <div class="map"  flex = "80">
+    <leaflet id="mymap" lf-center="successfactor" height="70vh" width="100%"></leaflet>
+  </div>
+  <div class="map"  flex = "10">Timeline Controller</div>
+</div>
+<!-- <leaflet id="mymap" lf-center="center" height="480px" width="100%"></leaflet> -->
