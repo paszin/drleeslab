@@ -81,11 +81,28 @@
       </md-content>
     </div>
   </div>
-</div>
+  <div class="eventWords">
+    <md-content class="eventWordsCloud md-padding">
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Events Cloud</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content my-directive>
+          <div id="d3WordCloud">
 
-  <md-list>
-    <md-list-item ng-repeat="event in events | limitTo: 10">
-        <p>{{event.title}} </p>
-    </md-list-item>
-  </md-list>
-</md-grid-list>
+          </div>
+        </md-card-content>
+      </md-card>
+    </md-content>
+    <md-content class="eventWordsList">
+      <md-list>
+        <md-list-item ng-repeat="event in events | limitTo: 10">
+            <p>{{event.title}} </p>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </div>
+
+</div>
