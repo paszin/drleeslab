@@ -9,10 +9,15 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/correlated_queries2/<event>')
-def getCorrelatedQueries(event):
+@app.route('/correlated_queries')
+def getCorrelatedQueries():
+	args = request.args
+	event = args.get('event')
+	place = args.get('place')
+	if place is None:
+		place = 'us'
 	url1 = "https://www.google.com/trends/correlate/search?e="
-	url2 = "&t=weekly&p=us&filter="
+	url2 = "&t=weekly&p=" + place + "&filter="
 	event = event.replace(" ", "+")
 	page =urllib2.urlopen(url1 + event + url2 + event)
 	data=page.read()
