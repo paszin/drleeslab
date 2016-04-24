@@ -93,3 +93,36 @@ http://localhost:5000/correlated_queries_plot?event=fukushima%20tsunami&correlat
   ]
 }
 ```
+
+## Get Houston Flood Tweets
+```bash
+http://nodetest123.mybluemix.net/houstonflood?limit=<number>
+```
+This Bluemix API returns tweets regarding Houston Flood along with sentiment analysis and location information. Limit is optional. Not specifying the limit returns all tweets in the database. 
+
+### Example
+```bash
+http://nodetest123.mybluemix.net/houstonflood?limit=10
+```
+
+## Get Fuego Volcano English Tweets
+```bash
+http://nodetest123.mybluemix.net/fuego_volcano_en?limit=<number>
+```
+This Bluemix API returns **English** tweets regarding Fuego Volcano along with sentiment analysis and location information. Limit is optional. Not specifying the limit returns all tweets in the database. 
+
+### Example
+```bash
+http://nodetest123.mybluemix.net/fuego_volcano_en?limit=10
+```
+
+## Get Fuego Volcano All Language Tweets
+```bash
+http://nodetest123.mybluemix.net/fuego_volcano_all?limit=<number>
+```
+This Bluemix API returns **all language** tweets regarding Fuego Volcano along with sentiment analysis and location information. Limit is optional. Not specifying the limit returns all tweets in the database. 
+
+### Example
+```bash
+http://nodetest123.mybluemix.net/fuego_volcano_all?limit=10
+```
