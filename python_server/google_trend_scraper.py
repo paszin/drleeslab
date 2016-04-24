@@ -29,7 +29,7 @@ import pdb
 
 month_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-def ScrapeTwoMonths(keyword, country, region, year, startmonth):
+def ScrapeTwoMonths(keyword, country, region, city, year, startmonth):
     print 'Scraping '+month_list[startmonth-1]+' and '+month_list[startmonth]+' in '+str(year)
     URL_start = "http://www.google.com/trends/trendsReport?&q="
     URL_end = "&cmpt=q&content=1&export=1"
@@ -61,22 +61,22 @@ def ScrapeTwoMonths(keyword, country, region, year, startmonth):
 # WARNING: Before you run ScrapeRange, ensure your /Downloads folder
 # does not contain any .csv files. 
 
-def ScrapeRange(keyword, country, region, startmonth, startyear, endmonth, endyear):
+def ScrapeRange(keyword, country, region, city, startmonth, startyear, endmonth, endyear):
             
     if startyear == endyear:
         for i in range(startmonth, endmonth,2):
-            ScrapeTwoMonths(keyword, country, region, startyear,i)
+            ScrapeTwoMonths(keyword, country, region, city, startyear,i)
             time.sleep(7)
     else:
         for i in range(startmonth,13,2):
-            ScrapeTwoMonths(keyword, country, region, startyear,i)
+            ScrapeTwoMonths(keyword, country, region, city, startyear,i)
             time.sleep(7)
         for y in range(startyear + 1, endyear):
             for i in range(1,11,2):
-                ScrapeTwoMonths(keyword, country, region, y,i)
+                ScrapeTwoMonths(keyword, country, region, city, y,i)
                 time.sleep(7)
         for i in range(1,endmonth,2):
-            ScrapeTwoMonths(keyword, country, region, endyear,i)
+            ScrapeTwoMonths(keyword, country, region, city, endyear,i)
             time.sleep(7)
     
     files = copy.deepcopy(os.listdir(path))    
@@ -257,9 +257,9 @@ def StitchFrames():
 
 if __name__ == '__main__':
     """
-    Example: extract daily google Search Volume Index of keyword "hurricane" from January 2016 to April 2016 in California, US
+    Example: extract daily google Search Volume Index of keyword "hurricane" from March 2016 to April 2016 in Houston,TX, US
 
-    >> python google_trend_scraper.py 1 2016 4 2016 "US" "CA" "hurricane"
+    >> python google_trend_scraper.py 3 2016 4 2016 "US" "TX" 618 "hurricane"
 
     """
 
@@ -271,7 +271,8 @@ if __name__ == '__main__':
     endyear = sys.argv[4]
     country = sys.argv[5]
     region = sys.argv[6]
-    keywords = sys.argv[7:]  # must be a list
+    city = sys.argv[7]
+    keywords = sys.argv[8:]  # must be a list
 
     path = '/Users/i852644/Downloads'  #change to Safari's download folder
 
@@ -279,7 +280,7 @@ if __name__ == '__main__':
     if not os.path.exists(path+"/"+scrapings_dir):
         os.makedirs(path+"/"+scrapings_dir)
 
-    ScrapeRange(keywords, str(country), str(region), int(startmonth), int(startyear), int(endmonth), int(endyear))
+    ScrapeRange(keywords, str(country), str(region), str(city), int(startmonth), int(startyear), int(endmonth), int(endyear))
 
     daily_frame = CreateDailyFrame()
     daily_frame.columns = ['Date', 'Daily_Volume']
