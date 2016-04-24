@@ -9,7 +9,7 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/correlated_queries/<event>')
+@app.route('/correlated_queries2/<event>')
 def getCorrelatedQueries(event):
 	url1 = "https://www.google.com/trends/correlate/search?e="
 	url2 = "&t=weekly&p=us&filter="
@@ -31,15 +31,24 @@ def getCorrelatedQueries(event):
 	print correlatedQueries
 	return jsonify(results=correlatedQueries)
 
-@app.route('/correlated_queries/<event>/<correlated_query>')
-def getCorrelatedQueriesPlots(event, correlated_query):
+@app.route('/correlated_queries_plot')
+def getCorrelatedQueriesPlots():
+	args = request.args
+	event = args.get('event')
+	correlated_query = args.get('correlated_query')
+	place = args.get('place')
+	if place is None:
+		place = 'us'
+	print place
 	url1 = "https://www.google.com/trends/correlate/search?e="
 	url2 = "&e="
-	url3 = "&t=weekly&p=us"
+	url3 = "&t=weekly&p="
 	event = event.replace(" ", "+")
 	correlated_query = correlated_query.replace(" ", "+")
-	page =urllib2.urlopen(url1 + event + url2 + correlated_query + url3)
+	page =urllib2.urlopen(url1 + event + url2 + correlated_query + url3 + place)
 	data=page.read()
+	if "series_set = " not in data:
+		return jsonify(series=[])
 	startIndex = data.index("series_set = ") + 13
 	semiColonIndexes = [m.start() for m in re.finditer(';', data)]
 	for thisIndex in semiColonIndexes:
@@ -50,14 +59,7 @@ def getCorrelatedQueriesPlots(event, correlated_query):
 	for thisSeries in dataJson["series"]:
 		for thisPoint in thisSeries["point"]:
 			del thisPoint['place_id']
-			print thisPoint
 	return jsonify(series=dataJson["series"])
-
-@app.route('/test')
-def test():
-	args = request.args
-	print args
-	return jsonify("")
 
 if __name__ == '__main__':
     app.run(debug=True)
