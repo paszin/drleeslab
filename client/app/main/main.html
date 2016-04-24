@@ -19,32 +19,30 @@
 
   </div>
 
-    <!-- sentiment twitter -->
-    <div>
-    <md-card>
-        <md-toolbar class="md-warn">
-        <div class="md-toolbar-tools">
-          <h2 class="md-flex">How people feel</h2>
-        </div>
-      </md-toolbar>
-        Twitter sentiment analysis
+   <div>
+          <md-card>
+              <md-toolbar>
+                  <div class="md-toolbar-tools md-warn">
+            <h2 class="md-flex">How People Feel</h2>
+                  </div>
+        </md-toolbar>
+        <md-content>
+            Twitter Sentiment Analysis
+          <div class="twitterChart">
+            <nvd3 options="twiiterOptions" data="twiiterData"></nvd3>
+          </div>
+        </md-content>
+      </md-card>
+  </div>
 
-        {{sentiment}}
-        {{sentimentData}}
 
 
-        </md-card>
-    </div>    
-    
-    
-    
-    
   <div class="eventWords">
     <md-content class="eventWordsCloud md-padding">
       <md-card>
        <md-toolbar class="md-warn">
         <div class="md-toolbar-tools">
-          <h2 class="md-flex">How people react</h2>
+          <h2 class="md-flex">How People React</h2>
         </div>
       </md-toolbar>
           Google Trends
@@ -74,6 +72,7 @@
   </div>
     
     
+    
     <div flex="40" class="eventChart">
     <div class="column md-padding">
       <md-toolbar class="md-warn">
@@ -95,67 +94,3 @@
 
 </div>
 
-
-
-<!--
-
-
-  <div flex="60" class="eventInfo">
-    <md-content class="md-padding" layout-xs="column" layout="row">
-      <div flex-xs="" flex-gt-xs="50" layout="column">
-        <md-card>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">Event Description</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-actions layout="row" layout-align="start center">
-            <md-icon md-font-set="material-icons">location_searching</md-icon>
-            <md-button flex="40">51.3987223</md-button>
-            <md-button flex="40">43.3874982</md-button>
-          </md-card-actions>
-          <md-card-content>
-            <p>
-              The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-              two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-            </p>
-          </md-card-content>
-        </md-card>
-        <md-card>
-          <img ng-src="{{sceneImgPath}}" class="md-card-image" alt="Washed Out">
-          <md-card-actions layout="row" layout-align="start center">
-          <md-card-content>
-            <p>The titles of Washed Out's breakthrough song and the first single from Paracosm share the  </p>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div flex-xs="" flex-gt-xs="50" layout="column">
-        <md-card>
-          <img ng-src="{{satImgPath}}" class="md-card-image" alt="Washed Out">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">In-card actions</span>
-              <span class="md-subhead">Description</span>
-            </md-card-title-text>
-          </md-card-title>
-
-          <md-card-content>
-            <p>
-              The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-              two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-            </p>
-          </md-card-content>
-        </md-card>
-        <md-card>
-          <md-card-content>
-            <p>
-              The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-            </p>
-          </md-card-content>
-        </md-card>
-      </div>
-    </md-content>
-
-
-
-  -->

@@ -32,7 +32,12 @@ def browser_headers(f):
         return f(*args, **kwargs)
     return decorated_function
 
-
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 @app.route('/')
 def hello_world():
@@ -46,6 +51,11 @@ def getCorrelatedQueries():
 	place = args.get('place')
 	if place is None:
 		place = 'us'
+	limit = args.get('limit')
+	if not RepresentsInt(limit):
+		return jsonify(success="fail", message="limit is not integer")
+	if int(limit) < 0:
+		return jsonify(success="fail", message="limit must be bigger than 0")
 	url1 = "https://www.google.com/trends/correlate/search?e="
 	url2 = "&t=weekly&p=" + place + "&filter="
 	event = event.replace(" ", "+")
@@ -54,7 +64,11 @@ def getCorrelatedQueries():
 	resultIndexes = [m.start() for m in re.finditer('<li class="result', data)]
 	correlatedQueries = []
 	endIndex = -1
-	for i in range(0, len(resultIndexes)-1):
+	count = 0
+	maxRange = len(resultIndexes)-1
+	if limit is not None:
+		maxRange = int(limit)
+	for i in range(0, maxRange):
 		thisData = data[resultIndexes[i]:resultIndexes[i+1]]
 		startIndex = thisData.index('event="') + 7
 		semiColonIndexes = [z.start() for z in re.finditer('"', thisData)]

@@ -16,7 +16,6 @@ angular.module('spaceappsApp')
     $scope.imagePath = "assets/images/" + imageLookup[event.id];
 
         //GET TWITTER
-
         $scope.sentiment = 0
         $scope.sentimentData = {};
     console.log(twitter + twitterLookup[event.id]);
@@ -29,12 +28,27 @@ angular.module('spaceappsApp')
                 $scope.sentimentData[""+tweet.sentiment.score] += 1;
             });
             $scope.sentiment = ($scope.sentiment/data.length)/8*100;
+
+            $scope.twiiterData = [];
+            var twiData = {};
+            twiData.key = "Cumulative Return";
+            twiData.values = [];
+
+            for(var d in $scope.sentimentData){
+                var newData = {};
+                newData.label = d;
+                newData.value = $scope.sentimentData[d];
+                twiData.values.push(newData);
+            };
+            $scope.twiiterData.push(twiData);
+            console.log($scope.twiiterData);
         });
 
         //GET TRENDS
         //clean event title
         var title = event.title.split(",")[0];
-        var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us&limit=15";
+
+        var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us&limit=40";
         $http.get(trendsUrl).success(function(result) {
 
                       var keywords = result.results;
@@ -42,16 +56,46 @@ angular.module('spaceappsApp')
                 
                   d3.layout.cloud().size([cloudCardWid, 300])
                     .words(keywords.map(function(d, i) {
-                      return {text: d, size: 0.3*i};
+                      return {text: d, size: 0.3*i+1};
                     }))
                      .rotate(function() { return 0;})
                      .font("Impact")
                      .fontSize(function(d) { return d.size; })
                      .on("end", draw)
                      .start();
+        });// Draw words cloud
 
-        });
-      });
+        console.log($scope.sentiment);
+        console.log($scope.sentimentData);
+        // debugger;
+        $scope.twiiterOptions = {
+                chart: {
+                    type: 'discreteBarChart',
+                    height: 450,
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value + (1e-10);},
+                    showValues: true,
+                    valueFormat: function(d){
+                        return d3.format(',.4f')(d);
+                    },
+                    duration: 500,
+                    xAxis: {
+                        axisLabel: 'X Axis'
+                    },
+                    yAxis: {
+                        axisLabel: 'Y Axis',
+                        axisLabelDistance: -10
+                    }
+                }
+            };
+
+      }); // $scope.sentiment
 
     $scope.options = {
             chart: {
@@ -97,7 +141,7 @@ angular.module('spaceappsApp')
             }
         };
     // Code for loading JSON files
-    $http.get('./app/main/sources/two_metric.csv').success(function(history){
+    $http.get('./app/main/sources/three_metric.csv').success(function(history){
         var data = d3.csv.parse(history);
         // console.log(data);
         var headList = Object.keys(data[0]);
@@ -134,10 +178,8 @@ angular.module('spaceappsApp')
         console.log(data[0]);
         console.log(nestData);
         $scope.data  = nestData;
-        // var nestData = d3.nest().key(function(d){
-        //     return d
-        // })
-    });
+    }); // create data for line chart
+
   }) // angular.controller
   .directive('myDirective', function($timeout) {
     return {
@@ -148,8 +190,8 @@ angular.module('spaceappsApp')
         }
     };
   });
-
-
+  // .controller('chartController', function($scope, $scope){
+ // Draw words cloud
  function draw(words) {
    var fill = d3.scale.category20();
 
