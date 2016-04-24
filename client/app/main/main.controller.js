@@ -7,7 +7,7 @@ angular.module('spaceappsApp')
 
     var twitter = "http://nodetest123.mybluemix.net/";
     var imageLookup = {"EONET_368": "houston_flood_image.jpg", "katrina": "katrina_2009.jpg"};
-    var twitterLookup = {"EONET_368": "houstonflood"};
+    var twitterLookup = {"EONET_368": "houstonflood", "EONET_56": "fuego_volcano_all"};
 
     var eventUrl = $location.search()["link"];
     $http.get(eventUrl).success(function(event) {
@@ -19,6 +19,7 @@ angular.module('spaceappsApp')
 
         $scope.sentiment = 0
         $scope.sentimentData = {};
+    console.log(twitter + twitterLookup[event.id]);
         $http.get(twitter + twitterLookup[event.id]).success(function(data) {
             data.forEach(function(tweet) {
                 $scope.sentiment += tweet.sentiment.score+4;
@@ -33,17 +34,17 @@ angular.module('spaceappsApp')
         //GET TRENDS
         //clean event title
         var title = event.title.split(",")[0];
-        var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us";
+        var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us&limit=15";
         $http.get(trendsUrl).success(function(result) {
 
                       var keywords = result.results;
                       console.log(keywords);
-
+                
                   d3.layout.cloud().size([cloudCardWid, 300])
-                    .words(keywords.map(function(d) {
-                      return {text: d, size: 10 + Math.random() * 50};
+                    .words(keywords.map(function(d, i) {
+                      return {text: d, size: 0.3*i};
                     }))
-                     .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                     .rotate(function() { return 0;})
                      .font("Impact")
                      .fontSize(function(d) { return d.size; })
                      .on("end", draw)
@@ -51,9 +52,6 @@ angular.module('spaceappsApp')
 
         });
       });
-
-    $scope.satImgPath = "app/main/sources/houston_flood_image.jpg";
-    $scope.sceneImgPath = "app/main/sources/katrina_2009.jpg";
 
     $scope.options = {
             chart: {

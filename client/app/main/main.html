@@ -34,26 +34,11 @@
 
 
         </md-card>
-    </div>
-
-
-
-
-
-
-
-  <div flex="40" class="eventChart">
-    <div class="column md-padding">
-      <md-toolbar class="md-warn">
-        <div class="md-toolbar-tools">
-          <h2 class="md-flex">History Trend Data</h2>
-        </div>
-      </md-toolbar>
-      <md-content>
-        <nvd3 options="options" data="data"></nvd3>
-      </md-content>
-    </div>
-  </div>
+    </div>    
+    
+    
+    
+    
   <div class="eventWords">
     <md-content class="eventWordsCloud md-padding">
       <md-card>
@@ -70,8 +55,43 @@
         </md-card-content>
       </md-card>
     </md-content>
-
   </div>
+    
+    
+    <!--WEATHER-->
+    
+  <div flex="40" class="eventChart">
+    <div class="column md-padding">
+      <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">History Trend Data</h2>
+        </div>
+      </md-toolbar>
+      <md-content>
+        <nvd3 options="options" data="data"></nvd3>
+      </md-content>
+    </div>
+  </div>
+    
+    
+    <div flex="40" class="eventChart">
+    <div class="column md-padding">
+      <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">Contribute</h2>
+        </div>
+      </md-toolbar>
+      <md-content>
+          <p>Add some content, so that other people can explore the social impact of this event</p>
+        <md-input-container>
+        <label>Paste url here</label>
+        <input ng-model="share" type="">
+      </md-input-container>
+          <md-button ng-click="share=''">submit</md-button>
+      </md-content>
+    </div>
+  </div>
+    
 
 </div>
 
