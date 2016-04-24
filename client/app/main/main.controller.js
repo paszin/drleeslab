@@ -2,11 +2,23 @@
 
 angular.module('spaceappsApp')
   .controller('MainCtrl', function ($scope, $http) {
+
+    var events = "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000";
+
+    $http.get(events).success(function(api) {
+      $scope.events = api.events;
+    });
+
+    $scope.events = [];
+
+    $http.get('http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000').success(function(api) {
+      $scope.events = api.events;
+    });
+    
     $scope.awesomeThings = [];
 
     $scope.imagePath = "app/main/sample.png";
 
-    // $scope.hello = "hello world";
     $scope.options = {
             chart: {
                 type: 'cumulativeLineChart',
@@ -58,8 +70,6 @@ angular.module('spaceappsApp')
                 ,
                 mean: -60
             },
-
-
             {
                 key: "Gross",
                 mean: 125,
@@ -76,6 +86,8 @@ angular.module('spaceappsApp')
       console.log(awesomeThings);
       $scope.awesomeThings = awesomeThings;
     });
+
+
 
     $scope.getColor = function($index) {
       var _d = ($index + 1) % 11;
