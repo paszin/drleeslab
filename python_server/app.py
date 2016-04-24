@@ -1,4 +1,4 @@
-from flask import Flask,jsonify
+from flask import Flask,jsonify, make_response
 import urllib2
 import re
 import json
@@ -46,9 +46,12 @@ def getCorrelatedQueriesPlots(event, correlated_query):
 		if (thisIndex > startIndex):
 			endIndex = thisIndex
 			break
-	#print data[startIndex:endIndex]
-	print data[startIndex:endIndex]['series']
-	return data[startIndex:endIndex]
+	dataJson = json.loads(data[startIndex:endIndex])
+	for thisSeries in dataJson["series"]:
+		for thisPoint in thisSeries["point"]:
+			del thisPoint['place_id']
+			print thisPoint
+	return jsonify(series=dataJson["series"])
 
 if __name__ == '__main__':
     app.run(debug=True)
