@@ -1,6 +1,85 @@
 <div ng-include="'components/shell/shell.html'"></div>
 
 <div layout="column" class="md-padding eventstory">
+
+  <div>
+
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+           <span class="md-headline"><h1>{{event.title}}</h1></span>
+              <span class="md-subhead">{{event.description}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media">
+              <img ng-src="{{imagePath}}" alt="sorry we have no image for that"></div>
+          </md-card-title-media>
+        </md-card-title>
+      </md-card>
+
+  </div>
+
+    <!-- sentiment twitter -->
+    <div>
+    <md-card>
+        <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">How people feel</h2>
+        </div>
+      </md-toolbar>
+        Twitter sentiment analysis
+
+        {{sentiment}}
+        {{sentimentData}}
+
+
+        </md-card>
+    </div>
+
+
+
+
+
+
+
+  <div flex="40" class="eventChart">
+    <div class="column md-padding">
+      <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">History Trend Data</h2>
+        </div>
+      </md-toolbar>
+      <md-content>
+        <nvd3 options="options" data="data"></nvd3>
+      </md-content>
+    </div>
+  </div>
+  <div class="eventWords">
+    <md-content class="eventWordsCloud md-padding">
+      <md-card>
+       <md-toolbar class="md-warn">
+        <div class="md-toolbar-tools">
+          <h2 class="md-flex">How people react</h2>
+        </div>
+      </md-toolbar>
+          Google Trends
+        <md-card-content my-directive>
+          <div id="d3WordCloud">
+
+          </div>
+        </md-card-content>
+      </md-card>
+    </md-content>
+
+  </div>
+
+</div>
+
+
+
+<!--
+
+
   <div flex="60" class="eventInfo">
     <md-content class="md-padding" layout-xs="column" layout="row">
       <div flex-xs="" flex-gt-xs="50" layout="column">
@@ -32,15 +111,6 @@
       </div>
       <div flex-xs="" flex-gt-xs="50" layout="column">
         <md-card>
-          <!-- <md-card-header>
-            <md-card-avatar>
-              <md-icon class="md-avatar-icon" md-svg-icon="img/icons/menu.svg"></md-icon>
-            </md-card-avatar>
-            <md-card-header-text>
-              <span class="md-title">Title</span>
-              <span class="md-subhead">subhead</span>
-            </md-card-header-text>
-          </md-card-header> -->
           <img ng-src="{{satImgPath}}" class="md-card-image" alt="Washed Out">
           <md-card-title>
             <md-card-title-text>
@@ -48,10 +118,7 @@
               <span class="md-subhead">Description</span>
             </md-card-title-text>
           </md-card-title>
-          <!-- <md-card-actions layout="row" layout-align="start center">
-            <md-button>Action 1</md-button>
-            <md-button>Action 2</md-button>
-          </md-card-actions> -->
+
           <md-card-content>
             <p>
               The titles of Washed Out's breakthrough song and the first single from Paracosm share the
@@ -68,41 +135,7 @@
         </md-card>
       </div>
     </md-content>
-  </div>
-  <div flex="40" class="eventChart">
-    <div class="column md-padding">
-      <md-toolbar class="md-warn">
-        <div class="md-toolbar-tools">
-          <h2 class="md-flex">History Trend Data</h2>
-        </div>
-      </md-toolbar>
-      <md-content>
-        <nvd3 options="options" data="data"></nvd3>
-      </md-content>
-    </div>
-  </div>
-  <div class="eventWords">
-    <md-content class="eventWordsCloud md-padding">
-      <md-card>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">Events Cloud</span>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content my-directive>
-          <div id="d3WordCloud">
 
-          </div>
-        </md-card-content>
-      </md-card>
-    </md-content>
-    <md-content class="eventWordsList">
-      <md-list>
-        <md-list-item ng-repeat="event in events | limitTo: 10">
-            <p>{{event.title}} </p>
-        </md-list-item>
-      </md-list>
-    </md-content>
-  </div>
 
-</div>
+
+  -->
