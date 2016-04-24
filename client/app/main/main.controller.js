@@ -10,13 +10,26 @@ angular.module('spaceappsApp')
     var eventUrl = $location.search()["link"];
     $http.get(eventUrl).success(function(event) {
       $scope.event = event;
-        var trendsUrl = "http://localhost:5000/correlated_queries?event=" + event.title + "&place=us";
+        //clean event title
+        var title = event.title.split(",")[0];
+        var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us";
         $http.get(trendsUrl).success(function(result) {
-            debugger;
+            var keywords = result.results;
+            console.log(keywords);
+
+        d3.layout.cloud().size([cloudCardWid, 300])
+          .words(keywords.map(function(d) {
+            return {text: d, size: 10 + Math.random() * 50};
+          }))
+           .rotate(function() { return ~~(Math.random() * 2) * 90; })
+           .font("Impact")
+           .fontSize(function(d) { return d.size; })
+           .on("end", draw)
+           .start();
+    });
             
         });
     
-    });
     
     //get trends
     
@@ -98,45 +111,6 @@ angular.module('spaceappsApp')
         ];
 
 
-    var keywords = [];
-    // Code for loading JSON files
-    $http.get('./app/main/keywords.json').success(function(json_data){
-        keywords = json_data['results'];
-        console.log(keywords);
-
-        d3.layout.cloud().size([cloudCardWid, 300])
-          .words(keywords.map(function(d) {
-            return {text: d, size: 10 + Math.random() * 50};
-          }))
-           .rotate(function() { return ~~(Math.random() * 2) * 90; })
-           .font("Impact")
-           .fontSize(function(d) { return d.size; })
-           .on("end", draw)
-           .start();
-    });
-
-    $scope.getColor = function($index) {
-      var _d = ($index + 1) % 11;
-      var bg = '';
-
-      switch(_d) {
-        case 1:       bg = 'red';         break;
-        case 2:       bg = 'green';       break;
-        case 3:       bg = 'darkBlue';    break;
-        default:      bg = 'yellow';      break;
-      }
-
-      return bg;
-    };
-
-    $scope.getSpan = function($index) {
-      var _d = ($index + 1) % 11;
-      if (_d === 1 || _d === 5) {  return 2;  }
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
   }) // angular.controller
   .directive('myDirective', function($timeout) {
     return {
