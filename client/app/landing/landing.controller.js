@@ -41,9 +41,18 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
                   lat = natureevent.geometries[0].coordinates[1]; 
                   lng = natureevent.geometries[0].coordinates[0]; 
             }
-              $scope.openEvents.push({message: natureevent.title, layer: "natureevents", lat: lat, lng: lng});    
-              
-              
+              $scope.openEvents.push({message: natureevent.title, layer: "natureevents", lat: lat, lng: lng, icon: //{}
+                                      {
+                    iconUrl: 'assets/images/cloud.png',
+                    //shadowUrl: 'img/leaf-shadow.png',
+                    iconSize:     [24, 24], // size of the icon
+                    shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [0, 0],  // the same for the shadow
+                    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+                }
+                
+                                     });    
           }
       });
         
@@ -55,6 +64,15 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
           lng: 0,
           zoom: 2
         },
+        cloudIcon: {
+                    iconUrl: 'assets/images/cloud.png',
+                    //shadowUrl: 'img/leaf-shadow.png',
+                    iconSize:     [38, 38], // size of the icon
+                    shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                },
         markers: $scope.openEvents,
         layers: {
           baselayers: {
@@ -69,7 +87,13 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
             name: 'natureevents',
             type: 'group',
             visible: true
-            }
+            },
+              truecolor: {
+                  name: "Sat",
+                  url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/" +
+        "MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg",
+                  type: "xyz"
+              }
           }
         }
       });
