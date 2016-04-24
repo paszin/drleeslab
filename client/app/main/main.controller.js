@@ -6,10 +6,27 @@ angular.module('spaceappsApp')
   .controller('MainCtrl', function ($scope, $http, $location) {
 
     var events = "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000";
+    var twitter = "http://nodetest123.mybluemix.net/";
+    var imageLookup = {"EONET_368": "houston_flood_image.jpg", "katrina": "katrina_2009.jpg"};
+    var twitterLookup = {"EONET_368": "houstonflood"};
     
     var eventUrl = $location.search()["link"];
     $http.get(eventUrl).success(function(event) {
       $scope.event = event;
+    //image
+    $scope.imagePath = "assets/images/" + imageLookup[event.id];
+        
+        //GET TWITTER
+        
+        $scope.sentiment = 0
+        $http.get(twitter + twitterLookup[event.id]).success(function(data) {
+            data.forEach(function(tweet) {
+                $scope.sentiment += tweet.sentiment.score+4;
+            });
+            $scope.sentiment = ($scope.sentiment/data.length)/8*100;
+        })
+        
+        //GET TRENDS
         //clean event title
         var title = event.title.split(",")[0];
         var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us";
@@ -35,8 +52,6 @@ angular.module('spaceappsApp')
     
     /*http://map1.vis.earthdata.nasa.gov/twms-geo/twms.cgi?request=GetMap&layers=MODIS_Aqua_CorrectedReflectance_TrueColor&srs=EPSG:4326&format=image/jpeg&styles=&time=2016-04-13&width=512&height=512&bbox=-36.00000000,-54.00000000,36.00000000,18.00000000*/
 
-
-    $scope.imagePath = "app/main/sample.png";
 
     $scope.options = {
             chart: {
