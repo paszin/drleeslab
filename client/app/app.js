@@ -7,7 +7,8 @@ angular.module('spaceappsApp', [
   'ngAnimate',
   'ngMessages',
   'ui.router',
-  'ngMaterial'
+  'ngMaterial',
+  'leaflet-directive', // including leaflet.js library.
 ])
   .config(function($mdIconProvider) {
     $mdIconProvider
