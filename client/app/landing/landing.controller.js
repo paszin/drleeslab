@@ -25,7 +25,9 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', function ($scope, $http)
     });
     
      $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {
-                $scope.info = args.model.message;
+        $scope.info = args.model.message;
+        $location.path('/event');
+        $location.search('link', args.model.data.link);
         });
     
     $scope.$on('leafletDirectiveMarker.mymap.mouseover', function (e, args) {

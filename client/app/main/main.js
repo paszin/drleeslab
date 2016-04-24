@@ -4,7 +4,7 @@ angular.module('spaceappsApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {
-        url: '/',
+        url: '/event',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });

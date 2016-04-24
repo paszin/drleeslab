@@ -33,7 +33,7 @@ angular.module('spaceappsApp', [
   })
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
-      .otherwise('/');
+      .otherwise('/landing');
 
     $locationProvider.html5Mode(true);
   });

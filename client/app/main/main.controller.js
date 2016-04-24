@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('spaceappsApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, $location) {
 
     var events = "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000";
+    
+    var eventUrl = $location.search()["link"];
+    $http.get(eventUrl).success(function(api) {
+      $scope.event = api.event;
+    });
 
     $http.get(events).success(function(api) {
       $scope.events = api.events;
