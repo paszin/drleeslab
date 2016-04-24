@@ -20,21 +20,27 @@
   </div>
 
     <!-- sentiment twitter -->
-    <div>
+  <div>
     <md-card>
         <md-toolbar class="md-warn">
-        <div class="md-toolbar-tools">
-          <h2 class="md-flex">How people feel</h2>
-        </div>
-      </md-toolbar>
-        Twitter sentiment analysis
-
-        {{sentiment}}
-        {{sentimentData}}
-
-
-        </md-card>
-    </div>
+          <div class="md-toolbar-tools">
+            <h2 class="md-flex">How people feel</h2>
+          </div>
+        </md-toolbar>
+        <md-content>
+          Twitter sentiment analysis:
+          <p>
+            {{sentiment}}
+            : {{sentimentData}}
+          </p>
+        </md-content>
+        <md-content>
+          <div class="twitterChart">
+            <nvd3 options="twiiterOptions" data="twiiterData"></nvd3>
+          </div>
+        </md-content>
+      </md-card>
+  </div>
 
 
 
