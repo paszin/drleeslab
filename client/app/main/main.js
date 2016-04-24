@@ -8,4 +8,5 @@ angular.module('spaceappsApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
+
   });
