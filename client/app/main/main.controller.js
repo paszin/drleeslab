@@ -5,6 +5,13 @@ angular.module('spaceappsApp')
     $scope.awesomeThings = [];
 
     // $scope.hello = "hello world";
+    
+    $scope.events = [];
+    
+    $http.get('http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=closed&limit=900&days=5000').success(function(api) {
+      $scope.events = api.events;
+    });
+
 
     $http.get('/api/things').success(function(awesomeThings) {
       console.log(awesomeThings);

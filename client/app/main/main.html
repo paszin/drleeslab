@@ -1,5 +1,15 @@
 <div ng-include="'components/shell/shell.html'"></div>
 
+<md-list>
+
+<md-list-item ng-repeat="event in events">
+    {{event.title}}
+    </md-list-item>
+
+</md-list>
+
+<!--
+
 <md-grid-list class="things-list" md-cols-sm="1" md-cols-md="2" md-cols-gt-md="5"
         md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
     <md-grid-tile ng-repeat="thing in awesomeThings" ng-class="getColor($index)" md-rowspan="{{getSpan($index)}}"
@@ -9,3 +19,4 @@
     <md-grid-tile-footer><h3>{{thing.name}}</h3></md-grid-tile-footer>
   </md-grid-tile>
 </md-grid-list>
+-->
