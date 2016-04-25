@@ -40,11 +40,12 @@ def RepresentsInt(s):
         return False
     
 @app.route('/')
+@browser_headers
 def hello_world():
     return 'Hello World!'
 
-@browser_headers
 @app.route('/correlated_queries')
+@browser_headers
 def getCorrelatedQueries():
 	args = request.args
 	event = args.get('event')
@@ -79,8 +80,8 @@ def getCorrelatedQueries():
 	return jsonify(results=correlatedQueries)
 
 
-@browser_headers
 @app.route('/correlated_queries_plot')
+@browser_headers
 def getCorrelatedQueriesPlots():
 	args = request.args
 	event = args.get('event')
