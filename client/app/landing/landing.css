@@ -8,3 +8,10 @@
   font-size: 18px;
   font-weight: bold;
 }
+
+.profile-avatar {
+    border-radius: 50%;
+    margin-top: 15px;
+    height: 40px;
+    width: 40px;
+}

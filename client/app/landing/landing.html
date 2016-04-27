@@ -1,10 +1,11 @@
-<div ng-include="'components/shell/shell.html'"></div>
+<shell>
+    <md-button ng-show="!isLoggedIn" ng-click="login()"><i class="fa fa-facebook-official"></i> connect with facebook</md-button>
+    <img layout-margin ng-click="logout()" class="profile-avatar" ng-show="isLoggedIn" ng-src="{{user.picture.data.url}}">
+</shell>
 <div layout="column">
-  <!-- <div class="mapintro" flex = "10"> -->
-    <div class="map"  flex = "80">
-      <leaflet id="mymap" lf-center="center" height="60vh" width="100%" markers="markers" layers="layers"></leaflet>
+    <div class="map">
+      <leaflet id="mymap" lf-center="center" height="60vh" width="100%" markers="markers" layers="layers" paths="paths"></leaflet>
     </div>
-
     <div class="md-padding"  flex = "20" id="latestEvent">
       <h2>Latest Events</h2>
       <md-content layout="row">
@@ -24,5 +25,7 @@
           </md-card>
         </md-content>
     </div>
+    
+    <md-button ng-click="login()">login</md-button>
 
 </div>
