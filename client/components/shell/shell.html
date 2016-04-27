@@ -1,16 +1,29 @@
 <div ng-controller="ShellCtrl" class="main-shell">
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-    <md-toolbar class="md-tall md-accent">
-
+    <md-toolbar class="md-tall md-accent column">
+        <div class="md-toolbar-tools">
+            <div class="userImg" style=" width: 100px; height: 100px; overflow: hidden; padding: 10px; background-image: url('app/landing/sample.png'); background-size: cover; border-radius: 50px; background-position-x: 40%; float: right; margin-top: 60px; margin-right: 20px;"></div>
+            <span flex> {{userInfo.who}} </span> 
+        </div>
     </md-toolbar>
     <md-content layout-padding>
-
+        <md-list layout-padding="">
+            <md-list-item class="md-3-line" ng-repeat="message in messages">
+                <img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">
+                <div class="md-list-item-text">
+                  <h3>{{message.what}}</h3>
+                  <h4>{{message.who}}</h4>
+                </div>
+            </md-list-item>
+          </md-list>
     </md-content>
   </md-sidenav>
+  
   <md-toolbar>
     <div class="md-toolbar-tools">
       <md-button ng-click="toggleLeft()" class="md-icon-button" aria-label="Settings">
-        <md-icon md-svg-icon="assets/icons/menu.svg"></md-icon>
+<!--        <md-icon md-svg-icon="assets/icons/menu.svg"></md-icon>-->
+            <md-icon class="material-icons">account_circle</md-icon>
       </md-button>
       <h2>
           <span><a href="/">Earth Care</a></span>
@@ -33,12 +46,14 @@
               Redial
             </md-button>
           </md-menu-item>
+<!--
           <md-menu-item>
             <md-button disabled="disabled" ng-click="checkVoicemail()">
               <md-icon md-svg-icon="communication:voicemail"></md-icon>
               Check voicemail
             </md-button>
           </md-menu-item>
+-->
           <md-menu-item>
             <md-button ng-click="toggleNotifications()">
               <md-icon md-svg-icon="social:notifications{{notificationsEnabled ? '_off' : ''}}"></md-icon>

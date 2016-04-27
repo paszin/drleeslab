@@ -4,23 +4,33 @@ var cloudCardWid;
 
 angular.module('spaceappsApp')
   .controller('MainCtrl', function ($scope, $http, $location) {
+    
+    $scope.center = {};
+    $scope.tiles = {};
+    $scope.tiles.url = "";
 
     var twitter = "http://nodetest123.mybluemix.net/";
     var imageLookup = {"EONET_368": "houston_flood_image.jpg", "katrina": "katrina_2009.jpg"};
     var twitterLookup = {"EONET_368": "houstonflood", "EONET_56": "fuego_volcano_all"};
 
     var eventUrl = $location.search()["link"];
+    
     $http.get(eventUrl).success(function(event) {
-      $scope.event = event;
-    //image
-    $scope.imagePath = "assets/images/" + imageLookup[event.id];
+        console.log(event);
+        $scope.event = event;
+        
+        drawRealTimeMap($scope, event);
+        
+        //image
+        $scope.imagePath = "assets/images/" + imageLookup[event.id];
 
         //GET TWITTER
         $scope.sentiment = 0
         $scope.sentimentData = {};
-    console.log(twitter + twitterLookup[event.id]);
-        $http.get(twitter + twitterLookup[event.id]).success(function(data) {
-            data.forEach(function(tweet) {
+        console.log(twitter + twitterLookup[event.id]);
+        
+        $http.get(twitter + twitterLookup[event.id]).then(function successCallback(response) {
+            response.data.forEach(function(tweet) {
                 $scope.sentiment += tweet.sentiment.score+4;
                 if (!$scope.sentimentData.hasOwnProperty(""+tweet.sentiment.score)) {
                     $scope.sentimentData[""+tweet.sentiment.score] = 0;
@@ -47,6 +57,11 @@ angular.module('spaceappsApp')
 
             $scope.twiiterData.push(twiData);
             console.log($scope.twiiterData);
+            
+//             drawRealTimeMap($scope, event);
+        }, function errorCallback(response) { // called asynchronously if an error occurs
+            // or server returns response with an error status.
+
         });
 
         //GET TRENDS
@@ -56,18 +71,19 @@ angular.module('spaceappsApp')
         var trendsUrl = "http://localhost:5000/correlated_queries?event=" + title + "&place=us&limit=40";
         $http.get(trendsUrl).success(function(result) {
 
-                      var keywords = result.results;
-                      console.log(keywords);
-                
-                  d3.layout.cloud().size([cloudCardWid, 300])
-                    .words(keywords.map(function(d, i) {
-                      return {text: d, size: 0.3*i+1};
-                    }))
-                     .rotate(function() { return 0;})
-                     .font("Impact")
-                     .fontSize(function(d) { return d.size; })
-                     .on("end", draw)
-                     .start();
+          var keywords = result.results;
+          console.log(keywords);
+
+          d3.layout.cloud().size([cloudCardWid, 300])
+                .words(keywords.map(function(d, i) {
+                  return {text: d, size: 2.2*i+1};
+                }))
+             .rotate(function() { return 0;})
+             .font("Impact")
+             .fontSize(function(d) { return d.size; })
+             .on("end", draw)
+             .start();
+            
         });// Draw words cloud
 
         console.log($scope.sentiment);
@@ -135,6 +151,7 @@ angular.module('spaceappsApp')
                 }
             }
         };
+    
     // Code for loading JSON files
     $http.get('./app/main/sources/three_metric.csv').success(function(history){
         var data = d3.csv.parse(history);
@@ -184,9 +201,69 @@ angular.module('spaceappsApp')
             cloudCardWid = element[0].offsetWidth - 16*2;
         }
     };
-  });
-  // .controller('chartController', function($scope, $scope){
- // Draw words cloud
+  })
+//.controller('chartController', function($scope, $scope){
+//     
+//};
+ 
+function drawRealTimeMap($scope, event){
+    console.log(event.geometries[0].coordinates[0][0]);
+    var curLng = event.geometries[0].coordinates[0][1][0],
+        curLat = event.geometries[0].coordinates[0][1][1];
+    angular.extend($scope, {
+        center: {
+          lat: curLat,
+          lng: curLng,
+          zoom: 8
+        }, tiles: {
+            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        },
+        defaults: {
+            zoomAnimation: false,
+            markerZoomAnimation: false,
+            fadeAnimation: false
+        },
+        markers: {
+            center: {
+              lat: curLat,
+              lng: curLng,
+                focus: true,
+                draggable: false,
+                message: "<b>" + event.title + "</b>."
+            }
+        }
+//        layers: {
+//          baselayers: {
+//            osm: {
+//              name: 'OpenStreetMap',
+//              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//              type: 'xyz'
+//            },
+//          },
+//          overlays:{
+//            natureevents: {
+//            name: 'rainfalls',
+//            type: 'group',
+//            visible: true
+//            },
+//              truecolor: {
+//                  name: "Sat",
+//                  url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/" +
+//        "MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg",
+//                  type: "xyz"
+//              } 
+//          }
+//        }
+      });
+    
+        $scope.$watch("center.zoom", function(zoom) {
+            $scope.tiles.url = (zoom > 12)
+                    ? "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    : "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+        });
+}
+
+// Draw words cloud
  function draw(words) {
    var fill = d3.scale.category20();
 

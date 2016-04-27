@@ -20,8 +20,6 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', '$location', function ($
         });
                                                
         console.log("Earthquakes", points.length);
-      
-        
     });
     
      $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {
@@ -42,7 +40,7 @@ map_basic.controller('LandingCtrl',[ '$scope', '$http', '$location', function ($
     
     $http.get('http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000').success(function(api) {
         $scope.openEventsList = api.events;
-      api.events.forEach(function(natureevent) {
+        api.events.forEach(function(natureevent) {
           var lat, lng;
           if (!!natureevent.geometries && natureevent.geometries.length > 0 && !!natureevent.geometries[0].coordinates && natureevent.geometries[0].coordinates.length > 0) {
 
