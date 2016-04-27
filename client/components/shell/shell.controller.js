@@ -49,7 +49,7 @@ angular.module('spaceappsApp')
       });
     };
     
-    var imagePath = 'app/landing/sample.png';
+    var imagePath = 'assets/images/sample.png';
     $scope.userInfo = {
         face: imagePath,
         who: "John Done"
