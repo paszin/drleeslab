@@ -136,7 +136,7 @@ angular.module('spaceappsApp')
             }
         };
     // Code for loading JSON files
-    $http.get('./app/main/sources/three_metric.csv').success(function(history){
+    $http.get('./app/main/sources/three_metric_new.csv').success(function(history){
         var data = d3.csv.parse(history);
         // console.log(data);
         var headList = Object.keys(data[0]);
