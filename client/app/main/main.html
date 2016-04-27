@@ -4,11 +4,12 @@
 
   <div>
 
+<!--
       <md-card>
         <md-card-title>
           <md-card-title-text>
-           <span class="md-headline"><h1>{{event.title}}</h1></span>
-              <span class="md-subhead">{{event.description}}</span>
+           <span class="md-headline"><h2>{{event.title}}</h2></span>
+              <span class="md-subhead" ng-show="event.description">{{event.description}}</span>
           </md-card-title-text>
           <md-card-title-media>
             <div class="md-media-lg card-media">
@@ -16,15 +17,29 @@
           </md-card-title-media>
         </md-card-title>
       </md-card>
-
+-->
+      <span class="md-title"><h2>{{event.title}}</h2></span>
   </div>
+    
+     <div class="map">
+        <md-card>
+          <md-toolbar>
+              <div class="md-toolbar-tools md-warn">
+                <h3 class="md-flex">Real-time rain fall heatmap</h3>
+              </div>
+        </md-toolbar>
+        <md-content>
+          <leaflet id="rainfallmap" lf-center="center" tiles="tiles" markers="markers" height="60vh" width="100%"></leaflet>  
+        </md-content>
+      </md-card>
+    </div><!--Map with icons-->
 
    <div>
-          <md-card>
-              <md-toolbar>
-                  <div class="md-toolbar-tools md-warn">
-            <h2 class="md-flex">How People Feel</h2>
-                  </div>
+      <md-card>
+          <md-toolbar>
+              <div class="md-toolbar-tools md-warn">
+                <h2 class="md-flex">How People Feel</h2>
+              </div>
         </md-toolbar>
         <md-content>
             Twitter Sentiment Analysis
@@ -34,8 +49,6 @@
         </md-content>
       </md-card>
   </div>
-
-
 
   <div class="eventWords">
     <md-content class="eventWordsCloud md-padding">
@@ -69,10 +82,7 @@
         <nvd3 options="options" data="data"></nvd3>
       </md-content>
     </div>
-  </div>
-    
-    
-    
+  </div> 
     
     <div class="column md-padding">
       <md-toolbar class="md-warn">
