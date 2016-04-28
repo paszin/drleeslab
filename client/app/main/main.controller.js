@@ -3,15 +3,51 @@
 var cloudCardWid;
 
 angular.module('spaceappsApp')
-  .controller('MainCtrl', function ($scope, $http, $location) {
-    
+  .controller('MainCtrl', function ($scope, $http, $location, $interval) {
+
     $scope.center = {};
+    $scope.layers = {};
     $scope.tiles = {};
     $scope.tiles.url = "";
+    $scope.twitterSentimentDataAll = [];
 
     var twitter = "http://nodetest123.mybluemix.net/";
     var imageLookup = {"EONET_368": "houston_flood_image.jpg", "katrina": "katrina_2009.jpg"};
     var twitterLookup = {"EONET_368": "houstonflood", "EONET_56": "fuego_volcano_all"};
+
+    //TWITTER SENTIMENT
+    var twitterSentimentUrl = "http://localhost:5000/twitter_sentiment?query=";
+
+    function getTwitterSentimentData(searchterm) {
+        $http.get(twitterSentimentUrl + searchterm).then(function(resp) {
+            $scope.twitterSentimentDataAll = resp.data.result;
+            $interval(function() {
+                c += 1;
+                getTwitterSentiment(["2016-04-20", "2016-04-22"][c%2]);
+            }, 1000);
+        });
+    }
+
+    function getTwitterSentiment(date) {
+        var extractedData = _.find($scope.twitterSentimentDataAll, {date: date});
+        $scope.twitterSentimentData = [
+            {
+                key: "positive",
+                y: extractedData.positive
+            },
+            {
+                key: "neutral",
+                y: extractedData.neutral
+            },
+            {
+                key: "negativ",
+                y: extractedData.negative
+            }
+        ];
+    }
+    var c = 0;
+    getTwitterSentimentData("houstonflood");
+
 
     var eventUrl = $location.search()["link"];
 
@@ -21,6 +57,8 @@ angular.module('spaceappsApp')
 
         drawRealTimeMap($scope, event);
 
+//        drawRealTimeMap($scope, event);
+        drawMapboxHeatMap($scope, $http, event);
         //image
         $scope.imagePath = "assets/images/" + imageLookup[event.id];
 
@@ -151,7 +189,7 @@ angular.module('spaceappsApp')
                 }
             }
         };
-    
+
     // Code for loading JSON files
     $http.get('./app/main/sources/three_metric_new.csv').success(function(history){
         var data = d3.csv.parse(history);
@@ -203,9 +241,74 @@ angular.module('spaceappsApp')
     };
   });
 //.controller('chartController', function($scope, $scope){
-//     
+//
 //};
- 
+
+function drawMapboxHeatMap($scope, $http, event){
+    console.log(event.geometries[0].coordinates[0]);
+    var curLng, curLat;
+    if(typeof event.geometries[0].coordinates[0] === "object"){
+        curLng = event.geometries[0].coordinates[0][1][0];
+        curLat = event.geometries[0].coordinates[0][1][1];
+    }else{
+        curLng = event.geometries[0].coordinates[0];
+        curLat = event.geometries[0].coordinates[1];
+    }
+    var points = [];
+    var heatmap = {
+        name: 'Heat Map',
+        type: 'heat',
+        data: points,
+        visible: true
+    };
+    $http.get("assets/jsons/heat-points.json").success(function(data) {
+        console.log(data);
+        $scope.layers.overlays = {
+            heat: {
+                name: 'Heat Map',
+                type: 'heat',
+                data: data,
+                layerOptions: {
+                    radius: 20,
+                    blur: 10
+                },
+                visible: true
+            }
+        };
+    }); // Fake data
+    angular.extend($scope, {
+        center: {
+            lat: 37.774546,
+            lng: -122.433523,
+            zoom: 12
+        },
+        layers: {
+            baselayers: {
+                mapbox_light: {
+                    name: 'Mapbox Light',
+//                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                    url: 'https://api.mapbox.com/styles/v1/sweetymeow/cinjy5pbt003paem5son415hv/tiles/{z}/{x}/{y}?access_token={apikey}',
+                    type: 'xyz',
+                    layerOptions: {
+                        apikey: 'pk.eyJ1Ijoic3dlZXR5bWVvdyIsImEiOiJjNDQzMzcxMjU0YmIzZDFiYTVkMzI0ZjAxMWU1NDhjNSJ9.Nt5jMK8zq1iBMJwUbbg7TQ',
+                        mapid: 'cinjy5pbt003paem5son415hv'
+                    }
+                }
+            }
+        },
+        markers: {
+            center: {
+                lat: 37.774546,
+                lng: -122.433523,
+                focus: true,
+                draggable: false,
+                message: "<b>" + event.title + "</b>."
+            }
+        }
+    }); // angular.extend
+//    }]);
+}
+
 function drawRealTimeMap($scope, event){
     console.log(event.geometries[0].coordinates[0]);
     var curLng, curLat;
@@ -216,7 +319,7 @@ function drawRealTimeMap($scope, event){
         curLng = event.geometries[0].coordinates[0];
         curLat = event.geometries[0].coordinates[1];
     }
-    
+
     angular.extend($scope, {
         center: {
           lat: curLat,
@@ -239,35 +342,13 @@ function drawRealTimeMap($scope, event){
                 message: "<b>" + event.title + "</b>."
             }
         }
-//        layers: {
-//          baselayers: {
-//            osm: {
-//              name: 'OpenStreetMap',
-//              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//              type: 'xyz'
-//            },
-//          },
-//          overlays:{
-//            natureevents: {
-//            name: 'rainfalls',
-//            type: 'group',
-//            visible: true
-//            },
-//              truecolor: {
-//                  name: "Sat",
-//                  url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/" +
-//        "MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg",
-//                  type: "xyz"
-//              } 
-//          }
-//        }
       });
-    
-        $scope.$watch("center.zoom", function(zoom) {
-            $scope.tiles.url = (zoom > 12)
-                    ? "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    : "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
-        });
+
+    $scope.$watch("center.zoom", function(zoom) {
+        $scope.tiles.url = (zoom > 12)
+                ? "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                : "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+    });
 }
 
 // Draw words cloud
