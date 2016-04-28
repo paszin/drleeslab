@@ -3,26 +3,62 @@
 var cloudCardWid;
 
 angular.module('spaceappsApp')
-  .controller('MainCtrl', function ($scope, $http, $location) {
-    
+  .controller('MainCtrl', function ($scope, $http, $location, $interval) {
+
     $scope.center = {};
     $scope.layers = {};
     $scope.tiles = {};
     $scope.tiles.url = "";
+    $scope.twitterSentimentDataAll = [];
 
     var twitter = "http://nodetest123.mybluemix.net/";
     var imageLookup = {"EONET_368": "houston_flood_image.jpg", "katrina": "katrina_2009.jpg"};
     var twitterLookup = {"EONET_368": "houstonflood", "EONET_56": "fuego_volcano_all"};
 
+    //TWITTER SENTIMENT
+    var twitterSentimentUrl = "http://localhost:5000/twitter_sentiment?query=";
+
+    function getTwitterSentimentData(searchterm) {
+        $http.get(twitterSentimentUrl + searchterm).then(function(resp) {
+            $scope.twitterSentimentDataAll = resp.data.result;
+            $interval(function() {
+                c += 1;
+                getTwitterSentiment(["2016-04-20", "2016-04-22"][c%2]);
+            }, 1000);
+        });
+    }
+
+    function getTwitterSentiment(date) {
+        var extractedData = _.find($scope.twitterSentimentDataAll, {date: date});
+        $scope.twitterSentimentData = [
+            {
+                key: "positive",
+                y: extractedData.positive
+            },
+            {
+                key: "neutral",
+                y: extractedData.neutral
+            },
+            {
+                key: "negativ",
+                y: extractedData.negative
+            }
+        ];
+    }
+    var c = 0;
+    getTwitterSentimentData("houstonflood");
+
+
     var eventUrl = $location.search()["link"];
-    
+
     $http.get(eventUrl).success(function(event) {
         console.log(event);
         $scope.event = event;
-        
+
+        drawRealTimeMap($scope, event);
+
 //        drawRealTimeMap($scope, event);
         drawMapboxHeatMap($scope, $http, event);
-        
         //image
         $scope.imagePath = "assets/images/" + imageLookup[event.id];
 
@@ -30,7 +66,7 @@ angular.module('spaceappsApp')
         $scope.sentiment = 0
         $scope.sentimentData = {};
         console.log(twitter + twitterLookup[event.id]);
-        
+
         $http.get(twitter + twitterLookup[event.id]).then(function successCallback(response) {
             response.data.forEach(function(tweet) {
                 $scope.sentiment += tweet.sentiment.score+4;
@@ -59,7 +95,7 @@ angular.module('spaceappsApp')
 
             $scope.twiiterData.push(twiData);
             console.log($scope.twiiterData);
-            
+
 //             drawRealTimeMap($scope, event);
         }, function errorCallback(response) { // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -85,7 +121,7 @@ angular.module('spaceappsApp')
              .fontSize(function(d) { return d.size; })
              .on("end", draw)
              .start();
-            
+
         });// Draw words cloud
 
         console.log($scope.sentiment);
@@ -153,7 +189,7 @@ angular.module('spaceappsApp')
                 }
             }
         };
-    
+
     // Code for loading JSON files
     $http.get('./app/main/sources/three_metric_new.csv').success(function(history){
         var data = d3.csv.parse(history);
@@ -205,9 +241,9 @@ angular.module('spaceappsApp')
     };
   });
 //.controller('chartController', function($scope, $scope){
-//     
+//
 //};
- 
+
 function drawMapboxHeatMap($scope, $http, event){
     console.log(event.geometries[0].coordinates[0]);
     var curLng, curLat;
@@ -283,7 +319,7 @@ function drawRealTimeMap($scope, event){
         curLng = event.geometries[0].coordinates[0];
         curLat = event.geometries[0].coordinates[1];
     }
-    
+
     angular.extend($scope, {
         center: {
           lat: curLat,
@@ -307,7 +343,7 @@ function drawRealTimeMap($scope, event){
             }
         }
       });
-    
+
     $scope.$watch("center.zoom", function(zoom) {
         $scope.tiles.url = (zoom > 12)
                 ? "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

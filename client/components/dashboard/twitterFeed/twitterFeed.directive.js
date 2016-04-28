@@ -6,11 +6,9 @@ angular.module('spaceappsApp')
       templateUrl: 'components/dashboard/twitterFeed/twitterFeed.html',
       restrict: 'E',
       scope: {
-          'tweetids': '=tweetids',
-          'data': '=data'
+          'tweetids': '=tweetids'
       },
       link: function (scope, element, attrs) {
-          scope.ids = [722389353218064384];
       }
     };
   });
