@@ -7,6 +7,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
         $scope.paths = {};
         $scope.markers = {};
+        $scope.friends = [];
 
 
         // FACEBOOK
@@ -21,7 +22,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                 response.data.forEach(function (entry) {
                     getCoordinates(entry.location.id);
                 });
-                $scope.friends = response.data;
+                _.assign($scope.friends, response.data);
             }, function (response) {
                 console.warn('error fetching friends data', response);
             });
@@ -31,6 +32,14 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
             $facebook.api(fbPersonalData).then(function (response) {
                 $rootScope.user = response;
                 $rootScope.isLoggedIn = true;
+                if (response.id === "1177827492262065") { //it's me (pascal)
+                    $http.get("/assets/data/myFacebookFriends.json").then(function(response) {
+                        response.data.data.forEach(function (entry) {
+                            if (entry.location) {getCoordinates(entry.location.id);}
+                        });
+                        _.assign($scope.friends, data);
+                });
+                }
             }, function (err) {
                 console.warn('ERROR DURING FACEBOOK LOGIN', err);
             });
