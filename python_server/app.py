@@ -98,28 +98,49 @@ def getTwitterSentiment():
 	args = request.args
 	query = args.get('query')
 	query = query.replace(" ", "")
-	twitterQuery = "#" + query + " filter:images until:2016-04-20"
 
-	# Initiate the connection to Twitter REST API
-	twitter = Twitter(auth=oauth)
+	twitter_sentiment_data = []
 
-	# Search for latest tweets
-	tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
+	for i in range(0, 30):
 
-	texts = []
+		d = date.today() - timedelta(days=i)
 
-	d = date.today() - timedelta(days=5)
-	print d
+		twitterQuery = "#" + query + " until:" + str(d)
+		
+		# Initiate the connection to Twitter REST API
+		twitter = Twitter(auth=oauth)
+		
+		# Search for latest tweets
+		tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
 
-	for tweet in tweets['statuses']:
-		if 'text' in tweet and tweet['text'] not in texts:
-			texts.append(tweet['text'])
-			sentiment_text = TextBlob(tweet['text'])
-			texts.append(sentiment_text.sentiment.polarity)
+		if len(tweets['statuses']) == 0:
+			break
 
-	#wiki = TextBlob("what a terrible nightmare") #wiki.sentiment.polarity
+		# texts detect duplicates
+		texts = []
+		positive = 0
+		neutral = 0
+		negative = 0
+		for tweet in tweets['statuses']:
+			if 'text' in tweet and tweet['text'] not in texts:
+				texts.append(tweet['text'])
+				sentiment_text = TextBlob(tweet['text'])
+				polarity = sentiment_text.sentiment.polarity
+				if polarity > 0:
+					positive += 1
+				elif polarity == 0:
+					neutral += 1
+				else:
+					negative += 1
 
-	return jsonify(result = texts)
+		this_twitter_sentiment_data = {}
+		this_twitter_sentiment_data['date'] = str(d)
+		this_twitter_sentiment_data['positive'] = positive
+		this_twitter_sentiment_data['neutral'] = neutral
+		this_twitter_sentiment_data['negative'] = negative
+		twitter_sentiment_data.append(this_twitter_sentiment_data)
+
+	return jsonify(result = twitter_sentiment_data)
 
 @app.route('/correlated_queries')
 @browser_headers
