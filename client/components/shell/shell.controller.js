@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('spaceappsApp')
-
   .controller('ShellCtrl', function ($mdSidenav, $mdDialog, $scope, $rootScope, $location) {
     $scope.isActive = function(route) {
       return route === $location.path();
