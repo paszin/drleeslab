@@ -3,6 +3,7 @@ import urllib2
 import re
 import json
 from functools import wraps
+from datetime import date, timedelta
 
 # Import the necessary methods from "twitter" library
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
@@ -97,7 +98,7 @@ def getTwitterSentiment():
 	args = request.args
 	query = args.get('query')
 	query = query.replace(" ", "")
-	twitterQuery = "#" + query + " filter:images"
+	twitterQuery = "#" + query + " filter:images until:2016-04-20"
 
 	# Initiate the connection to Twitter REST API
 	twitter = Twitter(auth=oauth)
@@ -105,11 +106,20 @@ def getTwitterSentiment():
 	# Search for latest tweets
 	tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
 
+	texts = []
 
+	d = date.today() - timedelta(days=5)
+	print d
 
-	wiki = TextBlob("what a terrible nightmare")
+	for tweet in tweets['statuses']:
+		if 'text' in tweet and tweet['text'] not in texts:
+			texts.append(tweet['text'])
+			sentiment_text = TextBlob(tweet['text'])
+			texts.append(sentiment_text.sentiment.polarity)
 
-	return jsonify(result = wiki.sentiment.polarity)
+	#wiki = TextBlob("what a terrible nightmare") #wiki.sentiment.polarity
+
+	return jsonify(result = texts)
 
 @app.route('/correlated_queries')
 @browser_headers
