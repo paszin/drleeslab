@@ -37,7 +37,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                         response.data.data.forEach(function (entry) {
                             if (entry.location) {getCoordinates(entry.location.id);}
                         });
-                        _.assign($scope.friends, data);
+                        _.assign($scope.friends, response.data.data);
                 });
                 }
             }, function (err) {
