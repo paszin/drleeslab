@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('spaceappsApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'ngAnimate',
-  'ngMessages',
-  'ui.router',
-  'ngMaterial',
-  'leaflet-directive',
-  'nvd3',
-  'ngFacebook',
-  'ngtweet'
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngAnimate',
+    'ngMessages',
+    'ui.router',
+    'ngMaterial',
+    'leaflet-directive',
+    'nvd3',
+    'ngFacebook',
+    'ngtweet'
 ])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')

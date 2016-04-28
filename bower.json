@@ -15,6 +15,7 @@
     "angular-leaflet-directive": "~0.10.0",
     "angular-nvd3": "^1.0.6",
     "leaflet-plugins": "^1.6.0",
+    "Leaflet.heat": "https://github.com/Leaflet/Leaflet.heat/archive/gh-pages.tar.gz",
     "ng-facebook": "^0.1.6",
     "font-awesome": "fontawesome#^4.5.0",
     "angular-filter": "^0.5.8",

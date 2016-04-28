@@ -53,7 +53,7 @@ angular.module('spaceappsApp')
                 .tickPadding(6)  // 12
             )
           .selectAll("text")
-            .attr("x", 6)
+            .attr("x", -6)
             .style("text-anchor", null)
           .select(".domain")
           .select(function() { 
