@@ -1,8 +1,28 @@
-<div ng-include="'components/shell/shell.html'"></div>
+<shell><span class="md-title"><h2>{{event.title}}</h2></span></shell>
 
 <div layout="column" class="md-padding eventstory">
 
   <div>
+
+      <div layout="row">
+
+     <div flex="66" class="map">
+        <md-card>
+          <md-toolbar>
+              <div class="md-toolbar-tools md-warn">
+                <h3 class="md-flex">Real-time rain fall heatmap</h3>
+              </div>
+        </md-toolbar>
+        <md-content>
+          <leaflet id="rainfallmap" lf-center="center" tiles="tiles" markers="markers" height="60vh" width="100%"></leaflet>  
+        </md-content>
+      </md-card>
+    </div><!--Map with icons-->
+
+
+      <twitter-feed flex="33" tweetids="['722389353218064384', '722452002941181952']"></twitter-feed>
+
+</div>
 
 <!--
       <md-card>
@@ -18,21 +38,7 @@
         </md-card-title>
       </md-card>
 -->
-      <span class="md-title"><h2>{{event.title}}</h2></span>
   </div>
-    
-     <div class="map">
-        <md-card>
-          <md-toolbar>
-              <div class="md-toolbar-tools md-warn">
-                <h3 class="md-flex">Real-time rain fall heatmap</h3>
-              </div>
-        </md-toolbar>
-        <md-content>
-          <leaflet id="rainfallmap" lf-center="center" tiles="tiles" markers="markers" height="60vh" width="100%"></leaflet>  
-        </md-content>
-      </md-card>
-    </div><!--Map with icons-->
 
    <div>
       <md-card>
