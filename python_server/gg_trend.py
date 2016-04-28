@@ -79,7 +79,7 @@ def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
 if __name__ == '__main__':
     
     # change input here
-    URL, flag= ScrapeWeekly('steph curry', 'US', None, None, 2016, 1, 4)
+    URL, flag= ScrapeWeekly('steph curry', 'US', None, None, 2016, 1, 3)
     
     # download and save to csv file
     page = urllib2.urlopen(URL)
