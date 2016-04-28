@@ -201,15 +201,22 @@ angular.module('spaceappsApp')
             cloudCardWid = element[0].offsetWidth - 16*2;
         }
     };
-  })
+  });
 //.controller('chartController', function($scope, $scope){
 //     
 //};
  
 function drawRealTimeMap($scope, event){
-    console.log(event.geometries[0].coordinates[0][0]);
-    var curLng = event.geometries[0].coordinates[0][1][0],
+    console.log(event.geometries[0].coordinates[0]);
+    var curLng, curLat;
+    if(typeof event.geometries[0].coordinates[0] === "object"){
+        curLng = event.geometries[0].coordinates[0][1][0];
         curLat = event.geometries[0].coordinates[0][1][1];
+    }else{
+        curLng = event.geometries[0].coordinates[0];
+        curLat = event.geometries[0].coordinates[1];
+    }
+    
     angular.extend($scope, {
         center: {
           lat: curLat,

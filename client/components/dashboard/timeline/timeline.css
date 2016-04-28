@@ -1,0 +1,47 @@
+/*
+#timelineBrush .axis text {
+  font: 11px sans-serif;
+}
+*/
+md-content .angular-leaflet-map{
+    color: black;
+}
+#timelineBrush .axis {
+  font: 10px sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+#timelineBrush .axis .tick line{
+    fill: white;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+#timelineBrush .axis .tick text{
+    fill: white;
+}
+
+#timelineBrush .axis .domain {
+    fill: none;
+    stroke: #fff;
+    stroke-opacity: .7;
+    stroke-width: 10px;
+    stroke-linecap: round;
+    transform: translateY(-5px);
+}
+
+#timelineBrush .axis .halo {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+#timelineBrush .slider .handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: .5;
+  stroke-width: 1.25px;
+  cursor: crosshair;
+}
