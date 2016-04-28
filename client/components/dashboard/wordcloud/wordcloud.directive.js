@@ -7,8 +7,9 @@ angular.module('spaceappsApp')
             scope: {
                 words: "=words"
             },
-            template: "<canvas width='800' height='800'></canvas>",
+            template: "<canvas width='300' height='250'></canvas>",
             link: function (scope, element, attribute) {
+                //console.log(element);
                 var w, h, circle, text, stageObjects = [];
                 var wordPosX = 30,
                     wordPosY = 30;
@@ -17,7 +18,6 @@ angular.module('spaceappsApp')
                 scope.$watch(function () {
                     return scope.words;
                 }, function (current, old) {
-                    console.log("word changed");
                     //check if new word added
                     if (old.length < current.length) {
                         current.forEach(function (word) {
@@ -87,7 +87,7 @@ angular.module('spaceappsApp')
 
                 function removeWord(word) {
                     var child = scope.stage.getChildByName(word.text);
-                    scope.stage.remoeChild(child);
+                    scope.stage.removeChild(child);
                 }
 
                 function handleTick() {

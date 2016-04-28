@@ -10,7 +10,8 @@ angular.module('spaceappsApp')
           scope.options = {
             chart: {
                 type: 'pieChart',
-                height: 450,
+                height: 300,
+                width: 400,
                 donut: true,
                 x: function(d){return d.key;},
                 y: function(d){return d.y;},
