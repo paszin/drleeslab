@@ -3,6 +3,22 @@ import urllib2
 import re
 import json
 from functools import wraps
+from datetime import date, timedelta
+
+# Import the necessary methods from "twitter" library
+from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
+
+# import the necessary methods from "TextBlob" library
+from textblob import TextBlob
+
+# Variables that contains the user credentials to access Twitter API 
+ACCESS_TOKEN = '725596276083941376-Rf25f1xDH6xmpUnpwwlLqDyeSi4vv8M'
+ACCESS_SECRET = 'bzvrVn8EoWetbEK929L7FFS0gwNnjDJOTAjE6KS9y8Ui7'
+CONSUMER_KEY = 'opxZpHiXxMSOINHIEKzmQQEJI'
+CONSUMER_SECRET = 'juAiRb11RF8OiHwVAs9gedsZrxKkTmCp2ATTHSUMLFtP8Un5ra'
+
+oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
+
 app = Flask(__name__)
 
 
@@ -43,6 +59,90 @@ def RepresentsInt(s):
 @browser_headers
 def hello_world():
     return 'Hello World!'
+
+@app.route('/twitter_images')
+@browser_headers
+def getTwitterImages():
+	args = request.args
+	query = args.get('query')
+	query = query.replace(" ", "")
+	count = args.get('count')
+	if int(count) > 100:
+		count = 100
+	count = int(count)
+
+	twitterQuery = "#" + query + " filter:images"
+
+	# Initiate the connection to Twitter REST API
+	twitter = Twitter(auth=oauth)
+
+	# Search for latest tweets
+	tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
+
+	image_ids = []
+	number = 0
+
+	for tweet in tweets['statuses']:
+		for media in tweet['entities']['media']:
+			if 'source_status_id' in media:
+				image_ids.append(media['source_status_id'])
+				number += 1
+				if number >= count:
+					return jsonify(result = image_ids)
+
+	return jsonify(result = image_ids)
+
+@app.route('/twitter_sentiment')
+@browser_headers
+def getTwitterSentiment():
+	args = request.args
+	query = args.get('query')
+	query = query.replace(" ", "")
+
+	twitter_sentiment_data = []
+
+	for i in range(0, 30):
+
+		d = date.today() - timedelta(days=i)
+
+		twitterQuery = "#" + query + " until:" + str(d)
+		
+		# Initiate the connection to Twitter REST API
+		twitter = Twitter(auth=oauth)
+		
+		# Search for latest tweets
+		tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
+
+		if len(tweets['statuses']) == 0:
+			break
+
+		# texts detect duplicates
+		texts = []
+		positive = 0
+		neutral = 0
+		negative = 0
+		for tweet in tweets['statuses']:
+			if 'text' in tweet and tweet['text'] not in texts:
+				texts.append(tweet['text'])
+				sentiment_text = TextBlob(tweet['text'])
+				polarity = sentiment_text.sentiment.polarity
+				if polarity > 0:
+					positive += 1
+				elif polarity == 0:
+					neutral += 1
+				else:
+					negative += 1
+
+		total = positive + neutral + negative
+
+		this_twitter_sentiment_data = {}
+		this_twitter_sentiment_data['date'] = str(d)
+		this_twitter_sentiment_data['positive'] = positive / (total * 1.0)
+		this_twitter_sentiment_data['neutral'] = neutral / (total * 1.0)
+		this_twitter_sentiment_data['negative'] = negative / (total * 1.0)
+		twitter_sentiment_data.append(this_twitter_sentiment_data)
+
+	return jsonify(result = twitter_sentiment_data)
 
 @app.route('/correlated_queries')
 @browser_headers

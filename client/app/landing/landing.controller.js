@@ -2,7 +2,7 @@
 var app = angular.module('spaceappsApp');
 
 app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location', '$facebook', 'mapBaselayers',
-                            function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers) {
+        function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers) {
         'use strict';
 
     
