@@ -12,8 +12,15 @@ angular.module('spaceappsApp')
                 osm: {
                   name: 'OpenStreetMap',
                   url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  type: 'xyz'
+                  type: 'xyz',
+                  visible: false
                 },
+                historic: {
+				    name: "Historic Topographic Maps",
+				    type: "agsTiled",
+				    url: "http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer",
+				    visible: true
+				},
                 bingAerial: {
                     name: 'Bing Aerial',
                     type: 'bing',

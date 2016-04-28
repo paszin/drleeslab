@@ -2,16 +2,18 @@
 var app = angular.module('spaceappsApp');
 
 app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location', '$facebook', 'mapBaselayers',
-                            function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers) {
+    function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers) {
         'use strict';
 
-    
+        $scope.paths = {};
+        $scope.markers = {};
+
         // FACEBOOK
         $rootScope.user = $rootScope.user || {};
         $rootScope.isLoggedIn = false;
-        $scope.paths = {};
-        var fbFriendsLocations = "/me/friends?fields=address,location,name,picture,hometown&limit=1000",
-            fbPersonalData = "/me?fields=location,hometown,picture";
+
+        var fbFriendsLocations = '/me/friends?fields=address,location,name,picture,hometown&limit=1000',
+            fbPersonalData = '/me?fields=location,hometown,picture';
 
         function getFbFriendsLocation() {
             $facebook.api(fbFriendsLocations).then(function (response) {
@@ -20,7 +22,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                 });
                 $scope.friends = response.data;
             }, function (response) {
-                console.warn("error fetching friends data", response);
+                console.warn('error fetching friends data', response);
             });
         }
 
@@ -29,13 +31,22 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                 $rootScope.user = response;
                 $rootScope.isLoggedIn = true;
             }, function (err) {
-                console.warn("ERROR DURING FACEBOOK LOGIN", err);
+                console.warn('ERROR DURING FACEBOOK LOGIN', err);
             });
         }
 
-        function getCoordinates(id) {
-            $facebook.api(id + "?fields=location").then(function (data) {
-                $scope.paths[id] = {
+        function getCoordinates(id, person) {
+            $facebook.api(id + '?fields=location').then(function (data) {
+            //    if $scope.markers.hasOwnProperty(id) {
+            //        $scope.markers[id]
+            //    }
+                $scope.markers[id] = {
+                    layer: 'friendsLocation',
+                    lat: data.location.latitude,
+                    lng: data.location.longitude,
+                    message: "A friend lives here"
+                  };
+                /*$scope.paths[id] = {
                         weight: 2,
                         color: '#2f61ff',
                         latlngs: {
@@ -44,9 +55,9 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                         },
                         radius: 200000,
                         type: 'circle',
-                        layer: 'shapes',
+                        layer: 'friendsLocation',
                 stroke: false
-                    }
+                    }*/
             });
         }
         //login
@@ -56,7 +67,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                 getFbFriendsLocation();
             });
         };
-                                
         $scope.logout = function () {
             $facebook.logout().then(function (resp) {
                 console.log(resp);
@@ -66,21 +76,20 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
         //NATURE EVENTS
         $scope.openEvents = [];
-        var earthquakeUrl = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson",
-            natureEventsOpenUrl = "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000";
+        var earthquakeUrl = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
+            natureEventsOpenUrl = 'http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000';
         //earthquakes
         $http.get(earthquakeUrl).success(function (response) {
             var points =  response.features.map(function (d) {
                 return {
-                    layer: "earthquake",
+                    layer: 'earthquake',
                     lat: d.geometry.coordinates[1],
                     lng: d.geometry.coordinates[0],
                     message: d.id
                   };
             });
-            console.log("Earthquakes", points.length); 
+            console.log('Earthquakes', points.length);
         });
-         
         //nature events eonet
         $http.get(natureEventsOpenUrl).success(function(api) {
             $scope.openEventsList = api.events;
@@ -89,24 +98,24 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
             //just take one of the coordinates, room for improvement!
             if (!!natureevent.geometries && natureevent.geometries.length > 0 && !!natureevent.geometries[0].coordinates && natureevent.geometries[0].coordinates.length > 0) {
 
-                  if (natureevent.geometries[0].type === "Polygon") {
-                      lat = natureevent.geometries[0].coordinates[0][0][1]; 
+                  if (natureevent.geometries[0].type === 'Polygon') {
+                      lat = natureevent.geometries[0].coordinates[0][0][1];
                       lng = natureevent.geometries[0].coordinates[0][0][0];
-                  } else if (natureevent.geometries[0].type === "Point") {
-                      lat = natureevent.geometries[0].coordinates[1]; 
-                      lng = natureevent.geometries[0].coordinates[0]; 
+                  } else if (natureevent.geometries[0].type === 'Point') {
+                      lat = natureevent.geometries[0].coordinates[1];
+                      lng = natureevent.geometries[0].coordinates[0];
                 }
-                  $scope.openEvents.push({data: natureevent, message: natureevent.title, layer: "natureevents", lat: lat, lng: lng, icon: //{}
+                  $scope.openEvents.push({data: natureevent, message: natureevent.title, layer: 'natureevents', lat: lat, lng: lng, icon: //{}
                                           {
                         iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
                         //shadowUrl: 'img/leaf-shadow.png',
                         iconSize:     [24, 24], // size of the icon
                         shadowSize:   [50, 64], // size of the shadow
-                        iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+                        iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
                         shadowAnchor: [0, 0],  // the same for the shadow
                         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
                     }
-                });    
+                });
               }
           });
 
@@ -116,7 +125,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
 
         //MAP CONFIG
-        var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': "volcano.svg", 'Sea and Lake Ice': 'ice_sea.svg'};
+        var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': 'volcano.svg', 'Sea and Lake Ice': 'ice_sea.svg'};
 
 
          $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {
@@ -130,15 +139,11 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
             args.leafletObject.openPopup();
                     $scope.info = args.model.data.title;
             });
-                                
          $scope.$on('leafletDirectivePath.mymap.mouseover', function (e, args) {
             //debugger;
             args.leafletObject.openPopup();
                     $scope.info = args.model.data.title;
             });
-                                
-                                
-                        
 
         angular.extend($scope, {
             center: {
@@ -152,26 +157,26 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
               baselayers: mapBaselayers,
               overlays:{
                 natureevents: {
-                name: 'natureevents',
-                type: 'group',
-                visible: true
+                    name: 'Nature Events',
+                    type: 'group',
+                    visible: true
                 },
-                  truecolor: {
-                      name: "Sat",
-                      url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/" +
-            "MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg",
-                      type: "xyz"
-                  } 
-                  ,something: {
-                      name: "earthdata",
-                      type: "xyz",
-                      url: "http://map1{s}.vis.earthdata.nasa.gov/wmts-arctic/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2013-06-20/EPSG3413_250m/{z}/{y}/{x}.jpg"
-                  },
-                  shapes: {
-                            name: 'Shapes',
-                            type: 'group',
-                            visible: true
-                        }
+                truecolor: {
+                    name: 'Sat',
+                    url: 'http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/' +
+                        'MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg',
+                    type: 'xyz'
+                },
+                  /*something: {
+                      name: 'earthdata',
+                      type: 'xyz',
+                      url: 'http://map1{s}.vis.earthdata.nasa.gov/wmts-arctic/MODIS_Aqua_CorrectedReflectance_TrueColor/default/2013-06-20/EPSG3413_250m/{z}/{y}/{x}.jpg'
+                  },*/
+                friendsLocation: {
+                    name: 'Friend`s Locations',
+                    type: 'group',
+                    visible: true
+                  }
               }
             }
           });
