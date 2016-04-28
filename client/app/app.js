@@ -8,9 +8,10 @@ angular.module('spaceappsApp', [
   'ngMessages',
   'ui.router',
   'ngMaterial',
-  'leaflet-directive', // including leaflet.js library.
+  'leaflet-directive',
   'nvd3',
-  'ngFacebook'
+  'ngFacebook',
+  'ngtweet'
 ])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
