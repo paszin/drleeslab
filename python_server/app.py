@@ -3,6 +3,18 @@ import urllib2
 import re
 import json
 from functools import wraps
+
+# Import the necessary methods from "twitter" library
+from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
+
+# Variables that contains the user credentials to access Twitter API 
+ACCESS_TOKEN = '46342680-LjlLytnHDFvQMXW8Pr0DiyLa70El0Ffj5BkULBVXZ'
+ACCESS_SECRET = 'gyZgAnSzQJRME3ZFlUHVMMUK1fm9G1hlE8Ez5nFe7sZPC'
+CONSUMER_KEY = 'TSBn91fLSaQbBfeRzyT0RCzja'
+CONSUMER_SECRET = '5qBW2BlXL4zXY9MwIAVN16ptlV02kj08xFgIctsatKHzIgXuau'
+
+oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
+
 app = Flask(__name__)
 
 
@@ -43,6 +55,17 @@ def RepresentsInt(s):
 @browser_headers
 def hello_world():
     return 'Hello World!'
+
+@app.route('/test')
+@browser_headers
+def test():
+	# Initiate the connection to Twitter REST API
+	twitter = Twitter(auth=oauth)
+
+	# Search for latest tweets about "#nlproc"
+	tweets = twitter.search.tweets(q='houston flood #houstonflood filter:images', result_type='recent', lang='en', count=10)
+
+	return jsonify(result = tweets)
 
 @app.route('/correlated_queries')
 @browser_headers
