@@ -56,14 +56,21 @@ def RepresentsInt(s):
 def hello_world():
     return 'Hello World!'
 
-@app.route('/test')
+@app.route('/twitter_images')
 @browser_headers
-def test():
+def getTwitterImages():
+	args = request.args
+	query = args.get('query')
+	query = query.replace(" ", "")
+	count = args.get('count')
+
+	twitterQuery = "#" + query + " filter:images"
+
 	# Initiate the connection to Twitter REST API
 	twitter = Twitter(auth=oauth)
 
 	# Search for latest tweets about "#nlproc"
-	tweets = twitter.search.tweets(q='houston flood #houstonflood filter:images', result_type='recent', lang='en', count=10)
+	tweets = twitter.search.tweets(q=twitterQuery, result_type='popular', lang='en', count=count)
 
 	return jsonify(result = tweets)
 
