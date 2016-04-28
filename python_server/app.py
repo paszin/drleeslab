@@ -3,6 +3,7 @@ import urllib2
 import re
 import json
 from functools import wraps
+from datetime import date, timedelta
 
 # Import the necessary methods from "twitter" library
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
@@ -11,10 +12,10 @@ from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 from textblob import TextBlob
 
 # Variables that contains the user credentials to access Twitter API 
-ACCESS_TOKEN = '46342680-LjlLytnHDFvQMXW8Pr0DiyLa70El0Ffj5BkULBVXZ'
-ACCESS_SECRET = 'gyZgAnSzQJRME3ZFlUHVMMUK1fm9G1hlE8Ez5nFe7sZPC'
-CONSUMER_KEY = 'TSBn91fLSaQbBfeRzyT0RCzja'
-CONSUMER_SECRET = '5qBW2BlXL4zXY9MwIAVN16ptlV02kj08xFgIctsatKHzIgXuau'
+ACCESS_TOKEN = '725596276083941376-Rf25f1xDH6xmpUnpwwlLqDyeSi4vv8M'
+ACCESS_SECRET = 'bzvrVn8EoWetbEK929L7FFS0gwNnjDJOTAjE6KS9y8Ui7'
+CONSUMER_KEY = 'opxZpHiXxMSOINHIEKzmQQEJI'
+CONSUMER_SECRET = 'juAiRb11RF8OiHwVAs9gedsZrxKkTmCp2ATTHSUMLFtP8Un5ra'
 
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 
@@ -97,19 +98,51 @@ def getTwitterSentiment():
 	args = request.args
 	query = args.get('query')
 	query = query.replace(" ", "")
-	twitterQuery = "#" + query + " filter:images"
 
-	# Initiate the connection to Twitter REST API
-	twitter = Twitter(auth=oauth)
+	twitter_sentiment_data = []
 
-	# Search for latest tweets
-	tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
+	for i in range(0, 30):
 
+		d = date.today() - timedelta(days=i)
 
+		twitterQuery = "#" + query + " until:" + str(d)
+		
+		# Initiate the connection to Twitter REST API
+		twitter = Twitter(auth=oauth)
+		
+		# Search for latest tweets
+		tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
 
-	wiki = TextBlob("what a terrible nightmare")
+		if len(tweets['statuses']) == 0:
+			break
 
-	return jsonify(result = wiki.sentiment.polarity)
+		# texts detect duplicates
+		texts = []
+		positive = 0
+		neutral = 0
+		negative = 0
+		for tweet in tweets['statuses']:
+			if 'text' in tweet and tweet['text'] not in texts:
+				texts.append(tweet['text'])
+				sentiment_text = TextBlob(tweet['text'])
+				polarity = sentiment_text.sentiment.polarity
+				if polarity > 0:
+					positive += 1
+				elif polarity == 0:
+					neutral += 1
+				else:
+					negative += 1
+
+		total = positive + neutral + negative
+
+		this_twitter_sentiment_data = {}
+		this_twitter_sentiment_data['date'] = str(d)
+		this_twitter_sentiment_data['positive'] = positive / (total * 1.0)
+		this_twitter_sentiment_data['neutral'] = neutral / (total * 1.0)
+		this_twitter_sentiment_data['negative'] = negative / (total * 1.0)
+		twitter_sentiment_data.append(this_twitter_sentiment_data)
+
+	return jsonify(result = twitter_sentiment_data)
 
 @app.route('/correlated_queries')
 @browser_headers
