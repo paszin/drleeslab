@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
+def ScrapeWeekly(keyword, country, region, city, today = False, now = False, year = None, startmonth = None, numofmonth = None):
     """
     Custom Timeframe Pattern:
 
@@ -23,6 +23,7 @@ def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
                 4-36 months will return weekly intervals of data
                 36+ months will return monthly intervals of data
                 NOTE Google uses UTC date as 'today'
+        Not support yet: 
         - Daily: "today #-d" where # is the number of days from that date to pull data for
                 For example: "today 7-d" would get data from the last week
                 1 day will return 8min intervals of data
@@ -35,7 +36,7 @@ def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
                 27-34 hours will return 16min intervals of data
     """
 
-    if numofmonth > 3:
+    if numofmonth > 3 and numofmonth < 36:
         flag = 'weekly'
     else:
         flag = 'daily'
@@ -68,7 +69,10 @@ def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
             for word in keyword[1:]:
                 queries = queries + "%2C" + word
         
-    date = '&date='+str(startmonth)+'%2F'+str(year)+'%20' + str(numofmonth) + 'm'
+    if today and (numofmonth is not None):
+        date = '&date=today' + '%20' + str(numofmonth) + '-m'
+    else:
+        date = '&date='+str(startmonth)+'%2F'+str(year)+'%20' + str(numofmonth) + 'm'
     # date = '&date=' + 'today' + '%20' +  str(8) + '-d'
 
     URL = URL_start+queries+ geo + date+URL_end
@@ -76,11 +80,7 @@ def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
 
     return URL, flag
 
-if __name__ == '__main__':
-    
-    # change input here
-    URL, flag= ScrapeWeekly('steph curry', 'US', None, None, 2016, 1, 4)
-    
+def readData(URL, flag):
     # download and save to csv file
     page = urllib2.urlopen(URL)
     data = page.read()
@@ -92,23 +92,33 @@ if __name__ == '__main__':
         fm = 'Date\((\d*),(\d*),(\d*)\),"f":\".+?\"},{"v":(\d*\.?\d*)'
 
     for m in re.finditer(fm,data):
-        iyear = int(m.group(1))
-        imonth = int(m.group(2)) + 1
-        iday = int(m.group(3))
-        date.append(pd.to_datetime(iyear*10000 + imonth*100 + iday, format = '%Y%m%d'))
         if flag == 'daily':
-            timestamp.append(pd.to_datetime(m.group(4), infer_datetime_format = True))
-            value.append(float(m.group(5)))
+            # skip missing data
+            if m.group(4) and m.group(5):
+                date.append(pd.to_datetime(m.group(4), infer_datetime_format = True))
+                value.append(float(m.group(5)))
         elif flag == 'weekly':
-            value.append(float(m.group(4)))   
-    
+            if m.group(1) and m.group(2) and m.group(3) and m.group(4):
+                iyear = int(m.group(1))
+                imonth = int(m.group(2)) + 1
+                iday = int(m.group(3))
+                date.append(pd.to_datetime(iyear*10000 + imonth*100 + iday, format = '%Y%m%d'))
+                value.append(float(m.group(4)))
     # pdb.set_trace()
     gt_df = pd.DataFrame({
-        'Date': timestamp,
-        'SVI': value
+    'Date': date,
+    'SVI': value,
     })
-    
-    gt_df.to_csv('gtdata.csv')
+    return gt_df   
+
+
+if __name__ == '__main__':    
+    # change input here
+    keyword = 'river'
+    URL, flag= ScrapeWeekly(keyword, 'US', 'TX', '618', True, False, 2016, 3, 4)
+    print URL
+    gt_df = readData(URL, flag)    
+    gt_df.to_csv('gtdata' + keyword + '.csv')
 
     # Plot
     # ts = pd.Series(value, index=date)
