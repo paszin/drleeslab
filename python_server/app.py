@@ -133,11 +133,13 @@ def getTwitterSentiment():
 				else:
 					negative += 1
 
+		total = positive + neutral + negative
+
 		this_twitter_sentiment_data = {}
 		this_twitter_sentiment_data['date'] = str(d)
-		this_twitter_sentiment_data['positive'] = positive
-		this_twitter_sentiment_data['neutral'] = neutral
-		this_twitter_sentiment_data['negative'] = negative
+		this_twitter_sentiment_data['positive'] = positive / (total * 1.0)
+		this_twitter_sentiment_data['neutral'] = neutral / (total * 1.0)
+		this_twitter_sentiment_data['negative'] = negative / (total * 1.0)
 		twitter_sentiment_data.append(this_twitter_sentiment_data)
 
 	return jsonify(result = twitter_sentiment_data)
