@@ -7,6 +7,9 @@ from functools import wraps
 # Import the necessary methods from "twitter" library
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
+# import the necessary methods from "TextBlob" library
+from textblob import TextBlob
+
 # Variables that contains the user credentials to access Twitter API 
 ACCESS_TOKEN = '46342680-LjlLytnHDFvQMXW8Pr0DiyLa70El0Ffj5BkULBVXZ'
 ACCESS_SECRET = 'gyZgAnSzQJRME3ZFlUHVMMUK1fm9G1hlE8Ez5nFe7sZPC'
@@ -63,16 +66,50 @@ def getTwitterImages():
 	query = args.get('query')
 	query = query.replace(" ", "")
 	count = args.get('count')
+	if int(count) > 100:
+		count = 100
+	count = int(count)
 
 	twitterQuery = "#" + query + " filter:images"
 
 	# Initiate the connection to Twitter REST API
 	twitter = Twitter(auth=oauth)
 
-	# Search for latest tweets about "#nlproc"
-	tweets = twitter.search.tweets(q=twitterQuery, result_type='popular', lang='en', count=count)
+	# Search for latest tweets
+	tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
 
-	return jsonify(result = tweets)
+	image_ids = []
+	number = 0
+
+	for tweet in tweets['statuses']:
+		for media in tweet['entities']['media']:
+			if 'source_status_id' in media:
+				image_ids.append(media['source_status_id'])
+				number += 1
+				if number >= count:
+					return jsonify(result = image_ids)
+
+	return jsonify(result = image_ids)
+
+@app.route('/twitter_sentiment')
+@browser_headers
+def getTwitterSentiment():
+	args = request.args
+	query = args.get('query')
+	query = query.replace(" ", "")
+	twitterQuery = "#" + query + " filter:images"
+
+	# Initiate the connection to Twitter REST API
+	twitter = Twitter(auth=oauth)
+
+	# Search for latest tweets
+	tweets = twitter.search.tweets(q=twitterQuery, result_type='recent', lang='en', count=100)
+
+
+
+	wiki = TextBlob("what a terrible nightmare")
+
+	return jsonify(result = wiki.sentiment.polarity)
 
 @app.route('/correlated_queries')
 @browser_headers
