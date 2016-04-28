@@ -14,7 +14,7 @@
               </div>
         </md-toolbar>
         <md-content>
-          <leaflet id="rainfallmap" lf-center="center" tiles="tiles" markers="markers" height="60vh" width="100%"></leaflet>  
+          <leaflet id="rainfallmap" lf-center="center" tiles="tiles" markers="markers" height="60vh" width="100%"></leaflet>
         </md-content>
       </md-card>
     </div><!--Map with icons-->
@@ -73,10 +73,10 @@
       </md-card>
     </md-content>
   </div>
-    
-    
+
+
     <!--WEATHER-->
-    
+
   <div flex="40" class="eventChart">
     <div class="column md-padding">
       <md-toolbar class="md-warn">
@@ -88,23 +88,6 @@
         <nvd3 options="options" data="data"></nvd3>
       </md-content>
     </div>
-  </div> 
-    
-    <div class="column md-padding">
-      <md-toolbar class="md-warn">
-        <div class="md-toolbar-tools">
-          <h2 class="md-flex">Contribute</h2>
-        </div>
-      </md-toolbar>
-      <md-content>
-          <p>Add some content, so that other people can explore the social impact of this event</p>
-        <md-input-container>
-        <label>Paste url here</label>
-        <input ng-model="share" type="">
-      </md-input-container>
-          <md-button ng-click="share=''">submit</md-button>
-      </md-content>
-    </div>
-    
+  </div>
 </div>
 
