@@ -16,8 +16,12 @@
                     </div>
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-subheader class="md-no-sticky">Safe & Sound</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="friend in friends">
+                <md-subheader class="md-no-sticky" layout="row" layout-align="space-between center">
+                    <span>Safe & Sound (102)</span>
+                    <i class="fa fa-chevron-down" ng-show="!show" ng-click="show=true"></i>
+                    <i class="fa fa-chevron-up" ng-show="show" ng-click="show=false"></i>
+                </md-subheader>
+                <md-list-item ng-show="show" class="md-3-line" ng-repeat="friend in friends">
                     <img ng-src="{{friend.picture.data.url}}" class="md-avatar" alt="no image" />
                     <div class="md-list-item-text" layout="column">
                         <h3>{{ friend.name }}</h3>
@@ -25,8 +29,10 @@
                     </div>
                 </md-list-item>
             </md-list>
+            <md-divider></md-divider>
+            <span>Should we use this space here? Facebook Invite? Nature Disasters list?</span>
         </md-content>
-        <div class="md-padding" id="latestEvent">
+        <!--<div class="md-padding" id="latestEvent">
             <h2>Latest Events</h2>
             <md-content layout="row">
                 <md-card ng-repeat="nevent in openEventsList" flex="20">
@@ -35,9 +41,9 @@
                             <span class="md-headline">{{nevent.title}}</span>
                             <span class="md-subhead">{{nevent.categories[0].title}}</span>
                         </md-card-title-text>
-                        <!-- <md-card-title-media>
+                         <md-card-title-media>
                 <div class="md-media-lg card-media"></div>
-              </md-card-title-media> -->
+              </md-card-title-media>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button>more</md-button>
@@ -45,6 +51,7 @@
                 </md-card>
             </md-content>
         </div>
+-->
     </div>
     <div flex class="map">
         <leaflet id="mymap" lf-center="center" height="100vh" width="100%" markers="markers" layers="layers" paths="paths"></leaflet>
