@@ -15,7 +15,9 @@ angular.module('spaceappsApp', [
 ])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('light-blue')
+    .primaryPalette('light-blue', {
+                "hue-1": "A100"
+            })
     .accentPalette('amber').dark();
 })
 .config(function($mdIconProvider) {
