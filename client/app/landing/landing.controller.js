@@ -8,6 +8,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         $scope.paths = {};
         $scope.markers = {};
 
+
         // FACEBOOK
         $rootScope.user = $rootScope.user || {};
         $rootScope.isLoggedIn = false;
@@ -73,6 +74,8 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
             });
         };
 
+        $scope.login();
+
 
         //NATURE EVENTS
         $scope.openEvents = [];
@@ -105,7 +108,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                       lat = natureevent.geometries[0].coordinates[1];
                       lng = natureevent.geometries[0].coordinates[0];
                 }
-                  $scope.openEvents.push({data: natureevent, message: natureevent.title, layer: 'natureevents', lat: lat, lng: lng, icon: //{}
+                  $scope.markers[natureevent.id] = {data: natureevent, message: natureevent.title, layer: 'natureevents', lat: lat, lng: lng, icon: //{}
                                           {
                         iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
                         //shadowUrl: 'img/leaf-shadow.png',
@@ -115,7 +118,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                         shadowAnchor: [0, 0],  // the same for the shadow
                         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
                     }
-                });
+                };
               }
           });
 
@@ -151,7 +154,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
               lng: 0,
               zoom: 2
             },
-            markers: $scope.openEvents,
+            markers: $scope.markers,
             paths: $scope.paths,
             layers: {
               baselayers: mapBaselayers,
@@ -174,7 +177,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                   },*/
                 friendsLocation: {
                     name: 'Friend`s Locations',
-                    type: 'group',
+                    type: 'markercluster',
                     visible: true
                   }
               }
