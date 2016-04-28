@@ -126,3 +126,14 @@ This Bluemix API returns **all language** tweets regarding Fuego Volcano along w
 ```bash
 http://nodetest123.mybluemix.net/fuego_volcano_all?limit=10
 ```
+
+## Get Twitter Images
+```bash
+http://localhost:5000/twitter_images?query=<query>&count=<count>
+```
+This API returns a list of IDs of twitter images given a query. <query> is converted to a hashtag format. For example, "houston flood" will be converted to "#houstonflood" for search. 
+
+### Example
+```bash
+http://localhost:5000/twitter_images?query=houston%20flood&count=20
+```
