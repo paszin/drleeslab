@@ -14,13 +14,13 @@ angular.module('spaceappsApp')
     var twitterLookup = {"EONET_368": "houstonflood", "EONET_56": "fuego_volcano_all"};
 
     var eventUrl = $location.search()["link"];
-    
+
     $http.get(eventUrl).success(function(event) {
         console.log(event);
         $scope.event = event;
-        
+
         drawRealTimeMap($scope, event);
-        
+
         //image
         $scope.imagePath = "assets/images/" + imageLookup[event.id];
 
@@ -28,7 +28,7 @@ angular.module('spaceappsApp')
         $scope.sentiment = 0
         $scope.sentimentData = {};
         console.log(twitter + twitterLookup[event.id]);
-        
+
         $http.get(twitter + twitterLookup[event.id]).then(function successCallback(response) {
             response.data.forEach(function(tweet) {
                 $scope.sentiment += tweet.sentiment.score+4;
@@ -57,7 +57,7 @@ angular.module('spaceappsApp')
 
             $scope.twiiterData.push(twiData);
             console.log($scope.twiiterData);
-            
+
 //             drawRealTimeMap($scope, event);
         }, function errorCallback(response) { // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -83,7 +83,7 @@ angular.module('spaceappsApp')
              .fontSize(function(d) { return d.size; })
              .on("end", draw)
              .start();
-            
+
         });// Draw words cloud
 
         console.log($scope.sentiment);
