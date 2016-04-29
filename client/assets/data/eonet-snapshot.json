@@ -1,0 +1,619 @@
+{
+	"title": "EONET Events",
+	"description": "Natural events from EONET.",
+	"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events",
+	"events": [
+		{
+			"id": "EONET_382",
+			"title": "Silver Mine Fire, North Carolina",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_382",
+			"categories": [
+				{
+					"id": 8,
+					"title": "Wildfires"
+				}
+			],
+			"sources": [
+				{
+					"id": "InciWeb",
+					"url": "http://inciweb.nwcg.gov/incident/4706/"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-21T15:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -82.808055555556, 35.890277777778 ]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_377",
+			"title": "Cyclone Amos",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_377",
+			"categories": [
+				{
+					"id": 10,
+					"title": "Severe Storms"
+				}
+			],
+			"sources": [
+				{
+					"id": "ReliefWeb",
+					"url": "http://reliefweb.int/disaster/tc-2016-000038-wsm"
+				},
+				{
+					"id": "UNISYS",
+					"url": "http://weather.unisys.com/hurricane/s_pacific/2016/AMOS/track.dat"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-20T00:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -178.20, -13.10 ]
+				},
+				{
+					"date": "2016-04-20T06:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -178.80, -12.90 ]
+				},
+				{
+					"date": "2016-04-20T12:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -178.80, -12.80 ]
+				},
+				{
+					"date": "2016-04-20T18:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -179.60, -12.60 ]
+				},
+				{
+					"date": "2016-04-21T00:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -179.50, -12.50 ]
+				},
+				{
+					"date": "2016-04-21T06:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -179.30, -13.00 ]
+				},
+				{
+					"date": "2016-04-21T12:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -178.90, -12.70 ]
+				},
+				{
+					"date": "2016-04-21T18:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -178.30, -12.70 ]
+				},
+				{
+					"date": "2016-04-22T00:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -177.40, -12.40 ]
+				},
+				{
+					"date": "2016-04-22T06:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -177.00, -12.50 ]
+				},
+				{
+					"date": "2016-04-22T12:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -176.30, -12.40 ]
+				},
+				{
+					"date": "2016-04-22T18:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -175.70, -12.40 ]
+				},
+				{
+					"date": "2016-04-23T00:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -174.90, -12.40 ]
+				},
+				{
+					"date": "2016-04-23T06:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -173.20, -12.80 ]
+				},
+				{
+					"date": "2016-04-23T12:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -172.00, -13.40 ]
+				},
+				{
+					"date": "2016-04-23T18:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -170.40, -14.00 ]
+				},
+				{
+					"date": "2016-04-24T00:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -171.00, -13.90 ]
+				},
+				{
+					"date": "2016-04-24T06:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -170.20, -13.70 ]
+				},
+				{
+					"date": "2016-04-24T12:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -169.50, -13.70 ]
+				},
+				{
+					"date": "2016-04-24T18:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -168.40, -14.30 ]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_383",
+			"title": "Myanmar (Burma) Severe Storms",
+            "description": "Since 19 April, strong winds, hail and heavy rains have affected over 40 townships across Mandalay and Sagaing regions and Shan, Kachin and Chin states. Over 1,100 houses were destroyed and 11,600 houses damaged.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_383",
+			"categories": [
+				{
+					"id": 10,
+					"title": "Severe Storms"
+				}
+			],
+			"sources": [
+				{
+					"id": "ReliefWeb",
+					"url": "http://reliefweb.int/disaster/st-2016-000039-mmr"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-19T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [93.0615234375, 20.029289527188645], [93.0615234375, 24.8736607761345], [96.93359375, 24.8736607761345], [96.93359375, 20.029289527188645], [93.0615234375, 20.029289527188645] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_378",
+			"title": "Whipping Creek Fire, North Carolina",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_378",
+			"categories": [
+				{
+					"id": 8,
+					"title": "Wildfires"
+				}
+			],
+			"sources": [
+				{
+					"id": "InciWeb",
+					"url": "http://inciweb.nwcg.gov/incident/4691/"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-18T14:00:00Z",
+					"type": "Point", 
+					"coordinates": [ -75.907777777778, 35.639166666667 ]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_368",
+			"title": "Flooding in Houston, Texas",
+            "description": "Nearly two feet of rain has resulted in extensive flooding in Houston, Texas.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_368",
+			"categories": [
+				{
+					"id": 9,
+					"title": "Floods"
+				}
+			],
+			"sources": [
+				{
+					"id": "EO",
+					"url": "http://earthobservatory.nasa.gov/NaturalHazards/event.php?id=87916"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-17T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [-95.980224609375, 29.213727993972313], [-95.980224609375, 30.36072451862922], [-94.64599609375, 30.36072451862922], [-94.64599609375, 29.213727993972313], [-95.980224609375, 29.213727993972313] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_376",
+			"title": "Rocky Mount Fire, Virgina",
+            "description": "The Rocky Mountain Fire in the Shenandoah National Park has resulted in the closure of many sections of the Appalachian Trail and several other trails in the park.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_376",
+			"categories": [
+				{
+					"id": 8,
+					"title": "Wildfires"
+				}
+			],
+			"sources": [
+				{
+					"id": "InciWeb",
+					"url": "http://inciweb.nwcg.gov/incident/4689/"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-17T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [-78.907470703125, 38.0603639807185], [-78.907470703125, 38.44255951354092], [-78.47412109375, 38.44255951354092], [-78.47412109375, 38.0603639807185], [-78.907470703125, 38.0603639807185] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_384",
+			"title": "India Heatwave, April 2016",
+            "description": "Very high temperatures have been affecting several parts of the country. On April 27, a max. temperature of 45 &deg;C was observed in Bankura (West Bengal state) and in Wardha (Maharashtra state).",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_384",
+			"categories": [
+				{
+					"id": 18,
+					"title": "Temperature Extremes"
+				}
+			],
+			"sources": [
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-15T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [73.9453125, 12.526880895516518], [73.9453125, 29.63762913559315], [89.90234375, 29.63762913559315], [89.90234375, 12.526880895516518], [73.9453125, 12.526880895516518] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_374",
+			"title": "West Africa Dust Storm, April 2016",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_374",
+			"categories": [
+				{
+					"id": 7,
+					"title": "Dust and Haze"
+				}
+			],
+			"sources": [
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-14T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [-34.6875, 0.6747501728730703], [-34.6875, 36.12650068285292], [-2.734375, 36.12650068285292], [-2.734375, 0.6747501728730703], [-34.6875, 0.6747501728730703] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_369",
+			"title": "Yemen Flash Floods, April 2016",
+            "description": "Flash floods caused by heavy rains on 13 and 14 April have inundated a number of districts in seven governorates in Yemen.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_369",
+			"categories": [
+				{
+					"id": 9,
+					"title": "Floods"
+				}
+			],
+			"sources": [
+				{
+					"id": "ReliefWeb",
+					"url": "http://reliefweb.int/disaster/ff-2016-000034-yem"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-13T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [42.45849609375, 14.874914697018605], [42.45849609375, 17.42107429246518], [45.18798828125, 17.42107429246518], [45.18798828125, 14.874914697018605], [42.45849609375, 14.874914697018605] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_371",
+			"title": "Flooding in Iran, April 2016",
+            "description": "Western and southwestern parts of Iran are suffering major flooding following days of heavy rain.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_371",
+			"categories": [
+				{
+					"id": 9,
+					"title": "Floods"
+				}
+			],
+			"sources": [
+				{
+					"id": "IDC",
+					"url": "https://www.disasterscharter.org/web/guest/-/flood-in-iran-islamic-republic-of"
+				},
+				{
+					"id": "ReliefWeb",
+					"url": "http://reliefweb.int/disaster/ff-2016-000036-irn"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-13T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [44.4140625, 30.877888118431578], [44.4140625, 38.9142723125973], [49.912109375, 38.9142723125973], [49.912109375, 30.877888118431578], [44.4140625, 30.877888118431578] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_373",
+			"title": "Hydrogen Sulphide Eruptions, Coast of Namibia",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_373",
+			"categories": [
+				{
+					"id": 13,
+					"title": "Water Color"
+				}
+			],
+			"sources": [
+				{
+					"id": "MRR",
+					"url": "https://lance.modaps.eosdis.nasa.gov/cgi-bin/imagery/single.cgi?image=Namibia.A2016105.0935.500m.jpg"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-11T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [12.3614501953125, -19.79338954926769], [12.3614501953125, -18.979356750355976], [12.9815673828125, -18.979356750355976], [12.9815673828125, -19.79338954926769], [12.3614501953125, -19.79338954926769] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_386",
+			"title": "Lake Kivu Whiting Event, Rwanda/DR Congo",
+            "description": "The lake in central Africa is in the middle of a whiting event caused by calcium carbonate precipitation.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_386",
+			"categories": [
+				{
+					"id": 13,
+					"title": "Water Color"
+				}
+			],
+			"sources": [
+				{
+					"id": "EO",
+					"url": "http://earthobservatory.nasa.gov/IOTD/view.php?id=87931"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-10T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [28.758544921875, -2.477537956871064], [28.758544921875, -1.5959075736972972], [29.400634765625, -1.5959075736972972], [29.400634765625, -2.477537956871064], [28.758544921875, -2.477537956871064] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_367",
+			"title": "Antarctic Iceberg C33",
+            "description": "A crack across the Nansen Ice Shelf in Antarctica has broken, shedding two icebergs&mdash;one large enough to earn the name C33.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_367",
+			"categories": [
+				{
+					"id": 15,
+					"title": "Sea and Lake Ice"
+				}
+			],
+			"sources": [
+				{
+					"id": "EO",
+					"url": "http://earthobservatory.nasa.gov/NaturalHazards/view.php?id=87859"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-07T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [162.5390625, -75.52624096698405], [162.5390625, -73.99921071133521], [168.7841796875, -73.99921071133521], [168.7841796875, -75.52624096698405], [162.5390625, -75.52624096698405] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_370",
+			"title": "Fires in Darien Province, Panama, April 2016",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_370",
+			"categories": [
+				{
+					"id": 8,
+					"title": "Wildfires"
+				}
+			],
+			"sources": [
+				{
+					"id": "IDC",
+					"url": "https://www.disasterscharter.org/web/guest/-/fire-in-panama"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-03T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [-78.0615234375, 8.26225285835533], [-78.0615234375, 8.480176033023001], [-77.8369140625, 8.480176033023001], [-77.8369140625, 8.26225285835533], [-78.0615234375, 8.26225285835533] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_385",
+			"title": "Nepal WIldfires, April 2016",
+            "description": "In Nepal, the dry month of April always brings an increase in fire activity.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_385",
+			"categories": [
+				{
+					"id": 8,
+					"title": "Wildfires"
+				}
+			],
+			"sources": [
+				{
+					"id": "EO",
+					"url": "http://earthobservatory.nasa.gov/NaturalHazards/event.php?id=87855"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-04-01T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [80.09765625, 26.01155805466736], [80.09765625, 30.398635834398917], [88.583984375, 30.398635834398917], [88.583984375, 26.01155805466736], [80.09765625, 26.01155805466736] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_358",
+			"title": "Kanlaon Volcano, Philippines",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_358",
+			"categories": [
+				{
+					"id": 12,
+					"title": "Volcanoes"
+				}
+			],
+			"sources": [
+				{
+					"id": "SIVolcano",
+					"url": "http://volcano.si.edu/volcano.cfm?vn=272020"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-03-29T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [123.0487060546875, 10.34376311542687], [123.0487060546875, 10.490168599740784], [123.21014404296875, 10.490168599740784], [123.21014404296875, 10.34376311542687], [123.0487060546875, 10.34376311542687] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_372",
+			"title": "Phytoplankton Bloom off Argentina",
+            "description": "",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_372",
+			"categories": [
+				{
+					"id": 13,
+					"title": "Water Color"
+				}
+			],
+			"sources": [
+				{
+					"id": "MRR",
+					"url": "https://lance.modaps.eosdis.nasa.gov/cgi-bin/imagery/single.cgi?image=Argentina.A2016105.1850.1km.jpg"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-03-21T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [-63.8232421875, -43.7598379031358], [-63.8232421875, -41.42033699166035], [-59.7314453125, -41.42033699166035], [-59.7314453125, -43.7598379031358], [-63.8232421875, -43.7598379031358] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_354",
+			"title": "Dukono Volcano, Indonesia",
+            "description": "During 16 and 19-22 March, ash plumes from Dukono rose to altitudes of 1.5-2.4 km (5,000-8,000 ft).",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_354",
+			"categories": [
+				{
+					"id": 12,
+					"title": "Volcanoes"
+				}
+			],
+			"sources": [
+				{
+					"id": "EO",
+					"url": "http://earthobservatory.nasa.gov/NaturalHazards/view.php?id=87762"
+				},
+				{
+					"id": "SIVolcano",
+					"url": "http://volcano.si.edu/volcano.cfm?vn=268010"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2016-03-16T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [127.84286499023438, 1.6633016286241373], [127.84286499023438, 1.7379700300000804], [127.91641235351562, 1.7379700300000804], [127.91641235351562, 1.6633016286241373], [127.84286499023438, 1.6633016286241373] ]]
+				}
+			
+			]
+		},
+		{
+			"id": "EONET_56",
+			"title": "Fuego Volcano, Guatemala",
+            "description": "During a 30-hour period during 30 June-1 July, activity at Fuego was at a high level, characterized by explosions, high-temperature pyroclastic flows, and ashfall. Ash plumes and explosions have continued into the fall.",
+			"link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_56",
+			"categories": [
+				{
+					"id": 12,
+					"title": "Volcanoes"
+				}
+			],
+			"sources": [
+				{
+					"id": "SIVolcano",
+					"url": "http://volcano.si.edu/volcano.cfm?vn=342090"
+				}
+			
+			],
+			"geometries": [
+				{
+					"date": "2015-06-30T00:00:00Z",
+					"type": "Polygon", 
+					"coordinates": [[ [-90.91110229492188, 14.442392240227267], [-90.91110229492188, 14.501434647062004], [-90.84945678710938, 14.501434647062004], [-90.84945678710938, 14.442392240227267], [-90.91110229492188, 14.442392240227267] ]]
+				}
+			
+			]
+		}
+	]
+}
