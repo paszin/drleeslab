@@ -160,11 +160,22 @@ def getGoogleTrend():
 	startMonth = args.get('startmonth')
 	numOfMonth = args.get('numofmonth')
 
+	if keyword is None:
+		return jsonify({'success': 'fail', 'message': 'keyword is not given'})
 	if country is None:
 		country = 'US'
+	if region is not None:
+		region = str(region)
+	if city is not None:
+		city = str(city)
+	if year is None:
+		return jsonify({'success': 'fail', 'message': 'year is not given'})
+	if startMonth is None:
+		return jsonify({'success': 'fail', 'message': 'startmonth is not given'})
+	if numOfMonth is None:
+		return jsonify({'success': 'fail', 'message': 'numofmonth is not given'})
 
-	URL, flag = ScrapeWeekly(str(keyword), 'US', region, city, int(year), int(startMonth), int(numOfMonth))
-	#URL, flag = ScrapeWeekly('steph curry', 'US', None, None, 2016, 1, 3)
+	URL, flag = ScrapeWeekly(str(keyword), str(country), region, city, int(year), int(startMonth), int(numOfMonth))
 
 	page = urllib2.urlopen(URL)
 	data = page.read()
@@ -197,14 +208,8 @@ def getGoogleTrend():
 
 	for i in range(0, len(gt_df)):
 
-		date = gt_df['Date'][i]
-		# dateTokens = date.split( )
-		# yearFormat = dateTokens[3]
-		# monthFormat = monthConverter(dateTokens[2])
-		# dayFormat = dateTokens[1]
-		# dateFormat = yearFormat + '-' + monthFormat + '-' + dayFormat
-
 		thisGGTrendData = {}
+		date = gt_df['Date'][i]
 		thisGGTrendData['date'] = date.strftime("%Y-%m-%d")
 		thisGGTrendData['svi'] = gt_df['SVI'][i]
 		ggTrendData.append(thisGGTrendData)
@@ -382,19 +387,6 @@ def getCorrelatedQueriesPlots():
 		for thisPoint in thisSeries["point"]:
 			del thisPoint['place_id']
 	return jsonify(series=dataJson["series"])
-
-@app.route('/test')
-@browser_headers
-def test():
-	date = 'Sat, 02 May 2016 00:00:00 GMT'
-	dateTokens = date.split( )
-	print dateTokens[3]
-	monthConverter(dateTokens[2])
-	data = {}
-	data['date'] = date
-
-	return jsonify(result=data)
-
 
 
 if __name__ == '__main__':
