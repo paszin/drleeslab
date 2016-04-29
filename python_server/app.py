@@ -192,16 +192,52 @@ def getGoogleTrend():
 	})
 
 	print gt_df
-	
+
 	ggTrendData = []
 
 	for i in range(0, len(gt_df)):
+
+		date = gt_df['Date'][i]
+		# dateTokens = date.split( )
+		# yearFormat = dateTokens[3]
+		# monthFormat = monthConverter(dateTokens[2])
+		# dayFormat = dateTokens[1]
+		# dateFormat = yearFormat + '-' + monthFormat + '-' + dayFormat
+
 		thisGGTrendData = {}
-		thisGGTrendData['date'] = gt_df['Date'][i]
+		thisGGTrendData['date'] = date.strftime("%Y-%m-%d")
 		thisGGTrendData['svi'] = gt_df['SVI'][i]
 		ggTrendData.append(thisGGTrendData)
 
 	return jsonify(result = ggTrendData)
+
+def monthConverter(month):
+	if month == 'Jan':
+		return '01'
+	elif month == 'Feb':
+		return '02'
+	elif month == 'Mar':
+		return '03'
+	elif month == 'Apr':
+		return '04'
+	elif month == 'May':
+		return '05'
+	elif month == 'Jun':
+		return '06'
+	elif month == 'Jul':
+		return '07'
+	elif month == 'Aug':
+		return '08'
+	elif month == 'Sep':
+		return '09'
+	elif month == 'Oct':
+		return '10'
+	elif month == 'Nov':
+		return '11'
+	elif month == 'Dec':
+		return '12'
+	else:
+		return '00'
 
 def ScrapeWeekly(keyword, country, region, city, year, startmonth, numofmonth):
 	"""
@@ -346,6 +382,20 @@ def getCorrelatedQueriesPlots():
 		for thisPoint in thisSeries["point"]:
 			del thisPoint['place_id']
 	return jsonify(series=dataJson["series"])
+
+@app.route('/test')
+@browser_headers
+def test():
+	date = 'Sat, 02 May 2016 00:00:00 GMT'
+	dateTokens = date.split( )
+	print dateTokens[3]
+	monthConverter(dateTokens[2])
+	data = {}
+	data['date'] = date
+
+	return jsonify(result=data)
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
