@@ -1,14 +1,17 @@
 /*global angular, console*/
 var app = angular.module('spaceappsApp');
 
-app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location', '$facebook', 'mapBaselayers',
-    function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers) {
+app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location', '$facebook', 'mapBaselayers', 'CoordinatesCalculater',
+    function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers, CoordinatesCalculater) {
         'use strict';
 
         $scope.paths = {};
         $scope.markers = {};
         $scope.friends = [];
 
+        /*function findClosetsEvent(person) {
+            CoordinatesCalculater.distance(person.location.latitude, person.location.longitude)
+        }*/
 
         // FACEBOOK
         $rootScope.user = $rootScope.user || {};
