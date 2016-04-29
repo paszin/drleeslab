@@ -1,0 +1,8 @@
+.nv-controlsWrap .disabled text {
+    font-weight: normal !important;
+}
+
+// Make the active link bold
+.nv-controlsWrap .nv-series text {
+    font-weight: 600;
+}
