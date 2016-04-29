@@ -8,10 +8,16 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         $scope.paths = {};
         $scope.markers = {};
         $scope.friends = [];
+        $scope.affectedCounter = 0;
 
         function findClosetsEvent(person) {
             $facebook.api(person.location.id + '?fields=location').then(function (data) {
             person.distance = CoordinatesCalculater.distance(data.location.latitude, data.location.longitude, 29.213727993972313, -95.980224609375) * 0.621371;
+            if (person.distance < 140) {
+                $scope.affectedCounter += 1;
+            }
+            person.location.latitude = data.location.latitude;
+            person.location.longitude = data.location.longitude;
             });
         }
 
@@ -25,6 +31,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         function getFbFriendsLocation() {
             $facebook.api(fbFriendsLocations).then(function (response) {
                 response.data.forEach(function (entry) {
+                    entry.distance = 100;
                     getCoordinates(entry.location.id, entry);
                     findClosetsEvent(entry);
                 });
@@ -41,7 +48,8 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                 if (response.id === "1177827492262065") { //it's me (pascal)
                     $http.get("/assets/data/myFacebookFriends.json").then(function(response) {
                         response.data.data.forEach(function (entry) {
-                            if (entry.location) {getCoordinates(entry.location.id, entry); findClosetsEvent(entry);}
+                            if (entry.location) {console.log(entry); getCoordinates(entry.location.id, entry); findClosetsEvent(entry);}
+                            else {console.warn("no location for ", entry)}
                         });
                         _.assign($scope.friends, response.data.data);
                 });
@@ -125,6 +133,13 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                   if (natureevent.geometries[0].type === 'Polygon') {
                       lat = natureevent.geometries[0].coordinates[0][0][1];
                       lng = natureevent.geometries[0].coordinates[0][0][0];
+                      //create a path
+                      if (natureevent.id === "EONET_368") {
+                      var points = natureevent.geometries[0].coordinates[0].map(function(coords) {return {lat: coords[1], lng: coords[0]}});
+                      $scope.paths[natureevent.id] = {latlngs: points, type: "polygon", stroke: false,
+                    fillColor: "#FF555E",
+                    fillOpacity: 0.7, clickable: true};
+                          }
                   } else if (natureevent.geometries[0].type === 'Point') {
                       lat = natureevent.geometries[0].coordinates[1];
                       lng = natureevent.geometries[0].coordinates[0];
@@ -135,10 +150,10 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                         //shadowUrl: 'img/leaf-shadow.png',
                         iconSize:     [24, 24], // size of the icon
                         shadowSize:   [50, 64], // size of the shadow
-                        iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
+                        iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
                         shadowAnchor: [0, 0],  // the same for the shadow
                         popupAnchor:  [0, 0], // point from which the popup should open relative to the iconAnchor
-                        fillOpacity: 0.4
+                        fillOpacity: 0.8
                     }
                 };
               }
@@ -161,11 +176,24 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
              }
             });
 
+        $scope.$on('leafletDirectivePath.mymap.click', function (e, args) {
+                 $location.path('/playground');
+            });
+        $scope.$on('leafletDirectivePath.mymap.mouseover', function (e, args) {
+            $scope.markers[args.modelName].openPopup();
+            });
+
         $scope.$on('leafletDirectiveMarker.mymap.mouseover', function (e, args) {
             //debugger;
             args.leafletObject.openPopup();
                     $scope.info = args.model.data.title;
             });
+        
+        $scope.zoomToPerson = function(person) {
+            $scope.center.lat = person.location.latitude;
+            $scope.center.lng = person.location.longitude;
+            $scope.center.zoom = 9;
+        };
 
         angular.extend($scope, {
             center: {
