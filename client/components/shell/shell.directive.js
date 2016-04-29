@@ -9,6 +9,8 @@ angular.module('spaceappsApp')
             scope: {
                 title: '=title'
             },
-            link: function (scope, element, attrs) {}
+            link: function (scope, element, attrs) {
+                console.log(scope.title);
+            }
         };
     });
