@@ -11,7 +11,8 @@ angular.module('spaceappsApp', [
     'leaflet-directive',
     'nvd3',
     'ngFacebook',
-    'ngtweet'
+    'ngtweet',
+    'duScroll'
 ])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')

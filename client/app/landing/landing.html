@@ -1,29 +1,65 @@
 <shell>
     <md-button ng-show="!isLoggedIn" ng-click="login()"><i class="fa fa-facebook-official"></i> connect with facebook</md-button>
-    <img layout-margin ng-click="logout()" class="profile-avatar" ng-show="isLoggedIn" ng-src="{{user.picture.data.url}}">
+    <img layout-margin ng-click="logout()" class="profile-avatar" ng-show="isLoggedIn" ng-src="{{user.picture.data.url}}"><span ng-show="isLoggedIn">{{user.name}}</span>
 </shell>
-<div layout="column">
-    <div class="map">
-      <leaflet id="mymap" lf-center="center" height="60vh" width="100%" markers="markers" layers="layers" paths="paths"></leaflet>
-    </div>
-    <div class="md-padding"  flex = "20" id="latestEvent">
-      <h2>Latest Events</h2>
-      <md-content layout="row">
-        <md-card ng-repeat="nevent in openEventsList" flex="20">
-            <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">{{nevent.title}}</span>
-                <span class="md-subhead">{{nevent.categories[0].title}}</span>
-              </md-card-title-text>
-              <!-- <md-card-title-media>
-                <div class="md-media-lg card-media"></div>
-              </md-card-title-media> -->
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button>more</md-button>
-            </md-card-actions>
-          </md-card>
+<div layout="row">
+    <div flex="25">
+        <md-content style="height: 100vh">
+            <md-list class="md-dense" flex>
+                <md-subheader class="md-no-sticky md-warn">Close to a nature disaster (4)</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="friend in friends | limitTo: 4">
+                    <img ng-src="{{friend.picture.data.url}}" class="md-avatar" alt="no image" />
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ friend.name }}</h3>
+                        <!--<h4>{{ Location: friend.location.name }}</h4>-->
+                        <p>53 miles away from Housten Flood</p>
+                    </div>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-subheader class="md-no-sticky" layout="row" layout-align="space-between center">
+                    <span>Safe & Sound (102)</span>
+                    <i class="fa fa-chevron-down" ng-show="!show" ng-click="show=true"></i>
+                    <i class="fa fa-chevron-up" ng-show="show" ng-click="show=false"></i>
+                </md-subheader>
+                <md-list-item ng-show="show" class="md-3-line" ng-repeat="friend in friends">
+                    <img ng-src="{{friend.picture.data.url}}" class="md-avatar" alt="no image" />
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ friend.name }}</h3>
+                        <!--<h4>{{ Location: friend.location.name }}</h4>-->
+                    </div>
+                </md-list-item>
+            </md-list>
+            <md-divider></md-divider>
+            <span>Should we use this space here? Facebook Invite? Nature Disasters list?</span>
         </md-content>
+        <!--<div class="md-padding" id="latestEvent">
+            <h2>Latest Events</h2>
+            <md-content layout="row">
+                <md-card ng-repeat="nevent in openEventsList" flex="20">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{nevent.title}}</span>
+                            <span class="md-subhead">{{nevent.categories[0].title}}</span>
+                        </md-card-title-text>
+                         <md-card-title-media>
+                <div class="md-media-lg card-media"></div>
+              </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button>more</md-button>
+                    </md-card-actions>
+                </md-card>
+            </md-content>
+        </div>
+-->
+    </div>
+    <div flex class="map">
+        <leaflet id="mymap" lf-center="center" height="100vh" width="100%" markers="markers" layers="layers" paths="paths"></leaflet>
     </div>
 
+
+</div>
+
+<div>
+    Additional Info
 </div>

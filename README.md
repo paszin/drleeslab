@@ -205,3 +205,41 @@ http://localhost:5000/twitter_sentiment?query=houston%20flood
   ]
 }
 ```
+
+## 8. Get Google Trend
+```bash
+http://localhost:5000/gg_trend?keyword=<keyword>&year=<year>&startmonth=<startmonth>&numofmonth=<numofmonth>&country=<country>&region=<region>&city=<city>
+```
+This API returns google trend data given a keyword. **keyword**, **year**, **startmonth**, and **numofmonth** are required. Default country is the US. 
+
+### Example
+```bash
+http://localhost:5000/gg_trend?keyword=houston flood&year=2016&startmonth=1&numofmonth=3
+```
+
+### Response
+```bash
+{
+  "result": [
+    {
+      "date": "2015-12-31", 
+      "svi": 74.0
+    }, 
+    {
+      "date": "2016-01-01", 
+      "svi": 71.0
+    }, 
+    .
+    .
+    .
+    {
+      "date": "2016-03-29", 
+      "svi": 78.0
+    }, 
+    {
+      "date": "2016-03-30", 
+      "svi": 77.0
+    }
+  ]
+}
+```

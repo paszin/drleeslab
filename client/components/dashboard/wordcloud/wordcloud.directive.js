@@ -7,8 +7,9 @@ angular.module('spaceappsApp')
             scope: {
                 words: "=words"
             },
-            template: "<canvas width='300' height='300'></canvas>",
+            template: "<canvas width='300' height='250'></canvas>",
             link: function (scope, element, attribute) {
+                //console.log(element);
                 var w, h, circle, text, stageObjects = [];
                 var wordPosX = 30,
                     wordPosY = 30;
@@ -17,7 +18,6 @@ angular.module('spaceappsApp')
                 scope.$watch(function () {
                     return scope.words;
                 }, function (current, old) {
-                    console.log("word changed");
                     //check if new word added
                     if (old.length < current.length) {
                         current.forEach(function (word) {
@@ -40,7 +40,10 @@ angular.module('spaceappsApp')
                             //var i = _.findIndex(old, {text: word.text});
                             //var old_size = old[i].size;
                             var child = scope.stage.getChildByName(word.text);
-                            child.scaleX = word.size;
+                            var tween = createjs.Tween.get(child).to({
+                                scaleX: word.size,
+                                scaleY: word.size
+                            }, 1000, createjs.Ease.linear);
                         });
                     }
                     scope.stage.update();
@@ -62,11 +65,11 @@ angular.module('spaceappsApp')
                     scope.words.forEach(function (word) {
                         addWord(word);
                     });
-                    //createjs.Ticker.addEventListener("tick", handleTick);
+                    createjs.Ticker.addEventListener("tick", scope.stage);
                 }
 
                 function addWord(word) {
-                    text = new createjs.Text(word.text, "20px Arial", "#ff7700");
+                    text = new createjs.Text(word.text, "20px Arial Black", "#4477ff");
                     text.x = word.x || wordPosX;
                     text.y = word.y || wordPosY;
                     text.name = word.text;
@@ -84,7 +87,7 @@ angular.module('spaceappsApp')
 
                 function removeWord(word) {
                     var child = scope.stage.getChildByName(word.text);
-                    scope.stage.remoeChild(child);
+                    scope.stage.removeChild(child);
                 }
 
                 function handleTick() {

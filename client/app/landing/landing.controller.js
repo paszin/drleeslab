@@ -1,13 +1,17 @@
 /*global angular, console*/
 var app = angular.module('spaceappsApp');
 
-app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location', '$facebook', 'mapBaselayers',
-    function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers) {
+app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location', '$facebook', 'mapBaselayers', 'CoordinatesCalculater',
+    function ($scope, $rootScope, $q, $http, $location, $facebook, mapBaselayers, CoordinatesCalculater) {
         'use strict';
 
         $scope.paths = {};
         $scope.markers = {};
+        $scope.friends = [];
 
+        /*function findClosetsEvent(person) {
+            CoordinatesCalculater.distance(person.location.latitude, person.location.longitude)
+        }*/
 
         // FACEBOOK
         $rootScope.user = $rootScope.user || {};
@@ -19,9 +23,9 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         function getFbFriendsLocation() {
             $facebook.api(fbFriendsLocations).then(function (response) {
                 response.data.forEach(function (entry) {
-                    getCoordinates(entry.location.id);
+                    getCoordinates(entry.location.id, entry);
                 });
-                $scope.friends = response.data;
+                _.assign($scope.friends, response.data);
             }, function (response) {
                 console.warn('error fetching friends data', response);
             });
@@ -31,6 +35,14 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
             $facebook.api(fbPersonalData).then(function (response) {
                 $rootScope.user = response;
                 $rootScope.isLoggedIn = true;
+                if (response.id === "1177827492262065") { //it's me (pascal)
+                    $http.get("/assets/data/myFacebookFriends.json").then(function(response) {
+                        response.data.data.forEach(function (entry) {
+                            if (entry.location) {getCoordinates(entry.location.id, entry);}
+                        });
+                        _.assign($scope.friends, response.data.data);
+                });
+                }
             }, function (err) {
                 console.warn('ERROR DURING FACEBOOK LOGIN', err);
             });
@@ -38,27 +50,17 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
         function getCoordinates(id, person) {
             $facebook.api(id + '?fields=location').then(function (data) {
-            //    if $scope.markers.hasOwnProperty(id) {
-            //        $scope.markers[id]
-            //    }
-                $scope.markers[id] = {
+                if ($scope.markers.hasOwnProperty(id) && person && person.hasOwnProperty(name)) {
+                    $scope.markers[id].message += ", " + person.name
+                } else { //Location
+                    $scope.markers[id] = {
                     layer: 'friendsLocation',
                     lat: data.location.latitude,
                     lng: data.location.longitude,
-                    message: "A friend lives here"
+                    message: "Here lives " + person.name || " a friend"
                   };
-                /*$scope.paths[id] = {
-                        weight: 2,
-                        color: '#2f61ff',
-                        latlngs: {
-                            lat: data.location.latitude,
-                            lng: data.location.longitude
-                        },
-                        radius: 200000,
-                        type: 'circle',
-                        layer: 'friendsLocation',
-                stroke: false
-                    }*/
+                }
+
             });
         }
         //login
@@ -123,8 +125,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
           });
 
         });
-
-
 
 
         //MAP CONFIG
