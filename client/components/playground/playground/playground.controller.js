@@ -180,38 +180,42 @@ angular.module('spaceappsApp')
 
         $scope.words = [
             {
-                text: 'FLOOD'
-                , size: 1
-                , x: 110
-                , y: 35
+                text: 'FLOOD',
+                size: 1,
+                x: 10,
+                y: 10,
+                color: "#BBD261"
         }, {
-                text: 'FEMA'
-                , size: 1
-                , x: 30
-                , y: 100
+                text: 'FEMA',
+                size: 1,
+                x: 10,
+                y: 60,
+                color: "#9BD977"
         }, {
-                text: 'JUNGLE BOOK'
-                , size: 1
-                , x: 120
-                , y: 140
+                text: 'JUNGLE BOOK',
+                size: 1,
+                x: 10,
+                y: 110,
+                color: "#7ADE93"
         }, {
-                text: 'BRAYS BAYOU'
-                , size: 1
-                , x: 20
-                , y: 180
+                text: 'BRAYS BAYOU',
+                size: 1,
+                x: 10,
+                y: 160,
+                color: "#5BE0B2"
         }];
 
         $scope.twitterIds = [
     725105271417147392
-    
+
             , 725441964699619328
-    
+
             , 723570517215596544
-    
+
             , 722449096418537473
-    
+
             , 723151141966467072
-    
+
             , 725459529157074944
   ];
         $scope.tweetId = $scope.twitterIds[0];

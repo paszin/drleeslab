@@ -26,7 +26,7 @@ angular.module('spaceappsApp')
                 duration: 1000,
                 transitionDuration: 1000,
                 showLegend: false,
-                color: ['#64A389', '#7bb5F4', '#924861'],
+                color: ['#55D8AD', '#79C0E7', '#F6869B'],
                 callback: "callbackFunction()"
             }
         };
