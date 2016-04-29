@@ -7,12 +7,12 @@
         <md-content style="height: 100vh">
             <md-list class="md-dense" flex>
                 <md-subheader class="md-no-sticky md-warn">Close to a nature disaster (4)</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="friend in friends | limitTo: 4">
+                <md-list-item ng-if="friend.distance<100" class="md-3-line" ng-repeat="friend in friends">
                     <img ng-src="{{friend.picture.data.url}}" class="md-avatar" alt="no image" />
                     <div class="md-list-item-text" layout="column">
                         <h3>{{ friend.name }}</h3>
                         <!--<h4>{{ Location: friend.location.name }}</h4>-->
-                        <p>53 miles away from Housten Flood</p>
+                        <p>{{friend.distance | number: 0}} miles away from Housten Flood</p>
                     </div>
                 </md-list-item>
                 <md-divider></md-divider>
@@ -21,17 +21,19 @@
                     <i class="fa fa-chevron-down" ng-show="!show" ng-click="show=true"></i>
                     <i class="fa fa-chevron-up" ng-show="show" ng-click="show=false"></i>
                 </md-subheader>
-                <md-list-item ng-show="show" class="md-3-line" ng-repeat="friend in friends">
+                <md-list-item ng-show="show" class="md-2-line" ng-if="friend.distance>=100" ng-repeat="friend in friends">
                     <img ng-src="{{friend.picture.data.url}}" class="md-avatar" alt="no image" />
                     <div class="md-list-item-text" layout="column">
                         <h3>{{ friend.name }}</h3>
-                        <!--<h4>{{ Location: friend.location.name }}</h4>-->
+                        <h4>Location: {{ friend.location.name }}</h4>
                     </div>
                 </md-list-item>
             </md-list>
             <md-divider></md-divider>
-            <span>Should we use this space here? Facebook Invite? Nature Disasters list?</span>
-            <md-button>Add Friends</md-button>
+            <span><br>
+            <md-button><i class="fa fa-user-plus"></i>  Add a Friend`s Location</md-button>
+            <md-button><i class="fa fa-info"></i>  take a tour</md-button>
+                </span>
         </md-content>
         <!--<div class="md-padding" id="latestEvent">
             <h2>Latest Events</h2>

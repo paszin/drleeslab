@@ -9,9 +9,11 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         $scope.markers = {};
         $scope.friends = [];
 
-        /*function findClosetsEvent(person) {
-            CoordinatesCalculater.distance(person.location.latitude, person.location.longitude)
-        }*/
+        function findClosetsEvent(person) {
+            $facebook.api(person.location.id + '?fields=location').then(function (data) {
+            person.distance = CoordinatesCalculater.distance(data.location.latitude, data.location.longitude, 29.213727993972313, -95.980224609375) * 0.621371;
+            });
+        }
 
         // FACEBOOK
         $rootScope.user = $rootScope.user || {};
@@ -24,6 +26,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
             $facebook.api(fbFriendsLocations).then(function (response) {
                 response.data.forEach(function (entry) {
                     getCoordinates(entry.location.id, entry);
+                    findClosetsEvent(entry);
                 });
                 _.assign($scope.friends, response.data);
             }, function (response) {
@@ -38,7 +41,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                 if (response.id === "1177827492262065") { //it's me (pascal)
                     $http.get("/assets/data/myFacebookFriends.json").then(function(response) {
                         response.data.data.forEach(function (entry) {
-                            if (entry.location) {getCoordinates(entry.location.id, entry);}
+                            if (entry.location) {getCoordinates(entry.location.id, entry); findClosetsEvent(entry);}
                         });
                         _.assign($scope.friends, response.data.data);
                 });
@@ -97,7 +100,8 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         //NATURE EVENTS
         $scope.openEvents = [];
         var earthquakeUrl = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
-            natureEventsOpenUrl = 'http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000';
+            natureEventsOpenUrl = 'http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000',
+            natureEventsOpenUrl = '/assets/data/eonet-snapshot.json';
         //earthquakes
         $http.get(earthquakeUrl).success(function (response) {
             var points =  response.features.map(function (d) {
@@ -133,7 +137,8 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                         shadowSize:   [50, 64], // size of the shadow
                         iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
                         shadowAnchor: [0, 0],  // the same for the shadow
-                        popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+                        popupAnchor:  [0, 0], // point from which the popup should open relative to the iconAnchor
+                        fillOpacity: 0.4
                     }
                 };
               }
@@ -143,7 +148,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
 
         //MAP CONFIG
-        var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': 'volcano.svg', 'Sea and Lake Ice': 'ice_sea.svg'};
+        var iconLookup = {'Floods': 'flood.svg', 'Severe Storms': 'tornado.svg', 'Wildfires': 'wildfire.svg', 'Dust and Haze': 'house_fire.svg', 'Water Color': 'tsunami.svg', 'Volcanoes': 'volcano.svg', 'Sea and Lake Ice': 'ice_sea.svg', 'Temperature Extremes': 'wildfire.svg'};
 
 
          $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {

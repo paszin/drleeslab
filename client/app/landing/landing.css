@@ -15,3 +15,7 @@
     height: 40px;
     width: 40px;
 }
+
+.leaflet-marker-icon {
+    border-radius: 50%;
+}
