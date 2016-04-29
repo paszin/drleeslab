@@ -3,7 +3,7 @@
 
     <div layout="row" layout="space-between center">
         <div layout="column" flex="25">
-            <md-card style="height: 50vh">
+            <md-card style="height: 40vh">
                 <md-card-header>
                     <md-card-avatar>
                         <i class="fa fa-twitter"></i>
@@ -31,30 +31,52 @@
                     </md-card-header-text>
                 </md-card-header>
                 <wordcloud words="words"></wordcloud>
-                <md-card-content style="position: relative; top: -150px;">
+                <md-card-content style="position: relative; top: -10px;">
                     <p>
                         The
                     </p>
                 </md-card-content>
             </md-card>
         </div>
-        <div flex="50">
+        <div flex="50" layout="column">
             <leaflet id="timelinemap" lf-center="center" layers="layers" height="50vh" width="100%"></leaflet>
+            <md-card>
+                 <md-card-header>
+                    <md-card-avatar>
+                        <i class="fa fa-globe"></i>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">Control Panel</span>
+                        <span class="md-subhead">travel in time</span>
+                    </md-card-header-text>
+                </md-card-header>
+                <md-card-content>
+                
+    <md-button ng-click="play()">play</md-button>
+    <md-button ng-click="stop()">stop</md-button>
+    <md-slider flex min="0" max="255" ng-model="ts" aria-label="timestamp" id="ts-slider" class="md-primary"></md-slider>
+
+                </md-card-content>
+            Control Panel</md-card>
         </div>
         <div flex="25" layout="column">
-            <!--column 2 33% -->
-            <md-content style="height: 100vh;">
-                <twitter-feed ng-show="c!==1" tweetids="['722389353218064384', '722764382938107904']"></twitter-feed>
-            </md-content>
+            <md-card style="height: 100vh;">
+             <md-card-header>
+                    <md-card-avatar>
+                        <i class="fa fa-twitter"></i>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">Tweets</span>
+                        <span class="md-subhead">impressions</span>
+                    </md-card-header-text>
+                </md-card-header>
+            <md-content id="twitter-feed-content">
+                <twitter-feed ng-show="c!==1" tweetids="['722389353218064384', '722764382938107904', '722452002941181952']"></twitter-feed>
+                </md-content>
+            </md-card>
             <!--<twitter-feed style="height: 60vh" ng-show="c==1" tweetids="['722764382938107904']"></twitter-feed>-->
 
         </div>
     </div>
-
-    <md-button ng-click="play()">play</md-button>
-    <md-button ng-click="stop()">stop</md-button>
-
-    <twitter-widget twitter-widget-id="tweetId"></twitter-widget>
-    <md-slider flex min="0" max="255" ng-model="ts" aria-label="timestamp" id="ts-slider" class="md-primary"></md-slider>
 
 </md-content>

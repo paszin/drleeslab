@@ -241,6 +241,7 @@ angular.module('spaceappsApp')
             }, 1000);
         };
         $scope.stop = function () {
+            angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet1"), 0, 250);
             if (angular.isDefined(stop)) {
                 $interval.cancel(scene);
                 scene = undefined;
