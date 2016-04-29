@@ -3,7 +3,7 @@
 
     <div layout="row" layout="space-between center">
         <div layout="column" flex="25">
-            <md-card style="height: 40vh">
+            <md-card style="height: 30vh">
                 <md-card-header>
                     <md-card-avatar>
                         <i class="fa fa-twitter"></i>
@@ -14,13 +14,14 @@
                     </md-card-header-text>
                 </md-card-header>
                 <twitter-sentiment height="300" width="300" data="twitterSentimentData"></twitter-sentiment>
-                <md-card-content style="position: relative; top: -150px;">
-                    <p>
-                        The
-                    </p>
-                </md-card-content>
+                <!--<md-card-content style="position: relative; top: -150px;">
+                    <md-subheader ng-click="showMore=!schowMore">Details 
+                        <i ng-show="!showMore" class="fa fa-chevron-down"></i>
+                        <i ng-show="showMore" class="fa fa-chevron-up"></i>
+                    </md-subheader>
+                </md-card-content> -->
             </md-card>
-            <md-card style="height: 50vh">
+            <md-card>
                 <md-card-header>
                     <md-card-avatar>
                         <i class="fa fa-google"></i>
@@ -32,16 +33,23 @@
                 </md-card-header>
                 <wordcloud words="words"></wordcloud>
                 <md-card-content style="position: relative; top: -10px;">
-                    <p>
-                        The
-                    </p>
+                    <md-subheader class="md-no-sticky" ng-click="showMore=!schowMore">Details
+                        <i ng-show="!showMore" class="fa fa-chevron-down"></i>
+                        <i ng-show="showMore" class="fa fa-chevron-up"></i>
+                    </md-subheader>
+                    <div ng-show="showMore">
+                        <p>FLOOD:</p>
+                        <p>FEMA:</p>
+                        <p>BRAYS BAYOU:</p>
+                        <p>JUNGLE BOOK: Movie released at </p>
+                    </div>
                 </md-card-content>
             </md-card>
         </div>
         <div flex="50" layout="column">
             <leaflet id="timelinemap" lf-center="center" layers="layers" height="50vh" width="100%"></leaflet>
             <md-card>
-                 <md-card-header>
+                <md-card-header>
                     <md-card-avatar>
                         <i class="fa fa-globe"></i>
                     </md-card-avatar>
@@ -51,17 +59,25 @@
                     </md-card-header-text>
                 </md-card-header>
                 <md-card-content>
-                
-    <md-button ng-click="play()">play</md-button>
-    <md-button ng-click="stop()">stop</md-button>
-    <md-slider flex min="0" max="255" ng-model="ts" aria-label="timestamp" id="ts-slider" class="md-primary"></md-slider>
-
+                    <div layout="row" layout-align="center center">
+                        <md-button class="md-fab" ng-click="play()" layout="row" layout-align="center center">
+                            <i ng-show="!isPlaying" class="fa fa-2x fa-play"></i>
+                            <i ng-show="isPlaying" class="fa fa-2x fa-pause"></i>
+                        </md-button>
+                        <label ng-show="!isPlaying">replay the scenario</label>
+                        <label ng-show="isPlaying">pause the scenario</label>
+                    </div>
+                    <md-slider flex min="0" max="7000" ng-model="sliderValue" aria-label="timestamp" id="ts-slider" class="md-primary"></md-slider>
+                    <div layout="row" layout-align="space-between center">
+                        <md-datepicker ng-model="startDate"></md-datepicker>
+                        <md-datepicker ng-model="endDate"></md-datepicker>
+                    </div>
                 </md-card-content>
-            Control Panel</md-card>
+                Control Panel</md-card>
         </div>
         <div flex="25" layout="column">
             <md-card style="height: 100vh;">
-             <md-card-header>
+                <md-card-header>
                     <md-card-avatar>
                         <i class="fa fa-twitter"></i>
                     </md-card-avatar>
@@ -70,8 +86,9 @@
                         <span class="md-subhead">impressions</span>
                     </md-card-header-text>
                 </md-card-header>
-            <md-content id="twitter-feed-content">
-                <twitter-feed ng-show="c!==1" tweetids="['722389353218064384', '722764382938107904', '722452002941181952']"></twitter-feed>
+                <md-content id="twitter-feed-content">
+                    <twitter-feed tweetids="['722389353218064384', '722764382938107904', '722452002941181952', '722076246872428548', '723570517215596544', '603242127284310016', '603489855033778176']">
+                    </twitter-feed>
                 </md-content>
             </md-card>
             <!--<twitter-feed style="height: 60vh" ng-show="c==1" tweetids="['722764382938107904']"></twitter-feed>-->

@@ -26,9 +26,15 @@ angular.module('spaceappsApp')
                 duration: 1000,
                 transitionDuration: 1000,
                 showLegend: false,
-                color: ['#64A389', '#7bb5F4', '#924861']
+                color: ['#64A389', '#7bb5F4', '#924861'],
+                callback: "callbackFunction()"
             }
         };
+          scope.callbackFunction = function(){
+     return function(){
+            d3.selectAll('.nv-pieLabels text').style('fill', "white");
+     }
+}
       }
     };
   });
