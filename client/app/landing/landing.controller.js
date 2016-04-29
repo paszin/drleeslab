@@ -50,14 +50,29 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
         function getCoordinates(id, person) {
             $facebook.api(id + '?fields=location').then(function (data) {
+                var icon = {
+                        iconUrl: person.picture.data.url,
+                        //shadowUrl: 'img/leaf-shadow.png',
+                        iconSize:     [40, 40], // size of the icon
+                        shadowSize:   [50, 64], // size of the shadow
+                        iconAnchor:   [12, 12], // point of the icon which will correspond to marker's location
+                        shadowAnchor: [0, 0],  // the same for the shadow
+                        popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+                    };
                 if ($scope.markers.hasOwnProperty(id) && person && person.hasOwnProperty(name)) {
-                    $scope.markers[id].message += ", " + person.name
+                    $scope.markers[id + Math.random()] = {
+                    layer: 'friendsLocation',
+                    lat: data.location.latitude + Math.random()-0.5,
+                    lng: data.location.longitude + Math.random()-0.5,
+                    message: "Here lives " + person.name || " a friend"
+                  };
                 } else { //Location
                     $scope.markers[id] = {
                     layer: 'friendsLocation',
                     lat: data.location.latitude,
                     lng: data.location.longitude,
-                    message: "Here lives " + person.name || " a friend"
+                    message: "Here lives " + person.name || " a friend",
+                        icon: icon
                   };
                 }
 
@@ -133,16 +148,15 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
 
          $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {
             $scope.info = args.model.message;
-            $location.path('/event');
-            $location.search('link', args.model.data.link);
+             if (args.model.data.id === "EONET_368") {
+                 $location.path('/playground');
+             } else {
+                 $location.path('/event');
+                 $location.search('link', args.model.data.link);
+             }
             });
 
         $scope.$on('leafletDirectiveMarker.mymap.mouseover', function (e, args) {
-            //debugger;
-            args.leafletObject.openPopup();
-                    $scope.info = args.model.data.title;
-            });
-         $scope.$on('leafletDirectivePath.mymap.mouseover', function (e, args) {
             //debugger;
             args.leafletObject.openPopup();
                     $scope.info = args.model.data.title;
