@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('spaceappsApp')
-    .controller('PlaygroundCtrl', function ($scope, $rootScope, $timeout, $interval, mapBaselayers) {
+    .controller('PlaygroundCtrl', function ($scope, $rootScope, $http, $timeout, $interval, mapBaselayers) {
 
         //SEED DATA
         $scope.event = {
@@ -590,26 +590,42 @@ angular.module('spaceappsApp')
 
 
         /////////////////REAL CODE
-
-        var heatmap = {
+    
+    $scope.heatmap =  {
             name: 'Heat Map',
             type: 'heat',
-            data: [[-95.64599609375, 30.36072451862922], [-93.64599609375, 30.36072451862922], [-94.94599609375, 30.36072451862922], [-94.64599609375, 31.36072451862922], [-94.64599609375, 32.36072451862922], [-94.64599609375, 30.072451862922], [-94.645999375, 30.3862922], [-94.64599609375, 30.36072451862922], [-94.64599609375, 30.36072451862922], [-94.64599609375, 30.36072451862922], [-94.64599609375, 30.36072451862922], [-94.64599609375, 30.36072451862922]
-  , [37.782551, -122.445368]
-  , [37.782745, -122.444586]
-  , [37.782842, -122.443688]
-  , [37.782919, -122.442815]
-  , [37.782992, -122.442112]
-  , [37.783100, -122.441461]
-  , [37.783206, -122.440829]
-  , [37.783273, -122.440324]
-  , [37.783316, -122.440023]],
+            data: [],
             layerOptions: {
                 radius: 40,
                 blur: 10
             },
             visible: true
         };
+    
+    //LOAD THE HEATMAP (OMG I AM SO EXITED)
+    $http.get("/assets/data/gpm/1.json").then(function(resp) {
+        var i = 1;
+        for (i; i<3717; i++) {
+            $scope.heatmap.data.push([resp.data.latitude[i], resp.data.longitude[i]]);
+        }
+        $scope.layers.overlays = {
+                    heat: {
+                        name: 'Heat Map',
+                        type: 'heat',
+                        data: $scope.heatmap.data,
+                        layerOptions: {
+                            radius: 20,
+                            blur: 10
+                        },
+                        visible: true
+                    }
+        }
+    });
+    
+    $http.get("/assets/jsons/heat-points.json").then(function(resp) {
+        //$scope.heatmap.data = resp.data;
+        
+        });
 
         var c = 0;
         var scene;
@@ -694,7 +710,7 @@ angular.module('spaceappsApp')
             layers: {
                 baselayers: mapBaselayers,
                 overlays: {
-                    heat: heatmap,
+                    //heat: $scope.heatmap,
                     friendsLocation: {
                         name: 'Friend`s Locations',
                         type: 'group',
