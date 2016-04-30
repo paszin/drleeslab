@@ -15,7 +15,7 @@ angular.module('spaceappsApp')
                 height: scope.height,
                 width: scope.width,
                 donut: true,
-                x: function(d){return {"negativ": "☹", "positive": "☺", "neutral": ""}[d.key];},
+                x: function(d){return {"negativ": "-", "positive": "+", "neutral": "o"}[d.key];},
                 y: function(d){return d.y;},
                 showLabels: true,
 

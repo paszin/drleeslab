@@ -550,25 +550,25 @@ angular.module('spaceappsApp')
         $scope.words = [
             {
                 text: 'FLOOD',
-                size: 1,
+                size: 1.7,
                 x: 10,
                 y: 10,
                 color: "#BBD261"
         }, {
                 text: 'FEMA',
-                size: 1,
+                size: 1.2,
                 x: 10,
                 y: 60,
                 color: "#9BD977"
         }, {
                 text: 'JUNGLE BOOK',
-                size: 1,
+                size: 0.6,
                 x: 10,
                 y: 110,
                 color: "#7ADE93"
         }, {
                 text: 'BRAYS BAYOU',
-                size: 1,
+                size: 1.4,
                 x: 10,
                 y: 160,
                 color: "#5BE0B2"
@@ -621,11 +621,6 @@ angular.module('spaceappsApp')
                     }
         }
     });
-    
-    $http.get("/assets/jsons/heat-points.json").then(function(resp) {
-        //$scope.heatmap.data = resp.data;
-        
-        });
 
         var c = 0;
         var scene;
@@ -659,17 +654,18 @@ angular.module('spaceappsApp')
         });
 
         function setScene(i) {
-            getTwitterSentiment(["2016-04-20", "2016-04-21", "2016-04-22", "2016-04-23", "2016-04-24", "2016-04-25", "2016-04-26"][c / $scope.speed % 7]);
+            console.log(parseInt(i/143));
+            getTwitterSentiment(["2016-04-20", "2016-04-21", "2016-04-22", "2016-04-23", "2016-04-24", "2016-04-25", "2016-04-26"][parseInt(i/143)]);
 
             //scroll through tweets
             if (document.getElementById("tweet" + parseInt(c / $scope.speed))) {
-                angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet" + parseInt(c / $scope.speed)), 0, 700);
+                angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet" + (6 - parseInt(i/143 ))), 0, 700);
             }
 
-            $scope.words[0].size = flow[0][(c / $scope.speed) % 7];
-            $scope.words[1].size = flow[1][(c / $scope.speed) % 7];
-            $scope.words[2].size = flow[2][(c / $scope.speed) % 7];
-            $scope.words[3].size = flow[3][(c / $scope.speed) % 7];
+            $scope.words[0].size = flow[0][parseInt(i/149)];
+            $scope.words[1].size = flow[1][parseInt(i/149)];
+            $scope.words[2].size = flow[2][parseInt(i/149)];
+            $scope.words[3].size = flow[3][parseInt(i/149)];
         }
 
         $scope.play = function () {
@@ -680,16 +676,14 @@ angular.module('spaceappsApp')
             $scope.isPlaying = true;
             scene = $interval(function () {
                 //twitter sentiment
-                setScene();
+                setScene($scope.sliderValue);
 
-                c = (c + 200);
-                $scope.c = c;
-                $scope.sliderValue = c;
+                $scope.sliderValue += 72;
 
 
 
 
-            }, 200);
+            }, 1000);
         };
         $scope.stop = function () {
 
