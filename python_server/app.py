@@ -14,6 +14,10 @@ from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 # import the necessary methods from "TextBlob" library
 from textblob import TextBlob
 
+import numpy as np
+import h5py as h5py
+from pandas.tseries.offsets import *
+
 # Variables that contains the user credentials to access Twitter API 
 ACCESS_TOKEN = '725596276083941376-Rf25f1xDH6xmpUnpwwlLqDyeSi4vv8M'
 ACCESS_SECRET = 'bzvrVn8EoWetbEK929L7FFS0gwNnjDJOTAjE6KS9y8Ui7'
@@ -387,6 +391,106 @@ def getCorrelatedQueriesPlots():
 		for thisPoint in thisSeries["point"]:
 			del thisPoint['place_id']
 	return jsonify(series=dataJson["series"])
+
+@app.route('/precipitation')
+@browser_headers
+def getPrecipitation():
+	args = request.args
+	timestamp = args.get('timestamp')
+
+	path = 'Data/'
+	filename = getFilename(timestamp)
+	dataset = h5py.File(path + filename, 'r')
+	# x, y, precip = getGlobal(dataset)
+	x, y, precip = getTexasRegion(dataset)
+	nx, ny, nprecip = getNonzeroPrecip(x,y,precip)
+	time = getTimestamp(filename)
+
+	output_df = pd.DataFrame({
+		'longitude': nx, 
+		'latitude': ny,
+		'precipitation': nprecip,
+	})
+
+	precipitationData = []
+	for i in range(0, len(output_df)):
+		thisPrecipitationData = {}
+		thisPrecipitationData['longitude'] = float(output_df['longitude'][i])
+		thisPrecipitationData['latitude'] = float(output_df['latitude'][i])
+		thisPrecipitationData['precipitation'] = float(output_df['precipitation'][i])
+		precipitationData.append(thisPrecipitationData)
+
+	return jsonify(timestamp = time, result = precipitationData)
+
+
+# timestamp: yyyy-mm-dd hh-mm-ss in string
+def getFilename(time_stamp_str): 
+	# get nearest time stamp
+	target = pd.to_datetime(str(time_stamp_str), infer_datetime_format = True)
+	ts = pd.date_range('2016-04-15', periods = 432, freq = '30min')
+	tdiff = abs(ts - target)
+	time_stamp = ts[tdiff == tdiff.min()][0]
+
+	# generate HDF5 file name
+	t1 = time_stamp.strftime('%Y%m%d')
+	t2 = time_stamp.strftime('%H%M%S')
+	t3 = time_stamp + Minute(29) + Second(59)
+	t3 = t3.strftime('%H%M%S')
+	t4 = time_stamp.hour*60 + time_stamp.minute 
+	t4 = "%04d" % t4
+	filename = '3B-HHR-E.MS.MRG.3IMERG.{}-S{}-E{}.{}.V03E.HDF5'.format(t1,t2,t3,t4)
+
+	return filename
+
+def getTimestamp(filename):
+	"""
+		Read the time stamp from a GPM filename
+	"""
+	txt  = re.search(r'IMERG.(\d+)-S\d+-E(\d+)',filename)
+	timestring = txt.group(1) + " " + txt.group(2)
+	time_stamp = pd.to_datetime(timestring, infer_datetime_format = True)
+	return time_stamp
+
+def getTexasRegion(dataset):
+	#   Subset to Spatial Region (22.94,-103.23,35.77,-90.04), 
+	value = dataset['Grid/precipitationUncal'][760:900,1120:1250]
+	value = value.transpose()
+	theLats = dataset['Grid/lat'][1120:1250]
+	theLons = dataset['Grid/lon'][760:900]
+	lon, lat = np.float32(np.meshgrid(theLons, theLats))
+	return lon, lat, value
+
+def getGlobal(dataset):
+	#   Subset to Spatial Region (22.94,-103.23,35.77,-90.04), 
+	value = dataset['Grid/precipitationUncal'][:]
+	value = value.transpose()
+	theLats = dataset['Grid/lat'][:]
+	theLons = dataset['Grid/lon'][:]
+	lon, lat = np.float32(np.meshgrid(theLons, theLats))
+	return lon, lat, value
+
+def getNonzeroPrecip(lon,lat,value):
+	idx = np.nonzero(value > 0)
+	newlon  = lon[idx]
+	newlat = lat[idx]
+	newvalue = value[idx]
+	return newlon, newlat, newvalue
+
+def readhdf5(filename, path):
+	dataset = h5py.File(path + filename, 'r')
+	# lon, lat, value = getGlobal(dataset)
+	lon, lat, value = getTexasRegion(dataset)
+	
+	time = getTimestamp(filename)
+	output_df = pd.DataFrame({
+			'longitude': lon, 
+			'lattitude': lat,
+			'precipitation': value,
+			'time_stamp': time
+		})
+	
+	return output_df
+
 
 
 if __name__ == '__main__':

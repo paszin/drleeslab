@@ -20,7 +20,8 @@ datafile = 'data/3B-HHR-E.MS.MRG.3IMERG.20160428-S013000-E015959.0090.V03E.HDF5'
 
 # datafile = 'data/3B-HHR-E.MS.MRG.3IMERG.20160424-S200000-E202959.1200.V03E.HDF5'
 
-def getFilename(time_stamp_str):
+# timestamp: yyyy-mm-dd hh-mm-ss in string
+def getFilename(time_stamp_str): 
 	# get nearest time stamp
 	target = pd.to_datetime(time_stamp_str, infer_datetime_format = True)
 	ts = pd.date_range('2016-04-15', periods = 432, freq = '30min')
@@ -89,8 +90,10 @@ def readhdf5(filename, path):
 
 if __name__ == "__main__":
 	path = 'GPMdata/'
+	time_stamp_str = "2016-04-18 18:30:00"
+	filename = getFilename(time_stamp_str)
 	# filename = '3B-HHR-E.MS.MRG.3IMERG.20160415-S000000-E002959.0000.V03E.HDF5'
-	filename = '3B-HHR-E.MS.MRG.3IMERG.20160418-S180000-E182959.1080.V03E.HDF5'
+	# filename = '3B-HHR-E.MS.MRG.3IMERG.20160418-S180000-E182959.1080.V03E.HDF5'
 	# pdb.set_trace()
 	dataset = h5py.File(path + filename, 'r')
 	# x, y, precip = getGlobal(dataset)
