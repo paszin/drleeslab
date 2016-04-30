@@ -16,7 +16,7 @@
     },{
       "location": {
         "id": "115963528414384",
-        "name": "Houston, Texas"
+        "name": "Houston, Texas","latitude": 29.7629 , "longitude": -95.3832
       },
       "name": "Emma Saul",
       "id": "1",
@@ -28,8 +28,47 @@
       }
     },{
       "location": {
+        "id": "112776278735458",
+        "name": "Baytown, Texas","latitude": 29.7438 , "longitude": -94.9658
+      },
+      "name": "Clara Miele",
+      "id": "2",
+      "picture": {
+        "data": {
+          "is_silhouette": false,
+          "url": "https://randomuser.me/api/portraits/women/12.jpg"
+        }
+      }
+    },{
+      "location": {
+        "id": "111815465501969",
+        "name": "Spring, Texas","latitude": 30.0541 , "longitude": -95.387
+      },
+      "name": "Maggy",
+      "id": "3",
+      "picture": {
+        "data": {
+          "is_silhouette": false,
+          "url": "https://randomuser.me/api/portraits/women/5.jpg"
+        }
+      }
+    },{
+      "location": {
+        "id": "115963528414384",
+        "name": "Houston, Texas"
+      },
+      "name": "Emma Saul",
+      "id": "4",
+      "picture": {
+        "data": {
+          "is_silhouette": false,
+          "url": "https://randomuser.me/api/portraits/women/31.jpg"
+        }
+      }
+    },{
+      "location": {
         "id": "110774245616525",
-        "name": "Paris, France"
+        "name": "Paris, France","latitude": 48.8567 , "longitude": 2.3508
       },
       "name": "Paris Francd",
       "id": "10",
@@ -42,7 +81,7 @@
     },{
       "location": {
         "id": "110251615664105",
-        "name": "Suburb Paris"
+        "name": "Suburb Paris","latitude": 48.8167 , "longitude": 2.41667
       },
       "name": "Benoit M",
       "id": "11",
@@ -70,8 +109,8 @@
       "name": "Onat Türkçüoğlu",
       "id": "10152388584929590",
         "location": {
-        "id": "114952118516947",
-        "name": "San Francisco, California"
+        "id": "11495211851694799999999",
+        "name": "Sunnyvale, California","latitude": 37.372 , "longitude": -122.026
       },
       "picture": {
         "data": {
@@ -97,12 +136,12 @@
     {
       "location": {
         "id": "106377336067638",
-        "name": "Bangalore, India"
+        "name": "Bangalore, India","latitude": 12.9833 , "longitude": 77.5833
       },
       "name": "Rohan Ramanath",
       "hometown": {
         "id": "106377336067638",
-        "name": "Bangalore, India"
+        "name": "Bangalore, India","latitude": 12.9833 , "longitude": 77.5833
       },
       "id": "719756111",
       "picture": {
@@ -129,12 +168,12 @@
     {
       "location": {
         "id": "111175118906315",
-        "name": "Berlin, Germany"
+        "name": "Berlin, Germany","latitude": 52.5006 , "longitude": 13.3989
       },
       "name": "Carl Ambroselli",
       "hometown": {
         "id": "110324442319084",
-        "name": "Berlin-Friedrichshain, Berlin, Germany"
+        "name": "Berlin-Friedrichshain, Berlin, Germany","latitude": 52.5006 , "longitude": 13.3989
       },
       "id": "1671622904",
       "picture": {
@@ -148,8 +187,8 @@
       "name": "Sören Oldag",
       "id": "1674618021",
         "location": {
-        "id": "114952118516947",
-        "name": "San Francisco, California"
+        "id": "114952118516947999999999",
+        "name": "Stanford, California","latitude": 37.4226 , "longitude": -122.165
       },
       "picture": {
         "data": {
@@ -175,7 +214,7 @@
     {
       "location": {
         "id": "110179422344981",
-        "name": "Potsdam, Germany"
+        "name": "Potsdam, Germany","latitude": 52.4 , "longitude": 13.0667
       },
       "name": "Kai Fabian",
       "hometown": {
@@ -209,16 +248,16 @@
       }
     },
     {
-      "name": "Eff von Icks",
+      "name": "Mike Brown",
       "id": "100001812534683",
         "location": {
         "id": "114952118516947",
-        "name": "San Francisco, California"
+        "name": "San Francisco, California","latitude": 37.775 , "longitude": -122.418
       },
       "picture": {
         "data": {
           "is_silhouette": false,
-          "url": "https://scontent.xx.fbcdn.net/v/t1.0-1/c12.12.155.155/s50x50/549582_381522115251536_132782058_n.jpg?oh=6691b4c9e1049446650466fc297d4b85&oe=57A575E8"
+          "url": "http://randomuser.me/api/portraits/men/12.jpg"
         }
       }
     },
@@ -273,7 +312,7 @@
       "id": "1001",
         "location": {
         "id": "113332018680656",
-        "name": "League City, Texas"
+        "name": "League City, Texas","latitude": 29.4998 , "longitude": -95.0898
       },
       "picture": {
         "data": {
@@ -284,10 +323,10 @@
     },
     {
       "name": "Wendy Phong",
-      "id": "1009",
+      "id": "1005",
         "location": {
         "id": "109563029063327",
-        "name": "El Campo, Texas"
+        "name": "El Campo, Texas","latitude": 30.0541 , "longitude": -95.387
       },
       "picture": {
         "data": {
@@ -301,7 +340,7 @@
       "id": "1005",
         "location": {
         "id": "111815465501969",
-        "name": "El Campo, Texas"
+        "name": "El Campo, Texas","latitude": 30.0541 , "longitude": -95.387
       },
       "picture": {
         "data": {

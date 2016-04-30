@@ -590,6 +590,8 @@ angular.module('spaceappsApp')
 
 
         /////////////////REAL CODE
+    
+    
 
         $scope.heatmap = {
             name: 'Heat Map',
@@ -619,7 +621,8 @@ angular.module('spaceappsApp')
                     },
                     visible: true
                 }
-            }
+            };
+            $scope.layers.overlays.friendsLocation.visible = true;
         });
 
         var c = 0;
@@ -722,7 +725,7 @@ angular.module('spaceappsApp')
             layers: {
                 baselayers: mapBaselayers,
                 overlays: {
-                    //heat: $scope.heatmap,
+                    heat: {},
                     friendsLocation: {
                         name: 'Friend`s Locations',
                         type: 'group',

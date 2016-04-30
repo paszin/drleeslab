@@ -21,7 +21,7 @@
 
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <md-button ng-click="toggleLeft()" class="md-icon-button" aria-label="Settings">
+      <md-button  class="md-icon-button" aria-label="Settings"> <!--ng-click="toggleLeft()" -->
         <md-icon md-svg-icon="assets/icons/logo.svg"></md-icon>
            <!-- <i class="fa fa-globe fa-2x"></i> -->
       </md-button>
@@ -32,7 +32,7 @@
         <span ng-bind="title"></span>
         <ng-transclude></ng-transclude>
       <md-menu>
-        <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
+        <md-button aria-label="Open phone interactions menu" class="md-icon-button"> <!--ng-click="openMenu($mdOpenMenu, $event)"-->
           <i class="fa fa-chevron-down"></i>
         </md-button>
         <md-menu-content width="4">

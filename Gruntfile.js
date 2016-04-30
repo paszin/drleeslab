@@ -1,4 +1,4 @@
-// Generated on 2016-04-23 using generator-angular-material-fullstack 0.1.2
+// Generated on 2016-04-01 using generator-angular-material-fullstack 0.1.2
 'use strict';
 
 module.exports = function (grunt) {
@@ -309,7 +309,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       options: {
         // This should be the name of your apps angular module
-        module: 'spaceappsApp',
+        module: 'goaldenAppApp',
         htmlmin: {
           collapseBooleanAttributes: true,
           collapseWhitespace: true,
@@ -377,7 +377,14 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
+      },
+      fontawesome: {
+          expand: true,
+          cwd: '<%= yeoman.client %>/bower_components/font-awesome/fonts',
+          dest: '<%= yeoman.dist %>/public/fonts',
+          src: ['fontawesome-webfont.*']
       }
+        
     },
 
     buildcontrol: {
@@ -613,6 +620,7 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
+    'copy:fontawesome',
     'cdnify',
     'cssmin',
     'uglify',

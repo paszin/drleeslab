@@ -48,7 +48,8 @@ $mdIconProvider
     $locationProvider.html5Mode(true);
 })
   .config( function( $facebookProvider ) {
-  $facebookProvider.setAppId('1721217284819855');
+    if (window.location.origin.indexOf("localhost:") > -1) {$facebookProvider.setAppId('1721217284819855');}
+    else {$facebookProvider.setAppId('1720802108194706');}
   $facebookProvider.setPermissions("email,user_education_history,user_tagged_places,user_hometown,user_work_history,user_location,user_friends,read_custom_friendlists");
 })
 .run( function( $rootScope ) {
