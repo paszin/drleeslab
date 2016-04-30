@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('spaceappsApp')
-    .controller('PlaygroundCtrl', function ($scope, $timeout, $interval, mapBaselayers) {
+    .controller('PlaygroundCtrl', function ($scope, $rootScope, $timeout, $interval, mapBaselayers) {
 
         //SEED DATA
         $scope.event = {
@@ -218,8 +218,6 @@ angular.module('spaceappsApp')
 
             , 725459529157074944
   ];
-        $scope.tweetId = $scope.twitterIds[0];
-
 
 
         /////////////////REAL CODE
@@ -254,7 +252,22 @@ angular.module('spaceappsApp')
 
         $scope.$watch("sliderValue", function (current, old) {
             //
-        })
+        });
+
+        function setScene(i) {
+            getTwitterSentiment(["2016-04-20", "2016-04-21", "2016-04-22", "2016-04-23", "2016-04-24", "2016-04-25", "2016-04-26"][c / 1000 % 7]);
+
+            //scroll through tweets
+            if (document.getElementById("tweet" + parseInt(c / 1000))) {
+                angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet" + parseInt(c / 1000)), 0, 700);
+            }
+
+            $scope.words[0].size = flow[0][(c / 1000) % 7];
+            $scope.words[1].size = flow[1][(c / 1000) % 7];
+            $scope.words[2].size = flow[2][(c / 1000) % 7];
+            $scope.words[3].size = flow[3][(c / 1000) % 7];
+        }
+
         $scope.play = function () {
             if (angular.isDefined(scene)) {
                 return $scope.stop();
@@ -295,19 +308,24 @@ angular.module('spaceappsApp')
 
         };
 
-
         console.log("center of map", $scope.event.geometries[0].coordinates[0][2]);
         angular.extend($scope, {
             center: {
                 lat: $scope.event.geometries[0].coordinates[0][2][1],
                 lng: $scope.event.geometries[0].coordinates[0][2][0],
                 zoom: 7
-            }, //markers: $scope.markers,
+            },
+            markers: $rootScope.friendsMarkers,
             layers: {
                 baselayers: mapBaselayers,
                 overlays: {
-                    heat: heatmap
-                }
+                    heat: heatmap,
+                    friendsLocation: {
+                        name: 'Friend`s Locations',
+                        type: 'group',
+                        visible: true
+                    }
+                },
             }
         });
 

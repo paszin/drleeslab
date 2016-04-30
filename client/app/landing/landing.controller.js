@@ -9,6 +9,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
         $scope.markers = {};
         $scope.friends = [];
         $scope.affectedCounter = 0;
+        $rootScope.friendsMarkers = {};
 
         function findClosetsEvent(person) {
             $facebook.api(person.location.id + '?fields=location').then(function (data) {
@@ -78,6 +79,14 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                     message: "Here lives " + person.name || " a friend"
                   };
                 } else { //Location
+                    $rootScope.friendsMarkers[id] = {
+                    layer: 'friendsLocation',
+                    lat: data.location.latitude,
+                    lng: data.location.longitude,
+                    message: "Here lives " + person.name || " a friend",
+                        icon: icon
+                  };
+
                     $scope.markers[id] = {
                     layer: 'friendsLocation',
                     lat: data.location.latitude,

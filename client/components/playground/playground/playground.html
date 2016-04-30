@@ -47,7 +47,7 @@
             </md-card>
         </div>
         <div flex="50" layout="column">
-            <leaflet id="timelinemap" lf-center="center" layers="layers" height="50vh" width="100%"></leaflet>
+            <leaflet id="timelinemap" lf-center="center" layers="layers" markers="markers" height="60vh" width="100%"></leaflet>
             <md-card>
                 <md-card-header>
                     <md-card-avatar>
@@ -60,14 +60,14 @@
                 </md-card-header>
                 <md-card-content>
                     <div layout="row" layout-align="center center">
-                        <md-button class="md-fab" ng-click="play()" layout="row" layout-align="center center">
-                            <i ng-show="!isPlaying" class="fa fa-2x fa-play"></i>
-                            <i ng-show="isPlaying" class="fa fa-2x fa-pause"></i>
+                        <md-button class="md-fab md-mini" ng-click="play()" layout="row" layout-align="center center">
+                            <i ng-show="!isPlaying" class="fa fa-play"></i>
+                            <i ng-show="isPlaying" class="fa fa-pause"></i>
                         </md-button>
                         <label ng-show="!isPlaying">replay the scenario</label>
                         <label ng-show="isPlaying">pause the scenario</label>
                     </div>
-                    <md-slider flex min="0" max="7000" ng-model="sliderValue" aria-label="timestamp" id="ts-slider" class="md-primary"></md-slider>
+                    <md-slider flex min="0" max="7000" ng-model="sliderValue" aria-label="timestamp" id="ts-slider" class="md-accent"></md-slider>
                     <div layout="row" layout-align="space-between center">
                         <md-datepicker ng-model="startDate"></md-datepicker>
                         <md-datepicker ng-model="endDate"></md-datepicker>
