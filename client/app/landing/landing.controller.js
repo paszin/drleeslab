@@ -221,7 +221,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$q', '$http', '$location
                     visible: true
                 },
                 truecolor: {
-                    name: 'Sat',
+                    name: 'Satellite Images',
                     url: 'http://map1{s}.vis.earthdata.nasa.gov/wmts-geo/' +
                         'MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-11-04/EPSG4326_250m/{z}/{y}/{x}.jpg',
                     type: 'xyz'

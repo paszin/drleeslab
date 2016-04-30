@@ -28,45 +28,6 @@
       }
     },{
       "location": {
-        "id": "112776278735458",
-        "name": "Baytown, Texas"
-      },
-      "name": "Clara Miele",
-      "id": "2",
-      "picture": {
-        "data": {
-          "is_silhouette": false,
-          "url": "https://randomuser.me/api/portraits/women/12.jpg"
-        }
-      }
-    },{
-      "location": {
-        "id": "111815465501969",
-        "name": "Spring, Texas"
-      },
-      "name": "Maggy",
-      "id": "3",
-      "picture": {
-        "data": {
-          "is_silhouette": false,
-          "url": "https://randomuser.me/api/portraits/women/5.jpg"
-        }
-      }
-    },{
-      "location": {
-        "id": "115963528414384",
-        "name": "Houston, Texas"
-      },
-      "name": "Emma Saul",
-      "id": "4",
-      "picture": {
-        "data": {
-          "is_silhouette": false,
-          "url": "https://randomuser.me/api/portraits/women/31.jpg"
-        }
-      }
-    },{
-      "location": {
         "id": "110774245616525",
         "name": "Paris, France"
       },
