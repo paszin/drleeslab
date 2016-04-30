@@ -49,7 +49,7 @@ def getTimestamp(filename):
 
 def getTexasRegion(dataset):
 	#   Subset to Spatial Region (22.94,-103.23,35.77,-90.04), 
-	value = dataset['Grid/HQprecipitation'][760:900,1120:1250]
+	value = dataset['Grid/precipitationUncal'][760:900,1120:1250]
 	value = value.transpose()
 	theLats = dataset['Grid/lat'][1120:1250]
 	theLons = dataset['Grid/lon'][760:900]
@@ -93,11 +93,21 @@ if __name__ == "__main__":
 	filename = '3B-HHR-E.MS.MRG.3IMERG.20160418-S180000-E182959.1080.V03E.HDF5'
 	# pdb.set_trace()
 	dataset = h5py.File(path + filename, 'r')
-	x, y, precip = getGlobal(dataset)
+	# x, y, precip = getGlobal(dataset)
+	x, y, precip = getTexasRegion(dataset)
+	nx, ny, nprecip = getNonzeroPrecip(x,y,precip)
 	time = getTimestamp(filename)
 
+	output_df = pd.DataFrame({
+        'longitude': nx, 
+        'lattitude': ny,
+        'precipitation': nprecip,
+        'time_stamp': time
+    })
+
+	output_df.to_json("GPM.json")
+	
 	# df = readhdf5(filename,path)
-	# df.to_json("GPM.json")
 	# x,y,precip = df['longitude'], df['lattitude'], df['precipitation']
 	pdb.set_trace()
 
