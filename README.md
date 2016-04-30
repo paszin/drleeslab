@@ -282,3 +282,46 @@ http://localhost:5000/gg_trend?keyword=houston flood&year=2016&startmonth=1&numo
   ]
 }
 ```
+
+## 9. Get Precipitation Data
+```bash
+http://localhost:5000/precipitation?timestamp=<timestamp>
+```
+This API returns a precipitation dataset given a timestamp. 
+
+### Example
+```bash
+http://localhost:5000/precipitation?timestamp=2016-04-21%2011:11:11
+```
+
+### Response
+```bash
+{
+  "result": [
+    {
+      "latitude": 22.350000381469727, 
+      "longitude": -98.75, 
+      "precipitation": 0.20000000298023224
+    }, 
+    {
+      "latitude": 22.350000381469727, 
+      "longitude": -98.6500015258789, 
+      "precipitation": 0.20000000298023224
+    },
+    .
+    .
+    .
+    {
+      "latitude": 34.75, 
+      "longitude": -90.94999694824219, 
+      "precipitation": 1.399999976158142
+    }, 
+    {
+      "latitude": 34.95000076293945, 
+      "longitude": -90.3499984741211, 
+      "precipitation": 1.2000000476837158
+    }
+  ], 
+  "timestamp": "Thu, 21 Apr 2016 11:29:59 GMT"
+}
+```
