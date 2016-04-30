@@ -172,6 +172,375 @@ angular.module('spaceappsApp')
                 y: 0.2
             }
         ];
+    
+        $scope.gg_svi_flood = {
+  "result": [
+    {
+      "date": "2015-12-31", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-01-01", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-01-02", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-01-03", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-01-04", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-01-05", 
+      "svi": 8.0
+    }, 
+    {
+      "date": "2016-01-06", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-01-07", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-01-08", 
+      "svi": 17.0
+    }, 
+    {
+      "date": "2016-01-09", 
+      "svi": 4.0
+    }, 
+    {
+      "date": "2016-01-10", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-01-11", 
+      "svi": 18.0
+    }, 
+    {
+      "date": "2016-01-12", 
+      "svi": 11.0
+    }, 
+    {
+      "date": "2016-01-13", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-01-14", 
+      "svi": 8.0
+    }, 
+    {
+      "date": "2016-01-15", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-01-16", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-01-17", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-01-18", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-01-19", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-01-20", 
+      "svi": 13.0
+    }, 
+    {
+      "date": "2016-01-21", 
+      "svi": 4.0
+    }, 
+    {
+      "date": "2016-01-22", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-01-23", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-01-24", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-01-25", 
+      "svi": 12.0
+    }, 
+    {
+      "date": "2016-01-26", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-01-27", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-01-28", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-01-29", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-01-30", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-01-31", 
+      "svi": 8.0
+    }, 
+    {
+      "date": "2016-02-01", 
+      "svi": 12.0
+    }, 
+    {
+      "date": "2016-02-02", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-03", 
+      "svi": 12.0
+    }, 
+    {
+      "date": "2016-02-04", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-02-05", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-02-06", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-07", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-02-08", 
+      "svi": 3.0
+    }, 
+    {
+      "date": "2016-02-09", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-02-10", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-02-11", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-12", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-13", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-14", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-15", 
+      "svi": 14.0
+    }, 
+    {
+      "date": "2016-02-16", 
+      "svi": 8.0
+    }, 
+    {
+      "date": "2016-02-17", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-18", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-02-19", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-02-20", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-02-21", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-02-22", 
+      "svi": 14.0
+    }, 
+    {
+      "date": "2016-02-23", 
+      "svi": 8.0
+    }, 
+    {
+      "date": "2016-02-24", 
+      "svi": 11.0
+    }, 
+    {
+      "date": "2016-02-25", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-02-26", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-02-27", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-02-28", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-02-29", 
+      "svi": 13.0
+    }, 
+    {
+      "date": "2016-03-01", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-03-02", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-03-03", 
+      "svi": 11.0
+    }, 
+    {
+      "date": "2016-03-04", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-03-05", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-03-06", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-03-07", 
+      "svi": 55.0
+    }, 
+    {
+      "date": "2016-03-08", 
+      "svi": 67.0
+    }, 
+    {
+      "date": "2016-03-09", 
+      "svi": 100.0
+    }, 
+    {
+      "date": "2016-03-10", 
+      "svi": 14.0
+    }, 
+    {
+      "date": "2016-03-11", 
+      "svi": 11.0
+    }, 
+    {
+      "date": "2016-03-12", 
+      "svi": 14.0
+    }, 
+    {
+      "date": "2016-03-13", 
+      "svi": 13.0
+    }, 
+    {
+      "date": "2016-03-14", 
+      "svi": 23.0
+    }, 
+    {
+      "date": "2016-03-15", 
+      "svi": 23.0
+    }, 
+    {
+      "date": "2016-03-16", 
+      "svi": 16.0
+    }, 
+    {
+      "date": "2016-03-17", 
+      "svi": 21.0
+    }, 
+    {
+      "date": "2016-03-18", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-03-19", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-03-20", 
+      "svi": 10.0
+    }, 
+    {
+      "date": "2016-03-21", 
+      "svi": 7.0
+    }, 
+    {
+      "date": "2016-03-22", 
+      "svi": 12.0
+    }, 
+    {
+      "date": "2016-03-23", 
+      "svi": 11.0
+    }, 
+    {
+      "date": "2016-03-24", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-03-25", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-03-26", 
+      "svi": 20.0
+    }, 
+    {
+      "date": "2016-03-27", 
+      "svi": 5.0
+    }, 
+    {
+      "date": "2016-03-28", 
+      "svi": 9.0
+    }, 
+    {
+      "date": "2016-03-29", 
+      "svi": 6.0
+    }, 
+    {
+      "date": "2016-03-30", 
+      "svi": 15.0
+    }
+  ]
+};
 
         var flow = [[1, 1.2, 1.2, 0.3, 0.4, 0.4, 0.5, 0.6, 0.6, 10, 0.7, 0.6, 0.5, 0.5, 0.3, 0.3, 0.2, 0.2]
             , [1.8, 1.8, 1.4, 1.3, 1.4, 1.4, 1.3, 1.2, 0.2, 1, 1, 1, 1, 1, 1, 1, 0.2, 1]
@@ -244,28 +613,47 @@ angular.module('spaceappsApp')
 
         var c = 0;
         var scene;
+        $scope.c = 0;
         $scope.isPlaying = false;
+    $scope.speed = 5000; // time from day one to day two
         $scope.startDate = new Date(moment("2016-04-18"));
+        $scope.currentDate = $scope.startDate;
         $scope.endDate = new Date(moment("2016-04-27"));
         $scope.sliderValue = 0;
-
+        $scope.sliderMin = 0;
+        $scope.sliderMax = 1001;
+    
+    function getDate() {
+        var timespan = moment($scope.endDate).diff(moment($scope.startDate));
+        var sliderspan = $scope.sliderMax - $scope.sliderMin;
+        var date = moment($scope.startDate).add((timespan/sliderspan) * $scope.sliderValue);
+        $scope.currentDate = date.format("YYYY-MM-DD HH:mm");
+        return date;
+        
+        
+    }
 
         $scope.$watch("sliderValue", function (current, old) {
-            //
+            //calculate date
+            getDate();
+            //if ((current/$scope.speed) % 7 !== $scope.c) {
+            //    $scope.c = (current/$scope.speed) % 7;
+            //    setScene((current/$scope.speed) % 7);
+            //}
         });
 
         function setScene(i) {
-            getTwitterSentiment(["2016-04-20", "2016-04-21", "2016-04-22", "2016-04-23", "2016-04-24", "2016-04-25", "2016-04-26"][c / 1000 % 7]);
+            getTwitterSentiment(["2016-04-20", "2016-04-21", "2016-04-22", "2016-04-23", "2016-04-24", "2016-04-25", "2016-04-26"][c / $scope.speed % 7]);
 
             //scroll through tweets
-            if (document.getElementById("tweet" + parseInt(c / 1000))) {
-                angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet" + parseInt(c / 1000)), 0, 700);
+            if (document.getElementById("tweet" + parseInt(c / $scope.speed))) {
+                angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet" + parseInt(c / $scope.speed)), 0, 700);
             }
 
-            $scope.words[0].size = flow[0][(c / 1000) % 7];
-            $scope.words[1].size = flow[1][(c / 1000) % 7];
-            $scope.words[2].size = flow[2][(c / 1000) % 7];
-            $scope.words[3].size = flow[3][(c / 1000) % 7];
+            $scope.words[0].size = flow[0][(c / $scope.speed) % 7];
+            $scope.words[1].size = flow[1][(c / $scope.speed) % 7];
+            $scope.words[2].size = flow[2][(c / $scope.speed) % 7];
+            $scope.words[3].size = flow[3][(c / $scope.speed) % 7];
         }
 
         $scope.play = function () {
@@ -276,20 +664,7 @@ angular.module('spaceappsApp')
             $scope.isPlaying = true;
             scene = $interval(function () {
                 //twitter sentiment
-                if (c % 1000 === 0) {
-                    getTwitterSentiment(["2016-04-20", "2016-04-21", "2016-04-22", "2016-04-23", "2016-04-24", "2016-04-25", "2016-04-26"][c / 1000 % 7]);
-
-                    //scroll through tweets
-                    if (document.getElementById("tweet" + parseInt(c / 1000))) {
-                        angular.element(document.getElementById("twitter-feed-content")).scrollToElement(document.getElementById("tweet" + parseInt(c / 1000)), 0, 700);
-                    }
-
-                    $scope.words[2].size = flow[2][(c / 1000) % 7];
-
-                    $scope.words[0].size = flow[0][(c / 1000) % 7];
-                    $scope.words[1].size = flow[1][(c / 1000) % 7];
-                    $scope.words[3].size = flow[3][(c / 1000) % 7];
-                }
+                setScene();
 
                 c = (c + 200);
                 $scope.c = c;

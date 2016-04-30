@@ -60,20 +60,24 @@
                 </md-card-header>
                 <md-card-content>
                     <div layout="row" layout-align="center center">
+                        {{currentDate}}
+                                            </div>
+                    <md-slider flex min="{{sliderMin}}" max="{{sliderMax}}" ng-model="sliderValue" aria-label="timestamp" id="ts-slider" class="md-accent"></md-slider>
+                    <div layout="row" layout-align="space-between center">
+                        <md-datepicker ng-model="startDate"></md-datepicker>
+                        <div layout="column" layout-align="center center">
                         <md-button class="md-fab md-mini" ng-click="play()" layout="row" layout-align="center center">
                             <i ng-show="!isPlaying" class="fa fa-play"></i>
                             <i ng-show="isPlaying" class="fa fa-pause"></i>
                         </md-button>
                         <label ng-show="!isPlaying">replay the scenario</label>
                         <label ng-show="isPlaying">pause the scenario</label>
-                    </div>
-                    <md-slider flex min="0" max="7000" ng-model="sliderValue" aria-label="timestamp" id="ts-slider" class="md-accent"></md-slider>
-                    <div layout="row" layout-align="space-between center">
-                        <md-datepicker ng-model="startDate"></md-datepicker>
+
+                        </div>
                         <md-datepicker ng-model="endDate"></md-datepicker>
                     </div>
                 </md-card-content>
-                Control Panel</md-card>
+                </md-card>
         </div>
         <div flex="25" layout="column">
             <md-card style="height: 100vh;">
@@ -91,8 +95,7 @@
                     </twitter-feed>
                 </md-content>
             </md-card>
-            <!--<twitter-feed style="height: 60vh" ng-show="c==1" tweetids="['722764382938107904']"></twitter-feed>-->
-
+            
         </div>
     </div>
 
