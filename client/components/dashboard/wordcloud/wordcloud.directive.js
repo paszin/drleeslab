@@ -69,7 +69,7 @@ angular.module('spaceappsApp')
                 }
 
                 function addWord(word) {
-                    text = new createjs.Text(word.text, "20px Arial Black", "#4477ff");
+                    text = new createjs.Text(word.text, "20px Arial Black", word.color || "#4477ff");
                     text.x = word.x || wordPosX;
                     text.y = word.y || wordPosY;
                     text.name = word.text;

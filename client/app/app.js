@@ -16,7 +16,7 @@ angular.module('spaceappsApp', [
 ])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('light-blue', {
+    .primaryPalette('indigo', {
                 "hue-1": "A100"
             })
     .accentPalette('amber').dark();

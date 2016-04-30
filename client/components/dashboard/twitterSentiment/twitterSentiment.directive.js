@@ -15,7 +15,7 @@ angular.module('spaceappsApp')
                 height: scope.height,
                 width: scope.width,
                 donut: true,
-                x: function(d){return d.key;},
+                x: function(d){return {"negativ": "☹", "positive": "☺", "neutral": ""}[d.key];},
                 y: function(d){return d.y;},
                 showLabels: true,
 
@@ -26,9 +26,15 @@ angular.module('spaceappsApp')
                 duration: 1000,
                 transitionDuration: 1000,
                 showLegend: false,
-                color: ['#64A389', '#7bb5F4', '#924861']
+                color: ['#55D8AD', '#79C0E7', '#F6869B'],
+                callback: "callbackFunction()"
             }
         };
+          scope.callbackFunction = function(){
+     return function(){
+            d3.selectAll('.nv-pieLabels text').style('fill', "white");
+     }
+}
       }
     };
   });

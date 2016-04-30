@@ -17,6 +17,8 @@
       <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
       <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
       <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+      <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
+      <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -25,9 +27,12 @@
       <link rel="stylesheet" href="app/app.css">
       <link rel="stylesheet" href="app/landing/landing.css">
       <link rel="stylesheet" href="app/main/main.css">
+      <link rel="stylesheet" href="components/dashboard/dashboardHeader/dashboardHeader.css">
       <link rel="stylesheet" href="components/dashboard/mapOverlay/mapOverlay.css">
       <link rel="stylesheet" href="components/dashboard/timeline/timeline.css">
       <link rel="stylesheet" href="components/dashboard/twitterFeed/twitterFeed.css">
+      <link rel="stylesheet" href="components/dashboard/twitterSentiment/twitterSentiment.css">
+      <link rel="stylesheet" href="components/playground/playground/playground.css">
       <!-- endinjector -->
     <!-- endbuild -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
@@ -93,6 +98,10 @@
       <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
       <script src="bower_components/moment/moment.js"></script>
       <script src="bower_components/ngtweet/dist/ngtweet.min.js"></script>
+      <script src="bower_components/EaselJS/lib/easeljs-0.8.2.combined.js"></script>
+      <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+      <script src="bower_components/TweenJS/lib/tweenjs-0.6.2.combined.js"></script>
+      <script src="bower_components/angular-scroll/angular-scroll.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -113,9 +122,16 @@
           <script src="app/landing/landing.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="components/CoordinatesCalculater/CoordinatesCalculater.service.js"></script>
+          <script src="components/dashboard/dashboardHeader/dashboardHeader.directive.js"></script>
           <script src="components/dashboard/mapOverlay/mapOverlay.directive.js"></script>
           <script src="components/dashboard/timeline/timeline.directive.js"></script>
+          <script src="components/dashboard/timelineFader/timelineFader.directive.js"></script>
           <script src="components/dashboard/twitterFeed/twitterFeed.directive.js"></script>
+          <script src="components/dashboard/twitterSentiment/twitterSentiment.directive.js"></script>
+          <script src="components/dashboard/wordcloud/wordcloud.directive.js"></script>
+          <script src="components/playground/playground/playground.controller.js"></script>
+          <script src="components/playground/playground/playground.js"></script>
           <script src="components/shell/dialog/dialog.controller.js"></script>
           <script src="components/shell/shell.controller.js"></script>
           <script src="components/shell/shell.directive.js"></script>

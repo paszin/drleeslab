@@ -9,6 +9,16 @@ angular.module('spaceappsApp')
         controller: 'LandingCtrl'
       });
   }).constant('mapBaselayers', {
+    mapbox_light: {
+                    name: 'Mapbox Light',
+//                            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                    url: 'https://api.mapbox.com/styles/v1/sweetymeow/cinjy5pbt003paem5son415hv/tiles/{z}/{x}/{y}?access_token={apikey}',
+                    type: 'xyz',
+                    layerOptions: {
+                        apikey: 'pk.eyJ1Ijoic3dlZXR5bWVvdyIsImEiOiJjNDQzMzcxMjU0YmIzZDFiYTVkMzI0ZjAxMWU1NDhjNSJ9.Nt5jMK8zq1iBMJwUbbg7TQ',
+                        mapid: 'cinjy5pbt003paem5son415hv'
+                    }
+                },
                 osm: {
                   name: 'OpenStreetMap',
                   url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

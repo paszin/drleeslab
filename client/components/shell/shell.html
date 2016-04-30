@@ -22,13 +22,14 @@
   <md-toolbar>
     <div class="md-toolbar-tools">
       <md-button ng-click="toggleLeft()" class="md-icon-button" aria-label="Settings">
-<!--        <md-icon md-svg-icon="assets/icons/menu.svg"></md-icon>-->
-            <i class="fa fa-globe fa-2x"></i>
+        <md-icon md-svg-icon="assets/icons/logo.svg"></md-icon>
+           <!-- <i class="fa fa-globe fa-2x"></i> -->
       </md-button>
       <h2>
           <span><a href="/">Earth Care</a></span>
         </h2>
       <span flex=""></span>
+        <span ng-bind="title"></span>
         <ng-transclude></ng-transclude>
       <md-menu>
         <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
