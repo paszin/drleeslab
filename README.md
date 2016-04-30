@@ -1,3 +1,42 @@
+# Earth Care
+
+
+
+
+### Technology Stack
+- Nodejs
+- Python
+- Flask
+- MongoDB
+- Express
+- AngularJS
+
+### APIs & Datasources
+
+- facebook (use connect with facebook function to see the locations of your friends)
+- twitter (see )
+- IBM Bluemix Node Red Sentiment Analysis
+- Google Correlate & Trend
+- CHIRPS Rainfall Data
+- NASA Map Layers
+
+
+### Getting Started (Frontend)
+
+`npm install -g bower grunt grunt-cli`
+
+ `npm install` 
+ 
+ `bower install` 
+ 
+ `mongod` 
+ 
+ `grunt serve`
+
+
+
+
+
 # Run Backend Python Server
 Go to python_server folder, and run the command below. 
 ```bash
