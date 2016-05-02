@@ -1,0 +1,52 @@
+{
+    "id": "EONET_368",
+    "title": "Flooding in Houston, Texas",
+    "description": "Nearly two feet of rain has resulted in extensive flooding in Houston, Texas.",
+    "link": "http://eonet.sci.gsfc.nasa.gov/api/v2.1/events/EONET_368",
+    "categories": [
+        {
+            "id": 9,
+            "title": "Floods"
+                }
+                ],
+    "sources": [],
+    "geometries": [
+        {
+            "date": "2016-04-17T00:00:00Z",
+            "type": "Polygon",
+            "coordinates": [
+                [
+                [
+                -95.980224609375
+
+                                , 29.213727993972313
+                ]
+
+                            , [
+                -95.980224609375
+
+                                , 30.36072451862922
+                ]
+
+                            , [
+                -94.64599609375
+
+                                , 30.36072451862922
+                ]
+
+                            , [
+                -94.64599609375
+
+                                , 29.213727993972313
+                ]
+
+                            , [
+                -95.980224609375
+
+                                , 29.213727993972313
+                ]
+                ]
+                ]
+                }
+                ]
+}
