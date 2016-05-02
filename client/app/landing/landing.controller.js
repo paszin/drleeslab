@@ -174,52 +174,71 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
                         if (natureevent.geometries[0].type === 'Polygon') {
                             lat = natureevent.geometries[0].coordinates[0][0][1];
                             lng = natureevent.geometries[0].coordinates[0][0][0];
-                            //create a path
-                            //if (natureevent.id === "EONET_368") {
-                            var points = natureevent.geometries[0].coordinates[0].map(function (coords) {
-                                return {
-                                    lat: coords[1],
-                                    lng: coords[0]
-                                }
-                            });
-                            $scope.paths[natureevent.id] = {
-                                latlngs: points,
-                                type: "polygon",
-                                stroke: false,
-                                fillColor: "#FF555E",
-                                fillOpacity: 0.7,
-                                clickable: true
-                            };
+                            addPolygone(natureevent);
                             //}
                         } else if (natureevent.geometries[0].type === 'Point') {
                             lat = natureevent.geometries[0].coordinates[1];
                             lng = natureevent.geometries[0].coordinates[0];
                         }
-                        $scope.markers[natureevent.id] = {
-                            data: natureevent,
-                            message: natureevent.title,
-                            layer: 'natureevents',
-                            lat: lat,
-                            lng: lng,
-                            icon: //{}
-                            {
-                                iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
-                                //shadowUrl: 'img/leaf-shadow.png',
-                                iconSize: [24, 24], // size of the icon
-                                shadowSize: [50, 64], // size of the shadow
-                                iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
-                                shadowAnchor: [0, 0], // the same for the shadow
-                                popupAnchor: [0, 0], // point from which the popup should open relative to the iconAnchor
-                                fillOpacity: 0.8
-                            }
-                        };
+                        addEventMarker(natureevent, lat, lng);
                     }
                 });
 
-            }).catch(function(err) {
+            }).catch(function (err) {
                 console.warn("could not parse json for nature events", err);
                 return loadNatureEvents(natureEventsOpenUrlFallback);
             });
+        }
+        
+        function loadHoustonFlood() {
+            $http.get("/assets/data/eonet_houstonflood.json").then(function(resp) {
+                addPolygone(resp.data);
+                addEventMarker(resp.data, 29.213727993972313, -95.980224609375);
+            });
+        }
+
+
+        function addPolygone(natureevent) {
+            var lat = natureevent.geometries[0].coordinates[0][0][1];
+            var lng = natureevent.geometries[0].coordinates[0][0][0];
+            //create a path
+            //if (natureevent.id === "EONET_368") {
+            var points = natureevent.geometries[0].coordinates[0].map(function (coords) {
+                return {
+                    lat: coords[1],
+                    lng: coords[0]
+                }
+            });
+            $scope.paths[natureevent.id] = {
+                data: natureevent,
+                latlngs: points,
+                type: "polygon",
+                stroke: false,
+                fillColor: "#FF555E",
+                fillOpacity: 0.7,
+                clickable: true
+            };
+        }
+
+        function addEventMarker(natureevent, lat, lng) {
+            $scope.markers[natureevent.id] = {
+                data: natureevent,
+                message: natureevent.title,
+                layer: 'natureevents',
+                lat: lat,
+                lng: lng,
+                icon: //{}
+                {
+                    iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
+                    //shadowUrl: 'img/leaf-shadow.png',
+                    iconSize: [24, 24], // size of the icon
+                    shadowSize: [50, 64], // size of the shadow
+                    iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [0, 0], // the same for the shadow
+                    popupAnchor: [0, 0], // point from which the popup should open relative to the iconAnchor
+                    fillOpacity: 0.8
+                }
+            };
         }
 
 
@@ -240,7 +259,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
         $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {
             $scope.info = args.model.message;
             if (args.model.data.id === "EONET_368") {
-                $location.path('/playground');
+                $location.path('/houstonflood');
             } else {
                 //$location.path('/event');
                 //$location.search('link', args.model.data.link);
@@ -248,7 +267,9 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
         });
 
         $scope.$on('leafletDirectivePath.mymap.mousedown', function (e, args) {
-            $location.path('/houstonflood');
+            if (args.leafletObject.options.data.id === "EONET_368") {
+                $location.path('/houstonflood');
+            }
         });
         $scope.$on('leafletDirectivePath.mymap.mouseover', function (e, args) {
             //$scope.markers[args.modelName].openPopup();
@@ -269,6 +290,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
 
         //init
         loadNatureEvents(natureEventsOpenUrl);
+        loadHoustonFlood();
 
 
         angular.extend($scope, {
@@ -283,7 +305,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
                 baselayers: mapBaselayers,
                 overlays: {
                     natureevents: {
-                        name: 'Nature Events',
+                        name: 'Natural Events',
                         type: 'group',
                         visible: true
                     },
