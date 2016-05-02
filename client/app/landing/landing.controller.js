@@ -5,13 +5,15 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
     function ($scope, $rootScope, $mdToast, $q, $http, $location, $facebook, mapBaselayers, CoordinatesCalculater) {
         'use strict';
 
-        $scope.paths = {};
-        $scope.markers = {};
+
+        $scope.paths = {}; //polygones for friends locations
+        $scope.markers = {}; //friends & events
         $scope.friends = [];
         $scope.affectedCounter = 0;
         $scope.notAffectedCounter = 0;
-        $rootScope.friendsMarkers = {};
+        $rootScope.friendsMarkers = {}; //save the friends to the rootscope, to make them visible in the details view
 
+        //PRCESSING
         function findClosetsEvent(person) {
             //TODO search through events first
             if (person.location.hasOwnProperty('latitude')) { //geolocation is known
@@ -140,14 +142,13 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             });
         };
 
-        //$scope.login();
 
 
         //NATURE EVENTS
         $scope.openEvents = [];
         var earthquakeUrl = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
             natureEventsOpenUrl = 'http://eonet.sci.gsfc.nasa.gov/api/v2.1/events?status=open&limit=900&days=5000',
-            natureEventsOpenUrl = '/assets/data/eonet-snapshot.json';
+            natureEventsOpenUrlFallback = '/assets/data/eonet-snapshot.json';
         //earthquakes
         $http.get(earthquakeUrl).success(function (response) {
             var points = response.features.map(function (d) {
@@ -161,18 +162,20 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             console.log('Earthquakes', points.length);
         });
         //nature events eonet
-        $http.get(natureEventsOpenUrl).success(function (api) {
-            $scope.openEventsList = api.events;
-            api.events.forEach(function (natureevent) {
-                var lat, lng;
-                //just take one of the coordinates, room for improvement!
-                if (!!natureevent.geometries && natureevent.geometries.length > 0 && !!natureevent.geometries[0].coordinates && natureevent.geometries[0].coordinates.length > 0) {
 
-                    if (natureevent.geometries[0].type === 'Polygon') {
-                        lat = natureevent.geometries[0].coordinates[0][0][1];
-                        lng = natureevent.geometries[0].coordinates[0][0][0];
-                        //create a path
-                        if (natureevent.id === "EONET_368") {
+        function loadNatureEvents(url) {
+            $http.get(url).success(function (api) {
+
+                api.events.forEach(function (natureevent) {
+                    var lat, lng;
+                    //just take one of the coordinates, room for improvement!
+                    if (!!natureevent.geometries && natureevent.geometries.length > 0 && !!natureevent.geometries[0].coordinates && natureevent.geometries[0].coordinates.length > 0) {
+
+                        if (natureevent.geometries[0].type === 'Polygon') {
+                            lat = natureevent.geometries[0].coordinates[0][0][1];
+                            lng = natureevent.geometries[0].coordinates[0][0][0];
+                            //create a path
+                            //if (natureevent.id === "EONET_368") {
                             var points = natureevent.geometries[0].coordinates[0].map(function (coords) {
                                 return {
                                     lat: coords[1],
@@ -187,33 +190,38 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
                                 fillOpacity: 0.7,
                                 clickable: true
                             };
+                            //}
+                        } else if (natureevent.geometries[0].type === 'Point') {
+                            lat = natureevent.geometries[0].coordinates[1];
+                            lng = natureevent.geometries[0].coordinates[0];
                         }
-                    } else if (natureevent.geometries[0].type === 'Point') {
-                        lat = natureevent.geometries[0].coordinates[1];
-                        lng = natureevent.geometries[0].coordinates[0];
+                        $scope.markers[natureevent.id] = {
+                            data: natureevent,
+                            message: natureevent.title,
+                            layer: 'natureevents',
+                            lat: lat,
+                            lng: lng,
+                            icon: //{}
+                            {
+                                iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
+                                //shadowUrl: 'img/leaf-shadow.png',
+                                iconSize: [24, 24], // size of the icon
+                                shadowSize: [50, 64], // size of the shadow
+                                iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+                                shadowAnchor: [0, 0], // the same for the shadow
+                                popupAnchor: [0, 0], // point from which the popup should open relative to the iconAnchor
+                                fillOpacity: 0.8
+                            }
+                        };
                     }
-                    $scope.markers[natureevent.id] = {
-                        data: natureevent,
-                        message: natureevent.title,
-                        layer: 'natureevents',
-                        lat: lat,
-                        lng: lng,
-                        icon: //{}
-                        {
-                            iconUrl: 'assets/icons/' + iconLookup[natureevent.categories[0].title] || 'assest/icons/dots-vertical.svg',
-                            //shadowUrl: 'img/leaf-shadow.png',
-                            iconSize: [24, 24], // size of the icon
-                            shadowSize: [50, 64], // size of the shadow
-                            iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
-                            shadowAnchor: [0, 0], // the same for the shadow
-                            popupAnchor: [0, 0], // point from which the popup should open relative to the iconAnchor
-                            fillOpacity: 0.8
-                        }
-                    };
-                }
-            });
+                });
 
-        });
+            }).catch(function(err) {
+                console.warn("could not parse json for nature events", err);
+                return loadNatureEvents(natureEventsOpenUrlFallback);
+            });
+        }
+
 
 
         //MAP CONFIG
@@ -258,6 +266,10 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             $scope.center.zoom = 9;
             $mdToast.show($mdToast.simple().textContent('Click into the area and you will find out about the well-being of your friends.'));
         };
+
+        //init
+        loadNatureEvents(natureEventsOpenUrl);
+
 
         angular.extend($scope, {
             center: {
