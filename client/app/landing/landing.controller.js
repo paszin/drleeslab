@@ -12,21 +12,34 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
         $scope.affectedCounter = 0;
         $scope.notAffectedCounter = 0;
         $rootScope.friendsMarkers = {}; //save the friends to the rootscope, to make them visible in the details view
+        $scope.showSafePeople = false;
 
         //PRCESSING
         function findClosetsEvent(person) {
             //TODO search through events first
+            var shortestDistance = 100000;
+            var closestEvent = "";
             if (person.location.hasOwnProperty('latitude')) { //geolocation is known
-                person.distance = CoordinatesCalculater.distance(person.location.latitude, person.location.longitude, 29.213727993972313, -95.980224609375) * 0.621371;
-                if (person.distance < 140) {
+                $scope.openEvents.forEach(function (nevent) {
+                    var distance = CoordinatesCalculater.distance(person.location.latitude, person.location.longitude, nevent.latitude, nevent.longitude) * 0.621371;
+                    if (distance < shortestDistance) {
+                        shortestDistance = distance;
+                        closestEvent = nevent.title;
+                    }
+                });
+                addMarker(person);
+                person.distance = shortestDistance;
+                person.closestEvent = closestEvent;
+                if (shortestDistance < 130) {
                     $scope.affectedCounter += 1;
                 } else {
                     $scope.notAffectedCounter += 1;
                 }
-                addMarker(person);
-            } else if ($scope.isLoggedIn) {
+
+            }
+            /* else if ($scope.isLoggedIn) {
                 $facebook.api(person.location.id + '?fields=location').then(function (data) {
-                    person.distance = CoordinatesCalculater.distance(data.location.latitude, data.location.longitude, 29.213727993972313, -95.980224609375) * 0.621371;
+                    person.distance = CoordinatesCalculater.distance(data.location.latitude, data.location.longitude,  nevent.latitude, nevent.longitude) * 0.621371;
                     if (person.distance < 140) {
                         $scope.affectedCounter += 1;
                     } else {
@@ -34,11 +47,12 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
                     }
                     person.location.latitude = data.location.latitude;
                     person.location.longitude = data.location.longitude;
-                    console.log("location name:", person.location.name);
-                    console.log(",latitude:", data.location.latitude, ",", "longitude:", data.location.longitude);
-                    console.log("");
+                    //console.log("location name:", person.location.name);
+                    //console.log(",latitude:", data.location.latitude, ",", "longitude:", data.location.longitude);
+                    //console.log("");
                 });
             }
+            }); */
         }
 
         $scope.loadSamples = loadExampleFriends;
@@ -67,9 +81,7 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             $facebook.api(fbPersonalData).then(function (response) {
                 $rootScope.user = response;
                 $rootScope.isLoggedIn = true;
-                if (response.id === "1177827492262065") { //it's me (pascal)
-                    loadExampleFriends();
-                }
+
             }, function (err) {
                 console.warn('ERROR DURING FACEBOOK LOGIN', err);
             });
@@ -79,8 +91,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             $http.get("/assets/data/myFacebookFriends.json").then(function (response) {
                 response.data.data.forEach(function (entry) {
                     if (entry.location) {
-                        console.log(entry);
-                        setCordinates(entry.location.id, entry);
                         findClosetsEvent(entry);
                     } else {
                         console.warn("no location for ", entry)
@@ -165,7 +175,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
 
         function loadNatureEvents(url) {
             $http.get(url).success(function (api) {
-
                 api.events.forEach(function (natureevent) {
                     var lat, lng;
                     //just take one of the coordinates, room for improvement!
@@ -180,20 +189,27 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
                             lat = natureevent.geometries[0].coordinates[1];
                             lng = natureevent.geometries[0].coordinates[0];
                         }
+                        natureevent.latitude = lat;
+                        natureevent.longitude = lng;
                         addEventMarker(natureevent, lat, lng);
                     }
                 });
+                $scope.openEvents = _.union($scope.openEvents, api.events);
+
 
             }).catch(function (err) {
                 console.warn("could not parse json for nature events", err);
                 return loadNatureEvents(natureEventsOpenUrlFallback);
             });
         }
-        
+
         function loadHoustonFlood() {
-            $http.get("/assets/data/eonet_houstonflood.json").then(function(resp) {
+            $http.get("/assets/data/eonet_houstonflood.json").then(function (resp) {
+                resp.data.latitude = 29.213727993972313;
+                resp.data.longitude = -95.980224609375;
                 addPolygone(resp.data);
                 addEventMarker(resp.data, 29.213727993972313, -95.980224609375);
+                $scope.openEvents.push(resp.data);
             });
         }
 
@@ -202,7 +218,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             var lat = natureevent.geometries[0].coordinates[0][0][1];
             var lng = natureevent.geometries[0].coordinates[0][0][0];
             //create a path
-            //if (natureevent.id === "EONET_368") {
             var points = natureevent.geometries[0].coordinates[0].map(function (coords) {
                 return {
                     lat: coords[1],
@@ -242,7 +257,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
         }
 
 
-
         //MAP CONFIG
         var iconLookup = {
             'Floods': 'flood.svg',
@@ -263,22 +277,25 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             } else {
                 //$location.path('/event');
                 //$location.search('link', args.model.data.link);
+                $scope.slectedEvent = args.leafletObject.options.data;
             }
         });
 
         $scope.$on('leafletDirectivePath.mymap.mousedown', function (e, args) {
             if (args.leafletObject.options.data.id === "EONET_368") {
                 $location.path('/houstonflood');
+            } else {
+                $scope.selectedEvent = args.leafletObject.options.data;
             }
         });
         $scope.$on('leafletDirectivePath.mymap.mouseover', function (e, args) {
-            //$scope.markers[args.modelName].openPopup();
+            //$scope.selectedEvent = args.leafletObject.options.data;
         });
 
         $scope.$on('leafletDirectiveMarker.mymap.mouseover', function (e, args) {
             //debugger;
             args.leafletObject.openPopup();
-            $scope.info = args.model.data.title;
+            $scope.selectedEvent = args.leafletObject.options.data;
         });
 
         $scope.zoomToPerson = function (person) {
