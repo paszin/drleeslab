@@ -1,6 +1,7 @@
 # Earth Care
 
-
+You have friends all over the world. The number of natural disasters is increasing and you can't know if a friend of you could be affected.
+We know about all recent natural disasters. 
 
 
 ### Technology Stack
