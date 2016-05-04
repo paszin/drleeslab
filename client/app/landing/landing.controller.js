@@ -37,22 +37,6 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
                 }
 
             }
-            /* else if ($scope.isLoggedIn) {
-                $facebook.api(person.location.id + '?fields=location').then(function (data) {
-                    person.distance = CoordinatesCalculater.distance(data.location.latitude, data.location.longitude,  nevent.latitude, nevent.longitude) * 0.621371;
-                    if (person.distance < 140) {
-                        $scope.affectedCounter += 1;
-                    } else {
-                        $scope.notAffectedCounter += 1;
-                    }
-                    person.location.latitude = data.location.latitude;
-                    person.location.longitude = data.location.longitude;
-                    //console.log("location name:", person.location.name);
-                    //console.log(",latitude:", data.location.latitude, ",", "longitude:", data.location.longitude);
-                    //console.log("");
-                });
-            }
-            }); */
         }
 
         $scope.loadSamples = loadExampleFriends;

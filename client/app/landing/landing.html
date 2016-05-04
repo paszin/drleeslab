@@ -6,15 +6,15 @@
     <div flex="25">
         <md-content style="height: 100vh">
             <md-list class="md-dense" flex>
-                <md-subheader class="md-no-sticky md-warn">Close to a Nature Disaster ({{affectedCounter}})</md-subheader>
+                <md-subheader class="md-no-sticky md-warn">Close to a Natural Disaster ({{affectedCounter}})</md-subheader>
                 <!---->
                 <md-list-item ng-if="friend.distance<140" class="md-3-line" ng-repeat="friend in friends" ng-click="zoomToPerson(friend)">
                     <img ng-src="{{friend.picture.data.url}}" class="md-avatar" alt="no image" />
                     <div class="md-list-item-text" layout="column">
                         <h3>{{ friend.name }}</h3>
                         <!--<h4>{{ Location: friend.location.name }}</h4>-->
-                        <p ng-if="friend.id == 1009">{{friend.distance | number: 0}} miles away from Housten Flood</p>
-                        <p ng-if="friend.id != 1009" class="md-warn">In the area of Housten Flood</p>
+                        <p ng-if="friend.id >= 10 || friend.id.indexOf('custom') > -1">{{ friend.distance | number:0}} miles away from {{friend.closestEvent}}</p>
+                        <p ng-if="friend.id < 10">In the area of {{friend.closestEvent}}</p>
                     </div>
                 </md-list-item>
                 <md-divider></md-divider>
@@ -35,7 +35,7 @@
             <md-divider></md-divider>
             <span>
                 <br>
-                <md-button><i class="fa fa-user-plus"></i>  Add a Friend`s Location</md-button>
+                <md-button ng-click="addFriendsLocation()" ng-disabled="newMarkerActive"><i class="fa fa-user-plus"></i>  Add a Friend`s Location</md-button>
                 <md-button ng-click="loadSamples()"><i class="fa fa-info"></i>  take a tour</md-button>
                 <br>
             </span>
