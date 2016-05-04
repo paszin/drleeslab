@@ -103,8 +103,14 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
 
         function addMarker(person) {
             var id = person.id;
+            var iconUrl = "https://randomuser.me/api/portraits/lego/1.jpg";
+            if (person.hasOwnProperty("picture") && person.picture.hasOwnProperty("data")) {
+                iconUrl = person.picture.data.url;
+            } else {
+                person.picture = {data: {url: "https://randomuser.me/api/portraits/lego/1.jpg"}};
+            }
             var icon = {
-                iconUrl: person.picture.data.url,
+                iconUrl: iconUrl ,
                 //shadowUrl: 'img/leaf-shadow.png',
                 iconSize: [40, 40], // size of the icon
                 shadowSize: [50, 64], // size of the shadow
@@ -269,6 +275,43 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             'Temperature Extremes': 'wildfire.svg'
         };
 
+        var customLocationsCounter = 0;
+        //$scope.newMarkerActive = false;
+        $scope.addFriendsLocation = function () {
+            $scope.newMarkerActive = true;
+            leafletData.getMap().then(function (map) {
+                var center = map.getCenter();
+                $scope.markers["custommarker" + (customLocationsCounter)] = {
+                    lat: center.lat,
+                    lng: center.lng,
+                    message: "<div layout='column' layout-align='center space-between'><span>Friend`s Name <input ng-model='newFriendsName'></span><button ng-click='fixNewLocation()'>Ok</button></div>",
+                    draggable: true,
+                    focus: true,
+                    getMessageScope: function () {
+                        return $scope;
+                    }
+
+                };
+            });
+        }
+
+        $scope.fixNewLocation = function () {
+            var markerid = "custommarker" + (customLocationsCounter);
+            $scope.newMarkerActive = false;
+            var person = {
+                id: markerid + "friends",
+                name: $scope.newFriendsName,
+                location: {
+                    latitude: $scope.markers[markerid].lat,
+                    longitude: $scope.markers[markerid].lng
+                }
+            };
+            $scope.friends.push(person);
+            findClosetsEvent(person);
+            delete $scope.markers[markerid];
+            customLocationsCounter += 1;
+            $scope.newFriendsName = "";
+        };
 
         $scope.$on('leafletDirectiveMarker.mymap.click', function (e, args) {
             $scope.info = args.model.message;
@@ -296,6 +339,11 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             //debugger;
             args.leafletObject.openPopup();
             $scope.selectedEvent = args.leafletObject.options.data;
+        });
+    
+    $scope.$on('leafletDirectiveMarker.mymap.dragend', function(e, args){
+            $scope.markers[args.modelName].lat = args.model.lat;
+            $scope.markers[args.modelName].lng = args.model.lng;
         });
 
         $scope.zoomToPerson = function (person) {
