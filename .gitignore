@@ -8,6 +8,9 @@ dist
 /server/config/local.env.js
 npm-debug.log
 **/.DS_Store
+
+python_server/Data/*
+
 python_server/Data/3B-HHR-E.MS.MRG.3IMERG.20160415-S000000-E002959.0000.V03E.HDF5
 python_server/Data/3B-HHR-E.MS.MRG.3IMERG.20160415-S003000-E005959.0030.V03E.HDF5
 python_server/Data/3B-HHR-E.MS.MRG.3IMERG.20160415-S010000-E012959.0060.V03E.HDF5
