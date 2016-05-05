@@ -1,8 +1,9 @@
 /*global angular, console*/
 var app = angular.module('spaceappsApp');
 
-app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http', '$location', '$facebook', 'mapBaselayers', 'CoordinatesCalculater',
-    function ($scope, $rootScope, $mdToast, $q, $http, $location, $facebook, mapBaselayers, CoordinatesCalculater) {
+
+app.controller('LandingCtrl',
+    function ($scope, $rootScope, $mdToast, $http, $location, $facebook, leafletData, mapBaselayers, CoordinatesCalculater) {
         'use strict';
 
 
@@ -378,4 +379,4 @@ app.controller('LandingCtrl', ['$scope', '$rootScope', '$mdToast', '$q', '$http'
             }
         });
 
-  }]);
+    });
