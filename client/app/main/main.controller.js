@@ -3,7 +3,12 @@
 var cloudCardWid;
 
 angular.module('spaceappsApp')
-  .controller('MainCtrl', function ($scope, $http, $location, $interval) {
+  .controller('MainCtrl', function ($scope, $http, $location, $interval, $stateParams) {
+
+    $scope.event = {};
+    $http.get($stateParams.link).then(function(resp) {
+        $scope.event = resp.data;
+    });
 
     $scope.center = {};
     $scope.layers = {};
